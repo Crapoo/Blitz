@@ -1,12 +1,15 @@
 package be.ipl.blitz.domaine;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -15,21 +18,30 @@ import be.ipl.blitz.utils.Util;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="User", schema="blitz",
-indexes = {@Index(name="user_name", columnList="name", unique=true)})
-public class User implements Serializable{
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+@Table(name = "USERS", schema = "BLITZ", indexes = { @Index(name = "user_name", columnList = "name", unique = true) })
+public class User implements Serializable {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
+	@Column
 	@NotNull
 	private String name;
-	
-	//TODO: verif si pwd et salt est bien necessaire
+
+	// TODO: verif si pwd et salt est bien necessaire
+	@Column
 	@NotNull
 	private byte[] pwd;
-	
+
+	@Column
 	@NotNull
 	private byte[] salt;
+	
+	@ManyToMany(mappedBy="players")
+	public Set<Game> gamesPlayed;
+
+	public User() {
+	}
 
 	public User(String name, String pwd) throws Exception {
 		super();
@@ -37,9 +49,9 @@ public class User implements Serializable{
 		Util.checkString(pwd);
 		this.name = name;
 		this.pwd = pwd.getBytes();
-		salt=PasswordTools.generateSalt();
+		salt = PasswordTools.generateSalt();
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -96,10 +108,10 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.id + " " + this.name;
 	}
-	
+
 }
