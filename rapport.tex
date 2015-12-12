@@ -1,0 +1,146 @@
+\documentclass[11pt]{scrreprt}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[scale=0.775]{geometry}
+\usepackage{lmodern}
+\usepackage[ilines]{scrpage2}
+\usepackage[pdftex, bookmarks=true, hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{tocbibind}
+\usepackage{chngcntr}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{scrhack}
+\usepackage{ulem}
+\usepackage{mdframed}
+
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+\pagestyle{scrheadings}
+
+\usepackage[table]{xcolor}
+\definecolor{lightgray}{gray}{0.9}
+\let\oldtabularx\tabularx
+\let\endoldtabularx\endtabularx
+\renewenvironment{tabularx}{\rowcolors{2}{white}{lightgray}\oldtabularx}{\endoldtabularx}
+
+\let\oldtabular\tabular
+\let\endoldtabular\endtabular
+\renewenvironment{tabular}{\rowcolors{2}{white}{lightgray}\oldtabular}{\endoldtabular}
+
+% clear head and foot
+\clearscrheadings
+\clearscrplain
+\clearscrheadfoot
+
+\cefoot[\textsc{Mighty Beards Studio}{\textsc{Mighty Beards Studio}}
+\cofoot[\textsc{Mighty Beards Studio}{\textsc{Mighty Beards Studio}}
+\lefoot[]{}
+\lofoot[]{}
+\refoot[\thepage]{\thepage}
+\rofoot[\thepage]{\thepage}
+
+\begin{document}
+
+    \renewcommand{\labelitemi}{$\bullet$}
+    \renewcommand{\labelitemii}{$\circ$}
+    %%%%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%
+
+
+    %%%%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%
+    \begin{titlepage}
+        \begin{center}
+            %\includegraphics[width=5cm]{images/dia/logo.pdf}
+            ~\\[1.5cm]
+
+            %\textsc{\LARGE Mighty Beards Studio}\\[1.5cm]
+
+            \textsc{\Large Projet d'AAE}\\[0.5cm]
+
+            % Title
+            \rule{\textwidth}{1pt} \\[0.4cm]
+            { \bfseries \Huge{Blitz}\\ \Large{Clone du jeu Wazabi}\\[0.4cm]}
+
+            \rule{\textwidth}{1pt} \\[1.5cm]
+
+            % Authors
+            \textsc{Javier Lethé - Gaëtan Navez - Matteo Taroli - Przemyslaw Gasinski}
+
+            \vfill
+
+            {\large \today}
+            \vfill
+        \end{center}
+    \end{titlepage}
+    \pagenumbering{gobble}
+    \tableofcontents
+    \pagebreak
+    \pagenumbering{arabic}
+
+    \setlength{\parskip}{3mm}
+    %	#	#	#	#	#	#	#	#	#	#	#	#	#	#	#	#	# Document
+
+    \chapter{Analyse}
+    \section{Scénario nominal}
+
+    L'utilisateur étant déjà connecté, il rejoint une partie selon le scénario suivant :
+
+    \begin{table}[H]
+        \begin{tabularx}{\textwidth}{X|X}
+            1. Le joueur clique sur le bouton \og Rejoindre une partie \fg{} & \\
+            & 2. Le système vérifie si une partie est déjà lancée \\
+            3.a [Une partie est en cours de lancement] & \\
+            & a.1 Le système envoie le joueur vers le lobby.\\
+            & a.2 Une fois que le nombre minimal de joueur est atteint, le jeu est lancé\\
+            3.b [Aucune partie n'est en cours] & \\
+            & b.1 Le système informe le joueur et le renvoie vers la page de création de jeu. \\
+            b.2 Le joueur crée une partie & \\
+            & b.3 Le système envoie le joueur vers le lobby. \\
+            & b.4 Une fois que le nombre minimal de joueur est atteint, le jeu est lancé\\
+            3.c [Une partie est déjà en cours de jeu] & \\
+            & c.1 Le système ne permettant de lancer qu'une partie à la fois, il informe le joueur et le renvoie vers la page d'accueil.\\
+        \end{tabularx}
+    \end{table}
+
+    \section{Tests Fonctionnels}
+    \section{Connexion}
+    \begin{table}[H]
+        \begin{tabularx}{\textwidth}{X|X}
+            1. Cliquer sur le bouton \og Connexion / Inscription\fg{} situé en haut à droite. & \\
+            & 2. Un popup apparait proposant de s'inscrire ou de se connecter. \\
+            3. Dans la partie de droite, entrer \og test\fg{} comme nom d'utilisateur et \og test \fg{} comme mot de passe. & \\
+            & 4. Le système vérifie que l'utilisateur existe et que le mot de passe est correct et renvoie le joueur sur la page d'accueil. \\
+            5. Cliquer sur le bouton \og Déconnexion\fg{}. & \\
+            6.Cliquer à nouveau sur le bouton \og Connexion / Inscription\fg{}. & \\
+            & 7. Le popup réapparait \\
+            8. Dans la partie de droite, entrer \og test\fg{} comme nom d'utilisateur et \og mauvaisMdp \fg{} comme mot de passe. & \\
+            & 9. Le système vérifie que l'utilisateur existe et que le mot de passe est correct et affiche l'erreur \og Nom d'utilisateur ou mot de passe incorrect\fg{} et reste sur le popup.\\
+        \end{tabularx}
+    \end{table}
+    \section{Création de partie}
+    \begin{table}[H]
+        \begin{tabularx}{\textwidth}{X|X}
+            1. En partant de la page d'accueil, cliquer sur le bouton \og Créer une partie\fg{}. & \\
+            & 2. Un popup apparait permettant d'entrer le nom de la partie.\\
+            3. Entrer \og test\fg{} en tant que nom de partie. & \\
+            4. Cliquer sur le bouton \og OK\fg{}. & \\
+            & 5.Le système renvoie vers le lobby de la partie. \\
+            6.Attendre d'autres joueurs et joueur. & \\
+        \end{tabularx}
+    \end{table}
+
+    \section{Jeu}
+    \begin{table}[H]
+        \begin{tabularx}{\textwidth}{X|X}
+            1. Attendre que ce soit 
+        \end{tabularx}
+    \end{table}
+
+
+\end{document}
