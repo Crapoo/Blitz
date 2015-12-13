@@ -12,19 +12,19 @@
 							<!-- NICKNAME -->
 							<div class="form-group">
 								<label class="control-label" for="signup-nickname">Pseudo :</label> <input
-								type="text" class="form-control" id="signup-nickname">
+								type="text" class="form-control" name="signup-nickname">
 							</div>
 							<!-- PASSWORD -->
 							<div class="form-group">
 								<label class="control-label" for="signup-password">Mot
 									de Passe :</label> <input type="password" class="form-control"
-									id="signup-password">
+									name="signup-password">
 								</div>
 								<!-- REPEAT PASSWORD -->
 								<div class="form-group">
 									<label class="control-labl" for="signup-repeat-password">Répétez
 										le mot-de-passe :</label> <input type="password" class="form-control"
-										id="signup-repeat-password">
+										name="signup-repeat-password">
 									</div>
 								</form>
 							</div>
