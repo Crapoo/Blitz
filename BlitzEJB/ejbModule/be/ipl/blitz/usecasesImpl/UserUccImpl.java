@@ -12,15 +12,19 @@ import be.ipl.blitz.utils.PasswordTools;
 import be.ipl.blitz.utils.Util;
 
 @Stateless
-public class UserUccImpl implements UserUcc{
-	
+public class UserUccImpl implements UserUcc {
+
 	@EJB
 	private UserDaoImpl dao;
 
-	public User saveUser(String username,String pwd) throws Exception {
+	public User saveUser(String username, String pwd) throws Exception {
+		if (username == null || pwd == null) {
+			System.err.println("lol, nul");
+		}
+		
 		Util.checkString(username);
 		Util.checkString(pwd);
-		User u=new User(username, pwd);		
+		User u = new User(username, pwd);
 		dao.save(u);
 		return u;
 	}
@@ -29,7 +33,7 @@ public class UserUccImpl implements UserUcc{
 	public Boolean login(String username, String pwd) throws Exception {
 		Util.checkString(username);
 		Util.checkString(pwd);
-		User u= dao.findByName(username);
+		User u = dao.findByName(username);
 		byte[] encryptedAttemptedPassword = PasswordTools.hash(pwd, u.getSalt());
 		return Arrays.equals(u.getPwd(), encryptedAttemptedPassword);
 	}

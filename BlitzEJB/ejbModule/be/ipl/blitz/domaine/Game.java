@@ -30,15 +30,15 @@ public class Game implements Serializable {
 	private Date startDate;
 	@Column
 	private User winner;
-	
+
 	@ManyToMany
-	@JoinTable(name="PLAYERS_GAME", schema="BLITZ", joinColumns={@JoinColumn(name="game_id")},
-	inverseJoinColumns={@JoinColumn(name="player_id")})
-	
+	@JoinTable(name = "PLAYERS_GAME", schema = "BLITZ", joinColumns = {
+			@JoinColumn(name = "game_id") }, inverseJoinColumns = { @JoinColumn(name = "player_id") })
+
 	private List<User> players;
 
 	// TODO : ajouter le sens du jeu (et le joueur courant?)
-	
+
 	public Game() {
 	}
 
