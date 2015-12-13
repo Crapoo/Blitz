@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import be.ipl.blitz.usecases.UserUcc;
+import be.ipl.blitz.usecasesImpl.UserUccImpl;
+
 @WebServlet("/login.html")
 public class LoginServlet extends HttpServlet {
 	@Override
@@ -17,18 +20,28 @@ public class LoginServlet extends HttpServlet {
 		String password = req.getParameter("signup-password");
 		String passwordRepeat = req.getParameter("signup-repeat-password");
 
-		if (!nickname.isEmpty() || !password.isEmpty() || !passwordRepeat.isEmpty()) {
+		// TODO Needs a veeery big refactoring
+		String nextPage = "login.html";
+
+		if (!nickname.isEmpty() && !password.isEmpty() && !passwordRepeat.isEmpty()) {
+			UserUcc userUcc = new UserUccImpl();
+			if (password.equals(passwordRepeat)) {
+				try {
+					userUcc.saveUser(nickname, password);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 
 			HttpSession session = req.getSession();
 			synchronized (session) {
 				session.setAttribute("name", nickname);
 				session.setAttribute("connected", true);
 			}
-
-			getServletContext().getNamedDispatcher("index.html").forward(req, resp);
-		} else {
-			getServletContext().getNamedDispatcher("login.html").forward(req, resp);
+			nextPage = "index.html";
 		}
+		getServletContext().getNamedDispatcher(nextPage).forward(req, resp);
+
 	}
 
 	@Override
