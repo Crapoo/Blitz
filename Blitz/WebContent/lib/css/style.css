@@ -1,5 +1,5 @@
-nav {
-	position: relative;
-	margin-top: 1.5em;
-	margin-right: 1.5em;
+#about-us {
+	position: absolute;
+	bottom: 5em;
+	right: 2em;
 }

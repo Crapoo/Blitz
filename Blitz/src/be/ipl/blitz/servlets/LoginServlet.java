@@ -2,6 +2,7 @@ package be.ipl.blitz.servlets;
 
 import java.io.IOException;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,18 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import be.ipl.blitz.usecases.UserUcc;
-import be.ipl.blitz.usecasesImpl.UserUccImpl;
 import be.ipl.blitz.utils.Util;
 
 @WebServlet("/login.html")
 public class LoginServlet extends HttpServlet {
+	@EJB
 	private UserUcc userUcc;
-
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		userUcc = new UserUccImpl();
-	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,6 +43,7 @@ public class LoginServlet extends HttpServlet {
 					try {
 						userUcc.saveUser(nickname, password);
 						login(nickname, req, resp);
+						return;
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -69,6 +65,7 @@ public class LoginServlet extends HttpServlet {
 				try {
 					userUcc.login(nickname, password);
 					login(nickname, req, resp);
+					return;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
