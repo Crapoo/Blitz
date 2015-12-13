@@ -2,19 +2,20 @@ package be.ipl.blitz.domaine;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import be.ipl.blitz.utils.Util;
 
 @Entity
 @Table(name = "GAMES", schema = "BLITZ")
@@ -34,15 +35,18 @@ public class Game implements Serializable {
 	@JoinTable(name="PLAYERS_GAME", schema="BLITZ", joinColumns={@JoinColumn(name="game_id")},
 	inverseJoinColumns={@JoinColumn(name="player_id")})
 	
-	private Set<User> players;
+	private List<User> players;
 
 	// TODO : ajouter le sens du jeu (et le joueur courant?)
 	
 	public Game() {
 	}
 
-	public Game(Date startDate, User winner, Set<User> players) {
+	public Game(Date startDate, User winner, List<User> players) {
 		super();
+		Util.checkObject(startDate);
+		Util.checkObject(winner);
+		Util.checkObject(players);
 		this.startDate = startDate;
 		this.winner = winner;
 		this.players = players;
@@ -53,6 +57,7 @@ public class Game implements Serializable {
 	}
 
 	public void setId(int id) {
+		Util.checkPositiveOrZero(id);
 		this.id = id;
 	}
 
@@ -61,6 +66,7 @@ public class Game implements Serializable {
 	}
 
 	public void setStartDate(Date startDate) {
+		Util.checkObject(startDate);
 		this.startDate = startDate;
 	}
 
@@ -69,6 +75,7 @@ public class Game implements Serializable {
 	}
 
 	public void setWinner(User winner) {
+		Util.checkObject(winner);
 		this.winner = winner;
 	}
 

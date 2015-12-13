@@ -28,7 +28,6 @@ public class User implements Serializable {
 	@NotNull
 	private String name;
 
-	// TODO: verif si pwd et salt est bien necessaire
 	@Column
 	@NotNull
 	private byte[] pwd;

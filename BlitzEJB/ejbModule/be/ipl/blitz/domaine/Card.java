@@ -13,6 +13,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import be.ipl.blitz.utils.Util;
+
 @Entity
 @Table(name = "CARDS", schema = "BLITZ", indexes = {
 		@Index(name = "num_effect", columnList = "effectNumber", unique = true) })
@@ -38,6 +40,9 @@ public class Card implements Serializable {
 
 	public Card(int effectNumber, String effect, int price) {
 		super();
+		Util.checkPositive(effectNumber);
+		Util.checkString(effect);
+		Util.checkPositiveOrZero(price);
 		this.effectNumber = effectNumber;
 		this.effect = effect;
 		this.price = price;
@@ -48,6 +53,7 @@ public class Card implements Serializable {
 	}
 
 	public void setId(int id) {
+		Util.checkPositiveOrZero(id);
 		this.id = id;
 	}
 
@@ -56,6 +62,7 @@ public class Card implements Serializable {
 	}
 
 	public void setEffectNumber(int effectNumber) {
+		Util.checkPositiveOrZero(effectNumber);
 		this.effectNumber = effectNumber;
 	}
 
@@ -64,6 +71,7 @@ public class Card implements Serializable {
 	}
 
 	public void setEffect(String effect) {
+		Util.checkString(effect);
 		this.effect = effect;
 	}
 
@@ -72,6 +80,7 @@ public class Card implements Serializable {
 	}
 
 	public void setPrice(int price) {
+		Util.checkPositiveOrZero(price);
 		this.price = price;
 	}
 
