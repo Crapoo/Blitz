@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp"
-	xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
 	<display-name>Blitz</display-name>
@@ -39,14 +39,20 @@
 			<include-coda>/WEB-INF/jspf/footer.jspf</include-coda>
 		</jsp-property-group>
 	</jsp-config>
-
 	<servlet>
 		<servlet-name>index.html</servlet-name>
 		<jsp-file>/WEB-INF/jsp/index.jsp</jsp-file>
 	</servlet>
-
 	<servlet>
 		<servlet-name>login.html</servlet-name>
 		<jsp-file>/WEB-INF/jsp/login.jsp</jsp-file>
 	</servlet>
+	<servlet>
+		<servlet-name>error.html</servlet-name>
+		<jsp-file>/WEB-INF/jsp/error.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>error.html</servlet-name>
+		<url-pattern>/error.html</url-pattern>
+	</servlet-mapping>
 </web-app>
