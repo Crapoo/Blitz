@@ -33,9 +33,14 @@
 										name="signup-repeat-password">
 									</div>
 								</form>
+								<c:if test='${status == "signup-error"}'>
+									<div class="alert alert-danger">
+										<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+										&nbsp;&nbsp;${applicationScope['error-message']}
+									</div>
+								</c:if>
 							</div>
 							<div class="panel-footer">
-								<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button> -->
 								<button type="submit" form="signup-form" class="btn btn-primary" name="connection" value="signup">S'inscrire</button>
 							</div>
 						</div>
@@ -60,9 +65,14 @@
 										</div>
 										<!-- REPEAT PASSWORD -->
 									</form>
+									<c:if test='${status == "signin-error"}'>
+										<div class="alert alert-danger">
+											<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+											&nbsp;&nbsp;${applicationScope['error-message']}
+										</div>
+									</c:if>
 								</div>
 								<div class="panel-footer">
-									<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button> -->
 									<button type="submit" form="signin-form" class="btn btn-primary" name="connection" value="signin">Se Connecter</button>
 								</div>
 							</div>

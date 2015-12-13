@@ -21,9 +21,8 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String connectionButton = req.getParameter("connection");
-
-		// TODO Needs a veeery big refactoring
-		// TODO Find a way to alert the user if there was an error
+		
+		// TODO How to store the session ?
 
 		if (connectionButton == null) {
 
@@ -45,12 +44,13 @@ public class LoginServlet extends HttpServlet {
 						login(nickname, req, resp);
 						return;
 					} catch (Exception e) {
-						e.printStackTrace();
+						getServletContext().setAttribute("status", "signup-error");
+						getServletContext().setAttribute("error-message", "Erreur lors de la cr&eacute;ation d'un compte");
 					}
 				}
 			} catch (NullPointerException | IllegalArgumentException e) {
-				doGet(req, resp);
-				return;
+				getServletContext().setAttribute("status", "signup-error");
+				getServletContext().setAttribute("error-message", "Veuillez remplir les champs correctement");
 			}
 
 		} else if (connectionButton.equals("signin")) {
@@ -67,11 +67,12 @@ public class LoginServlet extends HttpServlet {
 					login(nickname, req, resp);
 					return;
 				} catch (Exception e) {
-					e.printStackTrace();
+					getServletContext().setAttribute("status", "signin-error");
+					getServletContext().setAttribute("error-message", "Mauvais Pseudo ou Mot-de-passe");
 				}
 			} catch (NullPointerException | IllegalArgumentException e) {
-				doGet(req, resp);
-				return;
+				getServletContext().setAttribute("status", "signin-error");
+				getServletContext().setAttribute("error-message", "Veuillez remplir les champs correctement");
 			}
 
 		}
