@@ -1,6 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <body>
 	<div class="container">
+
+		<div class="text-center">
+			<h1>Blitz !</h1>
+			<h2>Un jeu auquel m&ecirc;me toi tu peux jouer!</h2>
+		</div>
+
 		<div class="row vertical-align">
 
 			<!-- SIGN-UP -->
@@ -22,7 +28,7 @@
 								</div>
 								<!-- REPEAT PASSWORD -->
 								<div class="form-group">
-									<label class="control-labl" for="signup-repeat-password">Répétez
+									<label class="control-labl" for="signup-repeat-password">R&eacute;p&eacute;tez
 										le mot-de-passe :</label> <input type="password" class="form-control"
 										name="signup-repeat-password">
 									</div>
@@ -53,19 +59,19 @@
 											name="signin-password">
 										</div>
 										<!-- REPEAT PASSWORD -->
-										</form>
-									</div>
-									<div class="panel-footer">
-										<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button> -->
-										<button type="submit" form="signin-form" class="btn btn-primary" name="connection" value="signin">Se Connecter</button>
-									</div>
+									</form>
+								</div>
+								<div class="panel-footer">
+									<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button> -->
+									<button type="submit" form="signin-form" class="btn btn-primary" name="connection" value="signin">Se Connecter</button>
 								</div>
 							</div>
 						</div>
-
 					</div>
 
-					<link href="lib/css/login.css" rel="stylesheet">
+				</div>
+
+				<link href="lib/css/login.css" rel="stylesheet">
 
 					<!-- TODO May not need this -->
 					<script src="lib/js/signup.js"></script>
