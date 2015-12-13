@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $("#signup-button").click(function() {
+  /*$("#signup-button").click(function() {
     var nickname = $("#signup-nickname").val();
     var password = $("#signup-password").val();
     var passwordRepeat = $("#signup-repeat-password").val();
@@ -18,7 +18,17 @@ $(document).ready(function() {
     if (errorMessage) {
       $("#signup-repeat-password").parent().after('<div class="alert alert-danger" role="alert"><strong><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span></strong>&nbsp;&nbsp;' + errorMessage + '</div>');
     } else {
+      /*$.post("login.html",
+        {
+          nickname : nickname,
+          password : password,
+          passwordRepeat : passwordRepeat
+        },
+        function(data, status) {
+
+        });
       $("#signup-repeat-password").parent().after('<div class="alert alert-success" role="alert"><strong><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;&nbsp;</strong>Inscription complétée</div>');
+      $("signup-button").submit();
     }
-  });
+  });*/
 });
