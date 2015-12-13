@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <body>
 	<div class="container">
-		<div class="row">
+		<div class="row vertical-align">
 
 			<!-- SIGN-UP -->
 			<div class="col-sm-5">
@@ -65,5 +65,8 @@
 
 					</div>
 
+					<link href="lib/css/login.css" rel="stylesheet">
+
+					<!-- TODO May not need this -->
 					<script src="lib/js/signup.js"></script>
 					<script src="lib/js/signin.js"></script>
