@@ -13,7 +13,6 @@ public class UserDaoImpl extends DaoImpl<Integer, User>{
 
 	public UserDaoImpl() {
 		super(User.class);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -24,7 +23,6 @@ public class UserDaoImpl extends DaoImpl<Integer, User>{
 	}
 	
 	public User findByName(String s){
-		//TODO:javier injectionsql
 		Util.checkString(s);
 		String queryString = "SELECT u FROM User u WHERE u.name = ?1";
 		return search(queryString, s);
