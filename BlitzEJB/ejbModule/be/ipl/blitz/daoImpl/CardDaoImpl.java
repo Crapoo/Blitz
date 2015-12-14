@@ -15,7 +15,6 @@ public class CardDaoImpl extends DaoImpl<Integer, Card> {
 
 	public CardDaoImpl() {
 		super(Card.class);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -24,9 +23,9 @@ public class CardDaoImpl extends DaoImpl<Integer, Card> {
 		String queryString = "SELECT c FROM Card c WHERE c.id = ?1";
 		return search(queryString, id);
 	}
-	
-	public List<Card> getAll(){
-		return list("SELECT * FROM Card c");
+
+	public List<Card> getAll() {
+		return list("SELECT c FROM Card c");
 	}
 
 }
