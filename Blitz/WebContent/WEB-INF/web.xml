@@ -55,4 +55,10 @@
 		<servlet-name>error.html</servlet-name>
 		<url-pattern>/error.html</url-pattern>
 	</servlet-mapping>
+	<session-config>
+		<cookie-config>
+			<http-only>true</http-only>
+		</cookie-config>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
 </web-app>

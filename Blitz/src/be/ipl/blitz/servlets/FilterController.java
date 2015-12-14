@@ -22,12 +22,26 @@ public class FilterController implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		String name = req.getServletPath();
+		if (!(request instanceof HttpServletRequest)) {
+			request.setAttribute("error-message",
+					"Veuillez ne pas essayer de pirater le serveur et de passer par de l'HTTP.");
+			request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
+			return;
+		}
 
+		HttpServletRequest req = (HttpServletRequest) request;
+		if (!req.isRequestedSessionIdFromCookie()) {
+			request.setAttribute("error-message", "Cookies. Il te faut des cookies. Ok ?");
+			request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
+			return;
+		}
+
+		String name = req.getServletPath();
 		String[] pages = { "/index.html", "/login.html" };
 
 		if (!name.contains("/lib/") && !Arrays.asList(pages).contains(name)) {
+			request.setAttribute("error-message",
+					"Bonjour, la page que vous recherchez n'est actuellement pas disponible, veuillez retourner demain ou bien le jour qui vient après le jour de demain. Eventuellement, changez de fournisseurs d'accès internet et émmigrez au Kenya.");
 			request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
 			return;
 		}
