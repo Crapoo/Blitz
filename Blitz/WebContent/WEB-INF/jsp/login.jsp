@@ -82,7 +82,4 @@
 				</div>
 
 				<link href="lib/css/login.css" rel="stylesheet" type="text/css">
-
-					<!-- TODO May not need this -->
-					<!--<script src="lib/js/signup.js"></script>
-					<script src="lib/js/signin.js"></script>-->
+					

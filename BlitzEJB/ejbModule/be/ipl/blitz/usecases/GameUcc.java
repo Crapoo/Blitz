@@ -5,11 +5,16 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import be.ipl.blitz.domaine.Die;
+import be.ipl.blitz.domaine.Game.State;
 
 @Remote
 public interface GameUcc {
 
 	boolean joinGame(String gameName, String pseudo);
+	
+	boolean createGame(String gameName);
+	
+	State getState();
 
 	boolean startGame();
 
