@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import be.ipl.blitz.utils.Util;
@@ -102,6 +103,7 @@ public class Game implements Serializable {
 	@ManyToMany(mappedBy = "games")
 	private List<User> users;
 
+	@Transient
 	private List<PlayerGame> players;
 
 	private State state;

@@ -1,5 +1,7 @@
 package be.ipl.blitz.usecases;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import be.ipl.blitz.domaine.Card;
@@ -7,7 +9,8 @@ import be.ipl.blitz.domaine.Card;
 @Remote
 public interface CardsUcc {
 
-	public Card pickCard();
+	public List<Card> pickCard(int nb);
 
 	public void discard(Card card);
+
 }

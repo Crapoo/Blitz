@@ -1,5 +1,6 @@
 package be.ipl.blitz.usecasesImpl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,8 +23,12 @@ public class CardsUccImpl implements CardsUcc {
 	}
 	
 	@Override
-	public Card pickCard() {
-		return deck.get(0);
+	public List<Card> pickCard(int nb) {
+		List<Card> cards = new ArrayList<>();
+		for (int i = 0; i < nb; i++) {
+			cards.add(deck.get(0));
+		}
+		return cards;
 	}
 
 	@Override
