@@ -7,7 +7,7 @@ public interface GameUcc {
 	List<String> listPlayers();
 	boolean startGame();
 	String currentPlayer();
-	//List<Dice> listPlayedDices();
+	List<Dice> listPlayedDices();
 	int throwDices();
 	boolean deleteDice(int numero);
 	int myScore();
