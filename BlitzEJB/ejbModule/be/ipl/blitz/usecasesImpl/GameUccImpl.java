@@ -8,7 +8,8 @@ import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.ejb.Lock;
 import javax.ejb.LockType;
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 
 import be.ipl.blitz.daoImpl.GameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
@@ -17,7 +18,8 @@ import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.domaine.User;
 import be.ipl.blitz.usecases.GameUcc;
 
-@Stateless
+@Singleton
+@Startup
 public class GameUccImpl implements GameUcc {
 	private Game game;
 	@EJB
@@ -163,12 +165,15 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		this.game = new Game(gameName);
-		gameDao.save(game);
+		game = gameDao.save(game);
 		return true;
 	}
 
 	@Override
 	public State getState() {
+		if (game == null) {
+			return null;
+		}
 		return game.getState();
 	}
 
