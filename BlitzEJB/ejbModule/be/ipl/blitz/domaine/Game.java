@@ -35,6 +35,9 @@ public class Game implements Serializable {
 				game.state = State.IN_PROGRESS;
 				Random r = new Random();
 				game.currentUser = r.nextInt(game.players.size());
+				for(User u:game.users){
+					game.players.add(new PlayerGame(u, game));
+				}
 				return true;
 			}
 		},

@@ -28,7 +28,7 @@ public class GameUccImpl implements GameUcc {
 	public GameUccImpl() {
 
 	}
-
+//TODO: javier save changes with update
 	@PostConstruct
 	public void postconstruct() {
 		System.out.println("GestionPartieImpl created");
@@ -48,7 +48,6 @@ public class GameUccImpl implements GameUcc {
 		}
 		game = new Game(gameName);
 		User player = userDao.search(pseudo);
-
 		return game.addPlayer(player);
 	}
 
@@ -163,6 +162,8 @@ public class GameUccImpl implements GameUcc {
 		if (game != null) {
 			return false;
 		}
+		this.game=new Game(gameName);
+		gameDao.save(game);
 		return true;
 	}
 
