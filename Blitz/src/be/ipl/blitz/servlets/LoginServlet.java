@@ -13,14 +13,15 @@ import javax.servlet.http.HttpSession;
 import be.ipl.blitz.usecases.UserUcc;
 import be.ipl.blitz.utils.Util;
 
-@WebServlet("/login.html")
+@WebServlet("/logins.html")
 public class LoginServlet extends HttpServlet {
 	@EJB
 	private UserUcc userUcc;
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String connectionButton = req.getParameter("connection");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String connectionButton = request.getParameter("connection");
 
 		// TODO How to store the session ?
 		// TODO: protect against evil sql/xss injections
@@ -28,21 +29,18 @@ public class LoginServlet extends HttpServlet {
 		if (connectionButton == null) {
 
 		} else if (connectionButton.equals("signup")) {
-			String nickname = req.getParameter("signup-nickname");
-			String password = req.getParameter("signup-password");
-			String passwordRepeat = req.getParameter("signup-repeat-password");
+			String nickname = request.getParameter("signup-nickname");
+			String password = request.getParameter("signup-password");
+			String passwordRepeat = request.getParameter("signup-repeat-password");
 
 			try {
-				Util.checkObject(nickname);
-				Util.checkObject(password);
-				Util.checkObject(passwordRepeat);
 				Util.checkString(nickname);
 				Util.checkString(password);
 				Util.checkString(passwordRepeat);
 				if (password.equals(passwordRepeat)) {
 					try {
 						userUcc.saveUser(nickname, password);
-						login(nickname, req, resp);
+						login(nickname, request, response);
 						return;
 					} catch (Exception e) {
 						getServletContext().setAttribute("status", "signup-error");
@@ -56,23 +54,23 @@ public class LoginServlet extends HttpServlet {
 			}
 
 		} else if (connectionButton.equals("signin")) {
-			String nickname = req.getParameter("signin-nickname");
-			String password = req.getParameter("signin-password");
+			String nickname = request.getParameter("signin-nickname");
+			String password = request.getParameter("signin-password");
 
 			try {
-				Util.checkObject(nickname);
-				Util.checkObject(password);
+				Util.checkString(nickname);
+				Util.checkString(password);
 				try {
 					if (userUcc.login(nickname, password)) {
-						login(nickname, req, resp);
-					}else{
+						login(nickname, request, response);
+						return;
+					} else {
 						getServletContext().setAttribute("status", "signin-error");
 						getServletContext().setAttribute("error-message", "Mauvais Pseudo ou Mot-de-passe");
 					}
-					return;
 				} catch (Exception e) {
 					getServletContext().setAttribute("status", "signin-error");
-					getServletContext().setAttribute("error-message", "erreur de connection");
+					getServletContext().setAttribute("error-message", "Erreur de connection");
 				}
 			} catch (NullPointerException | IllegalArgumentException e) {
 				getServletContext().setAttribute("status", "signin-error");
@@ -80,7 +78,8 @@ public class LoginServlet extends HttpServlet {
 			}
 
 		}
-		doGet(req, resp);
+		request.getRequestDispatcher("login.html").forward(request, response);
+		//doGet(request, response);
 	}
 
 	@Override
@@ -92,7 +91,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		synchronized (session) {
-			session.setAttribute("name", nickname);
+			session.setAttribute("nickname", nickname);
 			session.setAttribute("connected", true);
 		}
 		getServletContext().getNamedDispatcher("index.html").forward(req, resp);
