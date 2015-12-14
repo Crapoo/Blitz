@@ -31,7 +31,6 @@ public class GameUccImpl implements GameUcc {
 
 	}
 
-	// TODO: save when proble (update)
 	@PostConstruct
 	public void postconstruct() {
 		System.out.println("GestionPartieImpl created");
@@ -49,9 +48,12 @@ public class GameUccImpl implements GameUcc {
 		if (game == null || game.getState() == State.OVER) {
 			return false;
 		}
-		game = new Game(gameName);
 		User player = userDao.search(pseudo);
-		return game.addPlayer(player);
+		if(game.addPlayer(player)){
+			gameDao.update(game);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -74,7 +76,11 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		game = gameDao.findById(game.getId());
-		return game.startGame();
+		if(game.startGame()){
+			gameDao.update(game);
+			return true;
+		}
+		return false;
 	}
 
 	public String getCurrentPlayer() {
@@ -93,7 +99,7 @@ public class GameUccImpl implements GameUcc {
 		if (game == null)
 			return false;
 		game = gameDao.findById(game.getId());
-		return game.throwDice();
+		return game.throwDice();//TODO javier update(game) even if modified is playerGame?
 	}
 
 	@Override
@@ -170,6 +176,7 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
+	@Lock(LockType.READ)
 	public State getState() {
 		if (game == null) {
 			return null;
