@@ -1,3 +1,7 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
 <body>
 
-  <h1>C EXIST AP</h1>
+  <div class="container text-center">
+    <h1>Erreur</h1>
+    <h2>${requestScope['error-message']}</h2>
+  </div>
