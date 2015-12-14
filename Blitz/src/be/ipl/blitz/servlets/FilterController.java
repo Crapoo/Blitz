@@ -25,9 +25,9 @@ public class FilterController implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		String name = req.getServletPath();
 
-		String[] pages = { "/index.html", "/login.html","/lib/" };
+		String[] pages = { "/index.html", "/login.html" };
 
-		if (!Arrays.asList(pages).contains(name)) {
+		if (!name.contains("/lib/") && !Arrays.asList(pages).contains(name)) {
 			request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
 			return;
 		}
