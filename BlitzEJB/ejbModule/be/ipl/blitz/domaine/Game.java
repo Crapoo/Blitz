@@ -1,6 +1,7 @@
 package be.ipl.blitz.domaine;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -47,8 +48,13 @@ public class Game implements Serializable {
 				return true;
 			}
 			@Override
-			int throwDice(Game game) {
-				return 0;
+			boolean throwDice(Game game) {
+				PlayerGame p=game.players.get(game.currentUser);
+				List<Face> facesThrown=new ArrayList<>();
+				for(Die d:p.getDice()){
+					
+				}
+				return true;
 			}
 			@Override
 			boolean ecarterDe(int num, Game game) {
@@ -74,8 +80,8 @@ public class Game implements Serializable {
 			return false;
 		}
 
-		int throwDice(Game game) {
-			return -1;
+		boolean throwDice(Game game) {
+			return false;
 		}
 
 		boolean ecarterDe(int numero, Game game) {
@@ -203,5 +209,10 @@ public class Game implements Serializable {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public boolean throwDice() {
+		return state.throwDice(this);
+		
 	}
 }

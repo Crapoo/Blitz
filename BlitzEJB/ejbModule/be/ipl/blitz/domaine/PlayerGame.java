@@ -40,8 +40,9 @@ public class PlayerGame implements Serializable {
 		this.game=g.getId();
 		this.player=u.getId();
 		dice = new ArrayList<Die>();
-		for(int i=0;i<4;i++){
-			dice.add(new Die());
+		Die d=new Die();
+		for(int i=0;i<d.getNbByPlayer();i++){
+			dice.add(new Die());//todo: le de doit retenir le joueur
 		}
 		cards = cardUcc.pickCard(3);
 	}

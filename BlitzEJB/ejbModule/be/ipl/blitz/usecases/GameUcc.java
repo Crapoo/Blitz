@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
 
 @Remote
@@ -15,7 +16,8 @@ public interface GameUcc {
 	boolean startGame();
 	boolean isOver();
 	void cancelGame();
-	int throwDice();
+	boolean throwDice();
+	Game getCurrentGame();
 	boolean deleteDie(int numero);
 	int myScore();
 	int score(String pseudo);
