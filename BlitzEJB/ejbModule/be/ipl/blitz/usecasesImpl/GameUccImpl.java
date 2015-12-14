@@ -112,25 +112,6 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public int myScore() {/*
-							 * if (game == null) return 0; game =
-							 * gameDao.findById(game.getId()); return
-							 * game.getPoints(game.getJoueurCourant());
-							 */
-		return 0;
-	}
-
-	@Override
-	public int score(
-			String pseudo) {/*
-							 * if (game == null) return 0; game =
-							 * gameDao.findById(game.getId()); return
-							 * game.getPoints(game.getJoueur(pseudo));
-							 */
-		return 0;
-	}
-
-	@Override
 	public boolean nextPlayer() {/*
 									 * if (game== null) return false; game =
 									 * gameDao.findById(game.getId()); return
