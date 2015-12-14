@@ -21,12 +21,12 @@ public class CardDaoImpl extends DaoImpl<Integer, Card> {
 	@Override
 	public Card findById(Integer id) {
 		Util.checkPositiveOrZero(id);
-		String queryString = "select c from Card c where c.id = ?1";
+		String queryString = "SELECT c FROM Card c WHERE c.id = ?1";
 		return search(queryString, id);
 	}
 	
 	public List<Card> getAll(){
-		return list("select * from Card c");
+		return list("SELECT * FROM Card c");
 	}
 
 }

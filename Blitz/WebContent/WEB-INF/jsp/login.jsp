@@ -14,7 +14,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Inscription</div>
 					<div class="panel-body">
-						<form class="form" id="signup-form" role="form" method="post" action="login.html">
+						<form class="form" id="signup-form" role="form" method="post" action="signup.html">
 							<!-- NICKNAME -->
 							<div class="form-group">
 								<label class="control-label" for="signup-nickname">Pseudo :</label> <input
@@ -51,7 +51,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">Connexion</div>
 							<div class="panel-body">
-								<form class="form" id="signin-form" role="form" method="post" action="login.html">
+								<form class="form" id="signin-form" role="form" method="post" action="signin.html">
 									<!-- NICKNAME -->
 									<div class="form-group">
 										<label class="control-label" for="signin-nickname">Pseudo :</label> <input
@@ -81,8 +81,8 @@
 
 				</div>
 
-				<link href="lib/css/login.css" rel="stylesheet">
+				<link href="lib/css/login.css" rel="stylesheet" type="text/css">
 
 					<!-- TODO May not need this -->
-					<script src="lib/js/signup.js"></script>
-					<script src="lib/js/signin.js"></script>
+					<!--<script src="lib/js/signup.js"></script>
+					<script src="lib/js/signin.js"></script>-->

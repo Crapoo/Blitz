@@ -21,12 +21,12 @@ public class GameDaoImpl extends DaoImpl<Integer, Game> {
 	@Override
 	public Game findById(Integer id) {
 		Util.checkPositiveOrZero(id);
-		String queryString = "select g from Game g where g.id = ?1";
+		String queryString = "SELECT g FROM Game g WHERE g.id = ?1";
 		return search(queryString, id);
 	}
 	
 	public List<Game> getAll(){
-		String queryString = "select * from Game g";
+		String queryString = "SELECT * FROM Game g";
 		return list(queryString);
 	}
 

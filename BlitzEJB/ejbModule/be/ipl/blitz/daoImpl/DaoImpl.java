@@ -49,7 +49,7 @@ public abstract class DaoImpl<K, E> implements Dao<K, E> {
 	}
 
 	public List<E> list() {
-		return list("select x from " + entityClass.getName() + " x");
+		return list("SELECT x FROM " + entityClass.getName() + " x");
 	}
 
 	protected List<E> list(String queryString, Object... params) {
