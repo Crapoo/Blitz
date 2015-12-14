@@ -17,7 +17,7 @@ import be.ipl.blitz.utils.Util;
 @WebServlet("/create-game.html")
 public class CreateGameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
 	private GameUcc gameUcc;
 
@@ -37,18 +37,18 @@ public class CreateGameServlet extends HttpServlet {
 		} catch (NullPointerException | IllegalArgumentException e) {
 			// TODO Do something
 		}
-		
+
 		final ServletContext context = getServletContext();
 
 		synchronized (context) {
-			/*if (gameUcc.createGame(gameName)) {
-				
+			State gameState = State.OVER;
+			if (gameUcc.createGame(gameName)) {
+				gameState = gameUcc.getState();
 			} else {
-				
-			}*/
-			//State gameState = gameUcc.getState();
-			//context.setAttribute("game-status", gameState);
-			context.setAttribute("game-status", State.IN_PROGRESS);
+				// TODO Fix states - Przemek
+			}
+
+			context.setAttribute("game-status", State.OVER);
 		}
 		getServletContext().getNamedDispatcher("index.html").forward(request, response);
 	}

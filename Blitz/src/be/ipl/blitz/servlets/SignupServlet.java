@@ -13,9 +13,6 @@ import javax.servlet.http.HttpSession;
 import be.ipl.blitz.usecases.UserUcc;
 import be.ipl.blitz.utils.Util;
 
-/**
- * Servlet implementation class SignupServlet
- */
 @WebServlet("/signup.html")
 public class SignupServlet extends HttpServlet {
 	private String errorMessage;
@@ -29,10 +26,8 @@ public class SignupServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String connectionButton = request.getParameter("connection");
 
-		// TODO How to store the session ?
 		// TODO: protect against evil sql/xss injections
 
-		// if (connectionButton != null) {
 		String nickname = request.getParameter("signup-nickname");
 		String password = request.getParameter("signup-password");
 		String passwordRepeat = request.getParameter("signup-repeat-password");
@@ -43,21 +38,19 @@ public class SignupServlet extends HttpServlet {
 			Util.checkString(passwordRepeat);
 			if (password.equals(passwordRepeat)) {
 				try {
-					if(!userUcc.saveUser(nickname, password)){
+					if (!userUcc.saveUser(nickname, password)) {
 						throw new Exception();
 					}
 					login(nickname, request, response);
 					return;
 				} catch (Exception e) {
-					errorMessage="Erreur lors de la cr&eacute;ation d'un compte";
+					errorMessage = "Erreur lors de la cr&eacute;ation d'un compte";
 				}
 			}
 		} catch (NullPointerException | IllegalArgumentException e) {
-			errorMessage="Erreur lors de la cr&eacute;ation d'un compte";
+			errorMessage = "Erreur lors de la cr&eacute;ation d'un compte";
 		}
 
-		// request.getRequestDispatcher("login.html").forward(request,
-		// response);
 		getServletContext().setAttribute("status", "signup-error");
 		getServletContext().setAttribute("error-message", errorMessage);
 		getServletContext().getNamedDispatcher("login.html").forward(request, response);

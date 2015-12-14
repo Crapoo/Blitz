@@ -26,10 +26,8 @@ public class SigninServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String connectionButton = request.getParameter("connection");
 
-		// TODO How to store the session ?
 		// TODO: protect against evil sql/xss injections
 
-		// if (connectionButton == null) {
 		String nickname = request.getParameter("signin-nickname");
 		String password = request.getParameter("signin-password");
 
@@ -41,16 +39,15 @@ public class SigninServlet extends HttpServlet {
 					login(nickname, request, response);
 					return;
 				} else {
-					errorMessage= "Mauvais Pseudo ou Mot-de-passe";
+					errorMessage = "Mauvais Pseudo ou Mot-de-passe";
 				}
 			} catch (Exception e) {
-				errorMessage= "Erreur de connection";
+				errorMessage = "Erreur de connection";
 			}
 		} catch (NullPointerException | IllegalArgumentException e) {
-			errorMessage= "Erreur de connection";
+			errorMessage = "Erreur de connection";
 		}
 
-		// }
 		getServletContext().setAttribute("status", "signin-error");
 		getServletContext().setAttribute("error-message", errorMessage);
 		request.getRequestDispatcher("login.html").forward(request, response);
