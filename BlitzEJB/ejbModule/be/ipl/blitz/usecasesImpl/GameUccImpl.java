@@ -11,7 +11,6 @@ import be.ipl.blitz.daoImpl.GameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.domaine.Die;
 import be.ipl.blitz.domaine.Game;
-import be.ipl.blitz.domaine.User;
 import be.ipl.blitz.usecases.GameUcc;
 
 @Stateless
@@ -39,7 +38,7 @@ public class GameUccImpl implements GameUcc{
 	
 	@Override
 	public boolean joinGame(String pseudo) {
-		if (game != null && game.getEtat() == Etat.EN_COURS)
+	/*	if (game != null && game.getEtat() == Etat.EN_COURS)
 			return false;
 		if (game == null || game.getEtat() == Etat.FINIE) {
 			game = new Game("partie" + num);
@@ -49,11 +48,9 @@ public class GameUccImpl implements GameUcc{
 		game = gameDao.findById(game.getId());
 
 		User joueur = userDao.search(pseudo);
-		if (joueur == null) {
-			joueur = new User(pseudo);
-			joueur = joueurDao.enregistrer(joueur);
-		}
-		return game.ajouterJoueur(joueur);
+		
+		return game.ajouterJoueur(joueur);*/
+		return false;
 	}
 
 	@Override
