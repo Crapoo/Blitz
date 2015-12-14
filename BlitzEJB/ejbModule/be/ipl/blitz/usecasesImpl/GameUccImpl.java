@@ -26,7 +26,6 @@ public class GameUccImpl implements GameUcc {
 	private UserDaoImpl userDao;
 
 	public GameUccImpl() {
-
 	}
 
 	@PostConstruct
