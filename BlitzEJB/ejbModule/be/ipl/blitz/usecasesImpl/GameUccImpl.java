@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
+import javax.ejb.Lock;
+import javax.ejb.LockType;
 import javax.ejb.Stateless;
 
 import be.ipl.blitz.daoImpl.GameDaoImpl;
@@ -34,95 +36,133 @@ public class GameUccImpl implements GameUcc{
 		System.out.println("GestionPartieImpl destroyed");
 	}
 	
-	
-	
 	@Override
-	public boolean joinGame(String pseudo) {
+	public boolean joinGame(String gameName,String pseudo) {
 	/*	if (game != null && game.getEtat() == Etat.EN_COURS)
 			return false;
 		if (game == null || game.getEtat() == Etat.FINIE) {
-			game = new Game("partie" + num);
-			game = gameDao.save(game);
+			return false;
 		}
-
-		game = gameDao.findById(game.getId());
-
-		User joueur = userDao.search(pseudo);
+		game=new Game(name);
+		User player = userDao.search(pseudo);
 		
-		return game.ajouterJoueur(joueur);*/
+		return game.ajouterJoueur(player);*/
 		return false;
 	}
 
 	@Override
-	public List<String> listPlayers() {
-		// TODO Auto-generated method stub
+	@Lock(LockType.READ)
+	public List<String> listPlayers() {/*
+		if (game == null)
+			return null;
+		List<User> users = game.getPlayers();
+		List<String> pseudos = new ArrayList<String>();
+		for (User u : users)
+			pseudos.add(u.getName());
+		return pseudos;*/
 		return null;
 	}
 
 	@Override
-	public boolean startGame() {
-		// TODO Auto-generated method stub
+	public boolean startGame() {/*
+		if (game == null || game.getEtat() != Etat.INITIAL)
+			return false;
+		game = gameDao.findById(game.getId());
+		return game.commencerPartie();*/
 		return false;
 	}
 
 	@Override
 	public String currentPlayer() {
-		// TODO Auto-generated method stub
+		/*if (game == null)
+			return null;
+		if (game.getJoueurCourant() == null)
+			return null;
+		return game.getJoueurCourant().getPseudo();*/ return null;
+	}
+
+	@Override
+	public List<Die> getPlayableDice() {/*
+		if (game == null)
+			return null;
+		game = gameDao.findById(game.getId());
+		List<Die> list = new ArrayList<Die>();
+		liste.addAll(game.getPlayableDice());
+		return list;*/
 		return null;
 	}
 
 	@Override
-	public List<Die> listPlayedDices() {
-		// TODO Auto-generated method stub
+	public int throwDice() {/*
+		if (game == null)
+			return 0;
+		game = gameDao.findById(game.getId());
+		return game.throwDice();*/
+		return 0;
+	}
+
+	@Override
+	public boolean deleteDie(int num) {/*
+		if (game == null)
+			return false;
+		game = partieDao.findById(game.getId());
+		boolean result = game.deleteDie(num);
+		return result;*/
+		return false;
+	}
+
+	@Override
+	public int myScore() {/*
+		if (game == null)
+			return 0;
+		game = gameDao.findById(game.getId());
+		return game.getPoints(game.getJoueurCourant());*/
+		return 0;
+	}
+
+	@Override
+	public int score(String pseudo) {/*
+		if (game == null)
+			return 0;
+		game = gameDao.findById(game.getId());
+		return game.getPoints(game.getJoueur(pseudo));*/
+		return 0;
+	}
+
+	@Override
+	public boolean nextPlayer() {/*
+		if (game== null)
+			return false;
+		game = gameDao.findById(game.getId());
+		return game.commencerTourSuivant();*/
+		return false;
+	}
+
+	@Override
+	public String winner() {/*
+	if (game == null)
+			return null;
+		game = gameDao.findById(game.getId());
+		User u = game.estVainqueur();
+		if (u == null)
+			return null;
+		return u.getName();*/
 		return null;
 	}
 
 	@Override
-	public int throwDices() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean deleteDice(int numero) {
-		// TODO Auto-generated method stub
+	public boolean isOver() {/*
+	if (game == null)
+			return true;
+		game = gameDao.findById(game.getId());
+		return game.getEtat() == Etat.FINIE;*/
 		return false;
 	}
 
 	@Override
-	public int myScore() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int score(String pseudo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean nextPlayer() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String winner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isOver() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void cancelGame() {
-		// TODO Auto-generated method stub
-		
+	public void cancelGame() {/*
+		if (game != null)
+			game.annuler();*/		
 	}
 	
 	

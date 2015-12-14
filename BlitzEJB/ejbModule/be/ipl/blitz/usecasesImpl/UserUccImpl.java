@@ -17,24 +17,30 @@ public class UserUccImpl implements UserUcc {
 	@EJB
 	private UserDaoImpl dao;
 
-	public User saveUser(String username, String pwd) throws Exception {
+	public boolean saveUser(String username, String pwd) throws Exception {
 		if (username == null || pwd == null) {
 			System.err.println("lol, nul");
 		}
-		
 		Util.checkString(username);
 		Util.checkString(pwd);
+		if (dao.findByName(username) == null) {
+			return false;
+		}
 		User u = new User(username, pwd);
 		dao.save(u);
-		return u;
+		return true;
 	}
 
 	@Override
-	public Boolean login(String username, String pwd) throws Exception {
+	public User login(String username, String pwd) throws Exception {
 		Util.checkString(username);
 		Util.checkString(pwd);
 		User u = dao.findByName(username);
 		byte[] encryptedAttemptedPassword = PasswordTools.hash(pwd, u.getSalt());
-		return Arrays.equals(u.getPwd(), encryptedAttemptedPassword);
+		if (Arrays.equals(u.getPwd(), encryptedAttemptedPassword)) {
+			return u;
+		} else {
+			return null;
+		}
 	}
 }
