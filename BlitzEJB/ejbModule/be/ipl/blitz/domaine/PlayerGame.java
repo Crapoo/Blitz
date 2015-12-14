@@ -28,6 +28,9 @@ public class PlayerGame implements Serializable {
 	@Transient
 	@EJB
 	private CardsUccImpl cardUcc;
+	
+	@Transient
+	private int nbDice=0;
 
 	@ManyToMany
 	@JoinTable(schema = "BLITZ")
@@ -42,7 +45,6 @@ public class PlayerGame implements Serializable {
 		dice = new ArrayList<Die>();
 		Die d=new Die();
 		for(int i=0;i<d.getNbByPlayer();i++){
-			dice.add(new Die());//todo: le de doit retenir le joueur
 		}
 		cards = cardUcc.pickCard(3);
 	}

@@ -51,9 +51,7 @@ public class Game implements Serializable {
 			boolean throwDice(Game game) {
 				PlayerGame p=game.players.get(game.currentUser);
 				List<Face> facesThrown=new ArrayList<>();
-				for(Die d:p.getDice()){
-					
-				}
+				
 				return true;
 			}
 			@Override
@@ -107,6 +105,7 @@ public class Game implements Serializable {
 	@Column
 	private User winner;
 
+	@Transient
 	private int currentUser;
 
 	@ManyToMany(mappedBy = "games")
@@ -115,6 +114,7 @@ public class Game implements Serializable {
 	@Transient
 	private List<PlayerGame> players;
 
+	@Transient
 	private State state;
 
 	// TODO : ajouter le sens du jeu (et le joueur courant?)
