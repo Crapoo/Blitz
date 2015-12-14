@@ -11,6 +11,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import be.ipl.blitz.usecasesImpl.CardsUccImpl;
 
@@ -23,6 +24,8 @@ public class PlayerGame implements Serializable {
 	private int player;
 	@Id
 	private int game;
+	
+	@Transient
 	@EJB
 	private CardsUccImpl cardUcc;
 
