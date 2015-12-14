@@ -43,7 +43,7 @@ public class CreateGameServlet extends HttpServlet {
 		synchronized (context) {
 			State gameState = State.OVER;
 			if (gameUcc.createGame(gameName)) {
-				gameState = gameUcc.getState();
+				//gameState = gameUcc.getState();
 			} else {
 				// TODO Fix states - Przemek
 			}
