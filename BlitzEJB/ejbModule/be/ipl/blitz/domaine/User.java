@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -35,10 +36,11 @@ public class User implements Serializable {
 	@Column
 	@NotNull
 	private byte[] salt;
-	
-	@ManyToMany(mappedBy="players")
-	public Set<Game> gamesPlayed;
 
+	@ManyToMany
+	@JoinTable(name="PLAYERS_GAMES", schema="BLITZ")
+	private Set<Game> games;
+	
 	public User() {
 	}
 
@@ -48,7 +50,7 @@ public class User implements Serializable {
 		Util.checkString(pwd);
 		this.name = name;
 		salt = PasswordTools.generateSalt();
-		this.pwd= PasswordTools.hash(pwd,salt);
+		this.pwd = PasswordTools.hash(pwd, salt);
 	}
 
 	public int getId() {
@@ -84,6 +86,10 @@ public class User implements Serializable {
 
 	public void setSalt(byte[] salt) {
 		this.salt = salt;
+	}
+
+	public void setPwd(byte[] pwd) {
+		this.pwd = pwd;
 	}
 
 	@Override

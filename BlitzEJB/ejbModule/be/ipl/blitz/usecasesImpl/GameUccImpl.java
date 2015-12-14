@@ -39,21 +39,19 @@ public class GameUccImpl implements GameUcc{
 	
 	@Override
 	public boolean joinGame(String pseudo) {
-		if (game != null && game.getEtat() == Etat.EN_COURS)
-			return false;
-		if (game == null || game.getEtat() == Etat.FINIE) {
-			game = new Game("partie" + num);
-			game = gameDao.save(game);
-		}
-
-		game = gameDao.findById(game.getId());
-
-		User joueur = userDao.search(pseudo);
-		if (joueur == null) {
-			joueur = new User(pseudo);
-			joueur = joueurDao.enregistrer(joueur);
-		}
-		return game.ajouterJoueur(joueur);
+		// if (game != null && game.getEtat() == Etat.EN_COURS)
+		// return false;
+		// if (game == null || game.getEtat() == Etat.FINIE) {
+		// game = new Game("partie" + num);
+		// game = gameDao.save(game);
+		// }
+		//
+		// game = gameDao.findById(game.getId());
+		//
+		// User joueur = userDao.search(pseudo);
+		//
+		// return game.ajouterJoueur(joueur);
+		return true;
 	}
 
 	@Override

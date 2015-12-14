@@ -1,9 +1,13 @@
 package be.ipl.blitz.domaine;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -30,16 +35,16 @@ public class Game implements Serializable {
 	private Date startDate;
 	@Column
 	private User winner;
+	@Column
+	private User currentUser;
 
-	@ManyToMany
-	@JoinTable(name = "PLAYERS_GAME", schema = "BLITZ", joinColumns = {
-			@JoinColumn(name = "game_id") }, inverseJoinColumns = { @JoinColumn(name = "player_id") })
-
-	private List<User> players;
+	@ManyToMany(mappedBy = "games")
+	private Set<User> users;
 
 	// TODO : ajouter le sens du jeu (et le joueur courant?)
 
 	public Game() {
+		this.startDate = new Date();
 	}
 
 	public Game(User winner, List<User> players) {
@@ -48,7 +53,7 @@ public class Game implements Serializable {
 		Util.checkObject(players);
 		this.startDate = new Date();
 		this.winner = winner;
-		this.players = players;
+		this.currentUser = currentUser;
 	}
 
 	public int getId() {
@@ -76,6 +81,14 @@ public class Game implements Serializable {
 	public void setWinner(User winner) {
 		Util.checkObject(winner);
 		this.winner = winner;
+	}
+
+	public User getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
 	}
 
 	@Override
