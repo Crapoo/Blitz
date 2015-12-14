@@ -36,12 +36,17 @@ public class PlayerGame implements Serializable {
 	@JoinTable(schema = "BLITZ")
 	private List<Card> cards;
 
-	public PlayerGame() {
+	public PlayerGame(User u, Game g) {
+		this.game=g.getId();
+		this.player=u.getId();
 		dice = new ArrayList<Die>();
 		for(int i=0;i<4;i++){
 			dice.add(new Die());
 		}
-		cards = new ArrayList<Card>();
+		cards = cardUcc.pickCard(3);
+	}
+	public PlayerGame(){
+		
 	}
 
 	public int getPlayer() {
