@@ -41,14 +41,20 @@ public class CreateGameServlet extends HttpServlet {
 		final ServletContext context = getServletContext();
 
 		synchronized (context) {
-			State gameState = State.OVER;
+			State gameState = null;
 			if (gameUcc.createGame(gameName)) {
-				//gameState = gameUcc.getState();
+				gameState = gameUcc.getState();
+				if (gameState == null) {
+					gameState = State.OVER;
+				}
 			} else {
-				// TODO Fix states - Przemek
+				// Shouldn't happen but hey..
+				request.setAttribute("error-message", "Cookies. Il te faut des cookies. Ok ?");
+				request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
+				return;
 			}
 
-			context.setAttribute("game-status", State.OVER);
+			context.setAttribute("game-status", gameState);
 		}
 		getServletContext().getNamedDispatcher("index.html").forward(request, response);
 	}
