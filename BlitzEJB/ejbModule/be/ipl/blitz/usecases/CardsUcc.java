@@ -8,6 +8,8 @@ import be.ipl.blitz.domaine.Card;
 
 @Remote
 public interface CardsUcc {
+	
+	public void shuffleDeck();
 
 	public List<Card> pickCard(int nb);
 

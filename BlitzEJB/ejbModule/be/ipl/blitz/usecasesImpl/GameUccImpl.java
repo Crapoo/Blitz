@@ -16,6 +16,7 @@ import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.domaine.User;
+import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
 
 @Singleton
@@ -26,6 +27,9 @@ public class GameUccImpl implements GameUcc {
 	private GameDaoImpl gameDao;
 	@EJB
 	private UserDaoImpl userDao;
+	
+	@EJB
+	private CardsUcc cardsUcc;
 
 	public GameUccImpl() {
 	}
@@ -48,7 +52,7 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		User player = userDao.search(pseudo);
-		if(game.addPlayer(player)){
+		if (game.addPlayer(player)) {
 			gameDao.update(game);
 			return true;
 		}
@@ -75,7 +79,7 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		game = gameDao.findById(game.getId());
-		if(game.startGame()){
+		if (game.startGame()) {
 			gameDao.update(game);
 			return true;
 		}
@@ -98,7 +102,8 @@ public class GameUccImpl implements GameUcc {
 		if (game == null)
 			return false;
 		game = gameDao.findById(game.getId());
-		return game.throwDice();//TODO javier update(game) even if modified is playerGame?
+		return game.throwDice();// TODO javier update(game) even if modified is
+								// playerGame?
 	}
 
 	@Override
@@ -152,6 +157,8 @@ public class GameUccImpl implements GameUcc {
 		}
 		this.game = new Game(gameName);
 		game = gameDao.save(game);
+		
+		cardsUcc.shuffleDeck();
 		return true;
 	}
 
