@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+  pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!-- FIXME Fix the ugly colours -->
+<c:choose>
+  <c:when test='${game == "in-progress"}'>
+  	<h4 class="bg-danger">Partie en cours, veuillez r&eacute;essyer ult&eacute;rieurement</h4>
+  </c:when>
+  <c:when test='${game == "initial"}'>
+  	<h4 class="bg-primary">Partie en attente, appuyez sur le bouton pour rejoindre<button type="button" class="btn btn-default">Rejoindre</button></h4>
+  </c:when>
+  <c:otherwise>
+  	<h4 class="bg-success">Aucune partie en cours, cr&eacute;ez en une</h4>
+  </c:otherwise>
+</c:choose>
