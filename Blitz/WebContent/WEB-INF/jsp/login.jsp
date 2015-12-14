@@ -51,7 +51,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">Connexion</div>
 							<div class="panel-body">
-								<form class="form" id="signin-form" role="form" method="post" action="logins.html">
+								<form class="form" id="signin-form" role="form" method="post" action="signin.html">
 									<!-- NICKNAME -->
 									<div class="form-group">
 										<label class="control-label" for="signin-nickname">Pseudo :</label> <input
