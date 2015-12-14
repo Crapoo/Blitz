@@ -47,8 +47,8 @@ public class User implements Serializable {
 		Util.checkString(name);
 		Util.checkString(pwd);
 		this.name = name;
-		this.pwd = pwd.getBytes();
 		salt = PasswordTools.generateSalt();
+		this.pwd= PasswordTools.hash(pwd,salt);
 	}
 
 	public int getId() {

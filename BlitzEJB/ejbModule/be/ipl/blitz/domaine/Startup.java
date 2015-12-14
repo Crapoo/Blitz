@@ -15,6 +15,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import be.ipl.blitz.daoImpl.CardDaoImpl;
 import be.ipl.blitz.daoImpl.DiceDaoImpl;
+import be.ipl.blitz.daoImpl.UserDaoImpl;
 
 @javax.ejb.Startup
 @Singleton
@@ -24,6 +25,8 @@ public class Startup {
 	private DiceDaoImpl diceDao;
 	@EJB
 	private CardDaoImpl cardDao;
+	@EJB
+	private UserDaoImpl userDao;
 
 	public Startup() {
 	}
@@ -40,12 +43,23 @@ public class Startup {
 			diceDao.save(de);
 		}
 
+		try {
+			userDao.save(new User("em", "em"));
+			userDao.save(new User("mi", "mi"));
+			userDao.save(new User("ol", "ol"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		// enregistrement des Cards
 		for (Card card : blitz.getCards().getCard()) {
 			int nbCardsType = card.getNb();
 			Card[] cards = new Card[nbCardsType];
 			for (int i = 0; i < nbCardsType; i++) {
-				/* FIXME dans l'exemple on peut directement cloner sans le try catch, tout ça :/ */
+				/*
+				 * FIXME dans l'exemple on peut directement cloner sans le try
+				 * catch, tout ça :/
+				 */
 				try {
 					cards[i] = (Card) card.clone();
 				} catch (CloneNotSupportedException e) {
@@ -54,8 +68,6 @@ public class Startup {
 				cardDao.save(cards[i]);
 			}
 		}
-		
-		System.err.println("Done");
 	}
 
 	@SuppressWarnings("unchecked")

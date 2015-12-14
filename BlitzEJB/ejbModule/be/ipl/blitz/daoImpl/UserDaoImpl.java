@@ -24,6 +24,7 @@ public class UserDaoImpl extends DaoImpl<Integer, User>{
 	}
 	
 	public User findByName(String s){
+		//TODO:javier injectionsql
 		Util.checkString(s);
 		String queryString = "select u from User u where u.name = ?1";
 		return search(queryString, s);

@@ -21,8 +21,9 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String connectionButton = req.getParameter("connection");
-		
+
 		// TODO How to store the session ?
+		// TODO: protect against evil sql/xss injections
 
 		if (connectionButton == null) {
 
@@ -45,7 +46,8 @@ public class LoginServlet extends HttpServlet {
 						return;
 					} catch (Exception e) {
 						getServletContext().setAttribute("status", "signup-error");
-						getServletContext().setAttribute("error-message", "Erreur lors de la cr&eacute;ation d'un compte");
+						getServletContext().setAttribute("error-message",
+								"Erreur lors de la cr&eacute;ation d'un compte");
 					}
 				}
 			} catch (NullPointerException | IllegalArgumentException e) {
@@ -60,15 +62,17 @@ public class LoginServlet extends HttpServlet {
 			try {
 				Util.checkObject(nickname);
 				Util.checkObject(password);
-				Util.checkString(nickname);
-				Util.checkString(password);
 				try {
-					userUcc.login(nickname, password);
-					login(nickname, req, resp);
+					if (userUcc.login(nickname, password)) {
+						login(nickname, req, resp);
+					}else{
+						getServletContext().setAttribute("status", "signin-error");
+						getServletContext().setAttribute("error-message", "Mauvais Pseudo ou Mot-de-passe");
+					}
 					return;
 				} catch (Exception e) {
 					getServletContext().setAttribute("status", "signin-error");
-					getServletContext().setAttribute("error-message", "Mauvais Pseudo ou Mot-de-passe");
+					getServletContext().setAttribute("error-message", "erreur de connection");
 				}
 			} catch (NullPointerException | IllegalArgumentException e) {
 				getServletContext().setAttribute("status", "signin-error");
