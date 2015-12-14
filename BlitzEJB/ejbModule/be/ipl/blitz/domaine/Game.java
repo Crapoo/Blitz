@@ -42,12 +42,11 @@ public class Game implements Serializable {
 	public Game() {
 	}
 
-	public Game(Date startDate, User winner, List<User> players) {
-		super();
+	public Game(User winner, List<User> players) {
 		Util.checkObject(startDate);
 		Util.checkObject(winner);
 		Util.checkObject(players);
-		this.startDate = startDate;
+		this.startDate = new Date();
 		this.winner = winner;
 		this.players = players;
 	}

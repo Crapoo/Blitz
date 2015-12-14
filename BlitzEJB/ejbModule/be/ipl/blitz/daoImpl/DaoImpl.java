@@ -73,7 +73,7 @@ public abstract class DaoImpl<K, E> implements Dao<K, E> {
 		return entities;
 	}
 
-	protected E search(String queryString, Object... params) {
+	public E search(String queryString, Object... params) {
 		try {
 			TypedQuery<E> query = entityManager.createQuery(queryString, entityClass);
 			int i = 0, j = 1;
