@@ -2,7 +2,7 @@
 // Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.2.8-b130911.1802 
 // Voir <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
-// Généré le : 2015.12.13 à 05:06:53 PM CET 
+// Généré le : 2015.12.14 à 11:46:14 AM CET 
 //
 
 
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;attribute name="figure" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="identif" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="src" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="nbFaces" use="required" type="{}diceType" />
+ *       &lt;attribute name="nbFaces" use="required" type="{}dieType" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>

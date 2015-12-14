@@ -2,13 +2,12 @@
 // Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.2.8-b130911.1802 
 // Voir <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
-// Généré le : 2015.12.13 à 05:47:03 PM CET 
+// Généré le : 2015.12.14 à 11:46:14 AM CET 
 //
 
 package be.ipl.blitz.domaine;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -54,10 +52,10 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;/complexType>
  *         &lt;/element>
  *       &lt;/sequence>
- *       &lt;attribute name="nb" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
  *       &lt;attribute name="cost" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
+ *       &lt;attribute name="nb" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
  *       &lt;attribute name="effect" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="effectCode" use="required" type="{http://www.w3.org/2001/XMLSchema}integer" />
+ *       &lt;attribute name="effectCode" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
  *       &lt;attribute name="src" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -82,29 +80,27 @@ public class Card implements Serializable {
 	@XmlMixed
 	@Transient
 	protected List<Serializable> content;
-	@XmlAttribute(name = "nb", required = true)
-	@Transient
-	protected int nb;
 	@XmlAttribute(name = "cost", required = true)
 	@Column
 	@NotNull
 	protected int cost;
+	@XmlAttribute(name = "nb", required = true)
+	@Transient
+	protected int nb;
 	@XmlAttribute(name = "effect", required = true)
 	@Column
 	@NotNull
 	protected String effect;
 	@XmlAttribute(name = "effectCode", required = true)
+	protected int effectCode;
 	@Column
 	@NotNull
-	protected BigInteger effectCode;
 	@XmlAttribute(name = "src")
-	@Column
 	protected String src;
 
 	public Card() {
 	}
 
-	/* FIXME : pas certain de ce clone là.. - Matt */
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		Card clone = new Card();
@@ -147,22 +143,6 @@ public class Card implements Serializable {
 	}
 
 	/**
-	 * Obtient la valeur de la propriété nb.
-	 * 
-	 */
-	public int getNb() {
-		return nb;
-	}
-
-	/**
-	 * Définit la valeur de la propriété nb.
-	 * 
-	 */
-	public void setNb(int value) {
-		this.nb = value;
-	}
-
-	/**
 	 * Obtient la valeur de la propriété cost.
 	 * 
 	 */
@@ -176,6 +156,22 @@ public class Card implements Serializable {
 	 */
 	public void setCost(int value) {
 		this.cost = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété nb.
+	 * 
+	 */
+	public int getNb() {
+		return nb;
+	}
+
+	/**
+	 * Définit la valeur de la propriété nb.
+	 * 
+	 */
+	public void setNb(int value) {
+		this.nb = value;
 	}
 
 	/**
@@ -202,21 +198,16 @@ public class Card implements Serializable {
 	/**
 	 * Obtient la valeur de la propriété effectCode.
 	 * 
-	 * @return possible object is {@link BigInteger }
-	 * 
 	 */
-	public BigInteger getEffectCode() {
+	public int getEffectCode() {
 		return effectCode;
 	}
 
 	/**
 	 * Définit la valeur de la propriété effectCode.
 	 * 
-	 * @param value
-	 *            allowed object is {@link BigInteger }
-	 * 
 	 */
-	public void setEffectCode(BigInteger value) {
+	public void setEffectCode(int value) {
 		this.effectCode = value;
 	}
 
@@ -320,4 +311,5 @@ public class Card implements Serializable {
 			return false;
 		return true;
 	}
+
 }

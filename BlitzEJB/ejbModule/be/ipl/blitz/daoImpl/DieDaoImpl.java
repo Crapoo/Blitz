@@ -3,19 +3,19 @@ package be.ipl.blitz.daoImpl;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import be.ipl.blitz.domaine.Dice;
+import be.ipl.blitz.domaine.Die;
 
 @SuppressWarnings("serial")
 @Stateless
 @LocalBean
-public class DiceDaoImpl extends DaoImpl<Integer, Dice> {
+public class DieDaoImpl extends DaoImpl<Integer, Die> {
 
-	public DiceDaoImpl() {
-		super(Dice.class);
+	public DieDaoImpl() {
+		super(Die.class);
 	}
 
 	@Override
-	public Dice findById(Integer id) {
+	public Die findById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

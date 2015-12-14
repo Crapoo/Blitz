@@ -2,7 +2,7 @@
 // Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.2.8-b130911.1802 
 // Voir <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
-// Généré le : 2015.12.13 à 05:06:53 PM CET 
+// Généré le : 2015.12.14 à 11:46:14 AM CET 
 //
 
 
@@ -49,19 +49,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Blitz }
+     * Create an instance of {@link Die }
      * 
      */
-    public Blitz createBlitz() {
-        return new Blitz();
-    }
-
-    /**
-     * Create an instance of {@link Dice }
-     * 
-     */
-    public Dice createDice() {
-        return new Dice();
+    public Die createDie() {
+        return new Die();
     }
 
     /**
@@ -73,11 +65,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Cards }
+     * Create an instance of {@link Blitz }
      * 
      */
-    public Cards createCards() {
-        return new Cards();
+    public Blitz createBlitz() {
+        return new Blitz();
     }
 
     /**

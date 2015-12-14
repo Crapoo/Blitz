@@ -4,33 +4,28 @@
 	<xs:element name="blitz">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="dice" />
-				<xs:element ref="cards" />
+				<xs:element ref="die" />
+				<xs:element ref="card" minOccurs="1" maxOccurs="24"/>
 			</xs:sequence>
 			<xs:attribute name="goal" type="xs:string" />
+			<xs:attribute name="nbCardsByPlayer" type="xs:int"
+				use="required" />
+			<xs:attribute name="nbTotalCards" type="xs:int" use="required" />
+			<xs:attribute name="minPlayers" type="xs:int" use="required" />
+			<xs:attribute name="maxPlayers" type="xs:int" use="required" />
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="dice">
+	<xs:element name="die">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="face" maxOccurs="6" />
 			</xs:sequence>
 			<xs:attribute name="nbByPlayer" type="xs:int" use="required" />
-			<xs:attribute name="totalNbDices" type="xs:int" use="required" />
+			<xs:attribute name="nbTotalDice" type="xs:int" use="required" />
 
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="cards">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="card" maxOccurs="unbounded" />
-			</xs:sequence>
-			<xs:attribute name="nbCardsByPlayer" type="xs:int" use="required" />
-			<xs:attribute name="totalNbCards" type="xs:int" use="required" />
-			<xs:attribute name="minPlayers" type="xs:int" use="required" />
-			<xs:attribute name="maxPlayers" type="xs:int" use="required" />
-		</xs:complexType>
-	</xs:element>
+
 	<xs:element name="card">
 		<xs:complexType mixed="true">
 			<xs:sequence>
@@ -40,10 +35,10 @@
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="nb" type="xs:int" use="required" />
 			<xs:attribute name="cost" type="xs:int" use="required" />
+			<xs:attribute name="nb" type="xs:int" use="required" />
 			<xs:attribute name="effect" type="xs:string" use="required" />
-			<xs:attribute name="effectCode" type="xs:integer" use="required" />
+			<xs:attribute name="effectCode" type="xs:int" use="required" />
 			<xs:attribute name="src" type="xs:string" />
 		</xs:complexType>
 	</xs:element>
@@ -52,10 +47,10 @@
 			<xs:attribute name="figure" type="xs:string" use="required" />
 			<xs:attribute name="identif" type="xs:string" use="required" />
 			<xs:attribute name="src" type="xs:string" />
-			<xs:attribute name="nbFaces" use="required" type="diceType" />
+			<xs:attribute name="nbFaces" use="required" type="dieType" />
 		</xs:complexType>
 	</xs:element>
-	<xs:simpleType name="diceType">
+	<xs:simpleType name="dieType">
 		<xs:restriction base="xs:integer">
 			<xs:minInclusive value="1" />
 			<xs:maxInclusive value="6" />

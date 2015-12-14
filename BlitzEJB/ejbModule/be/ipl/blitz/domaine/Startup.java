@@ -14,7 +14,7 @@ import javax.xml.bind.JAXBIntrospector;
 import javax.xml.transform.stream.StreamSource;
 
 import be.ipl.blitz.daoImpl.CardDaoImpl;
-import be.ipl.blitz.daoImpl.DiceDaoImpl;
+import be.ipl.blitz.daoImpl.DieDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
 
 @javax.ejb.Startup
@@ -22,7 +22,7 @@ import be.ipl.blitz.daoImpl.UserDaoImpl;
 public class Startup {
 
 	@EJB
-	private DiceDaoImpl diceDao;
+	private DieDaoImpl dieDao;
 	@EJB
 	private CardDaoImpl cardDao;
 	@EJB
@@ -38,9 +38,9 @@ public class Startup {
 		Blitz blitz = fromStream(Blitz.class, is);
 
 		// enregistrement des dés
-		for (int i = 0; i < blitz.getDice().getTotalNbDices(); i++) {
-			Dice de = new Dice();
-			diceDao.save(de);
+		for (int i = 0; i < blitz.getDie().getNbTotalDice(); i++) {
+			Die de = new Die();
+			dieDao.save(de);
 		}
 
 		try {
@@ -52,7 +52,7 @@ public class Startup {
 		}
 
 		// enregistrement des Cards
-		for (Card card : blitz.getCards().getCard()) {
+		for (Card card : blitz.getCard()) {
 			int nbCardsType = card.getNb();
 			Card[] cards = new Card[nbCardsType];
 			for (int i = 0; i < nbCardsType; i++) {

@@ -2,7 +2,7 @@
 // Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.2.8-b130911.1802 
 // Voir <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
-// Généré le : 2015.12.13 à 05:06:53 PM CET 
+// Généré le : 2015.12.14 à 11:46:14 AM CET 
 //
 
 package be.ipl.blitz.domaine;
@@ -11,15 +11,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -44,7 +41,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{}face" maxOccurs="6"/>
  *       &lt;/sequence>
  *       &lt;attribute name="nbByPlayer" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
- *       &lt;attribute name="totalNbDices" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
+ *       &lt;attribute name="nbTotalDice" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -54,10 +51,10 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "face" })
-@XmlRootElement(name = "dice")
+@XmlRootElement(name = "die")
 @Entity
-@Table(name = "DICES", schema = "BLITZ")
-public class Dice implements Serializable {
+@Table(name = "DICE", schema = "BLITZ")
+public class Die implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,11 +67,11 @@ public class Dice implements Serializable {
 	@XmlAttribute(name = "nbByPlayer", required = true)
 	@Transient
 	protected int nbByPlayer;
-	@XmlAttribute(name = "totalNbDices", required = true)
+	@XmlAttribute(name = "nbTotalDice", required = true)
 	@Transient
-	protected int totalNbDices;
+	protected int nbTotalDice;
 
-	public Dice() {
+	public Die() {
 	}
 
 	/**
@@ -123,19 +120,19 @@ public class Dice implements Serializable {
 	}
 
 	/**
-	 * Obtient la valeur de la propriété totalNbDices.
+	 * Obtient la valeur de la propriété nbTotalDice.
 	 * 
 	 */
-	public int getTotalNbDices() {
-		return totalNbDices;
+	public int getNbTotalDice() {
+		return nbTotalDice;
 	}
 
 	/**
-	 * Définit la valeur de la propriété totalNbDices.
+	 * Définit la valeur de la propriété nbTotalDice.
 	 * 
 	 */
-	public void setTotalNbDices(int value) {
-		this.totalNbDices = value;
+	public void setNbTotalDice(int value) {
+		this.nbTotalDice = value;
 	}
 
 	public int getId() {
@@ -162,9 +159,10 @@ public class Dice implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Dice other = (Dice) obj;
+		Die other = (Die) obj;
 		if (id != other.id)
 			return false;
 		return true;
 	}
+
 }
