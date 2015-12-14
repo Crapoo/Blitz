@@ -10,6 +10,8 @@ import be.ipl.blitz.domaine.Die;
 public interface GameUcc {
 
 	boolean joinGame(String gameName, String pseudo);
+	
+	boolean createGame(String gameName);
 
 	boolean startGame();
 
