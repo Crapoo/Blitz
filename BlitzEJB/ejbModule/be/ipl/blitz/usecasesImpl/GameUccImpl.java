@@ -12,7 +12,6 @@ import javax.ejb.Stateless;
 
 import be.ipl.blitz.daoImpl.GameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
-import be.ipl.blitz.domaine.Die;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.domaine.User;
@@ -41,8 +40,9 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	public boolean joinGame(String gameName, String pseudo) {
-		if (game != null && game.getState() == State.IN_PROGRESS)
+		if (game != null && game.getState() == State.IN_PROGRESS) {
 			return false;
+		}
 		if (game == null || game.getState() == State.OVER) {
 			return false;
 		}
@@ -55,53 +55,43 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	@Lock(LockType.READ)
 	public List<String> listPlayers() {
-		if (game == null)
+		if (game == null) {
 			return null;
+		}
 		List<User> users = game.getPlayers();
 		List<String> pseudos = new ArrayList<String>();
-		for (User u : users)
+		for (User u : users) {
 			pseudos.add(u.getName());
+		}
 		return pseudos;
 	}
 
 	@Override
 	public boolean startGame() {
-		if (game == null || game.getState() != State.INITIAL)
+		if (game == null || game.getState() != State.INITIAL) {
 			return false;
+		}
 		game = gameDao.findById(game.getId());
 		return game.startGame();
 	}
 
-	
-	public String currentPlayer() {
+	public String getCurrentPlayer() {
 		if (game == null) {
 			return null;
 		}
-		User u =game.getCurrentUser();
-		if(u==null){
+		User u = game.getCurrentUser();
+		if (u == null) {
 			return null;
 		}
-		return game.getCurrentUser().toString();
+		return u.toString();
 	}
 
 	@Override
-	public List<Die> getPlayableDice() {/*
-										 * if (game == null) return null; game =
-										 * gameDao.findById(game.getId());
-										 * List<Die> list = new
-										 * ArrayList<Die>();
-										 * liste.addAll(game.getPlayableDice());
-										 * return list;
-										 */
-		return null;
-	}
-
-	@Override
-	public int throwDice() {/*
-							 * if (game == null) return 0; game =
-							 * gameDao.findById(game.getId()); return
-							 * game.throwDice();
-							 */
+	public int throwDice() {
+		if (game == null)
+			return 0;
+		game = gameDao.findById(game.getId());
+	//	return game.throwDice();
 		return 0;
 	}
 

@@ -19,62 +19,74 @@ import be.ipl.blitz.utils.Util;
 @Entity
 @Table(name = "GAMES", schema = "BLITZ")
 public class Game implements Serializable {
-	
+
 	public enum State {
 		INITIAL {
+			@Override
 			boolean addPlayer(User user, Game game) {
-				if (game.getPlayer(user) != null) 
+				if (game.getPlayer(user) != null)
 					return false;
 				game.users.add(user);
 				return true;
 			}
+			@Override
 			boolean startGame(Game game) {
 				game.state = State.IN_PROGRESS;
-				Random r=new Random();
-				game.currentUser= r.nextInt(game.players.size()) ;
+				Random r = new Random();
+				game.currentUser = r.nextInt(game.players.size());
 				return true;
 			}
-		}, 
+		},
 		IN_PROGRESS {
+			@Override
 			boolean startNextTurn(Game game) {
 				return true;
 			}
+			@Override
 			int throwDice(Game game) {
 				return 0;
 			}
+			@Override
 			boolean ecarterDe(int num, Game game) {
 				return false;
 			}
-		}, 
+		},
+
 		OVER {
-			User isWinner(Game game) {
+			@Override
+			User getWinner(Game game) {
 				return null;
-			}			
+			}
 		};
-		boolean addPlayer(User u, Game g){
+		boolean addPlayer(User u, Game g) {
 			return false;
 		}
+
 		boolean startGame(Game game) {
 			return false;
 		}
-		boolean commencerTourSuivant(Game game) {
+
+		boolean startNextTurn(Game game) {
 			return false;
 		}
-		int lancerLesDes(Game game) {
+
+		int throwDice(Game game) {
 			return -1;
 		}
+
 		boolean ecarterDe(int numero, Game game) {
 			return false;
 		}
-		User estVainqueur(Game game) {
+
+		User getWinner(Game game) {
 			return null;
 		}
 	}
-	
+
 	@Column
 	@NotNull
 	private String name;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -84,14 +96,14 @@ public class Game implements Serializable {
 	private Date startDate;
 	@Column
 	private User winner;
-	
+
 	private int currentUser;
 
 	@ManyToMany(mappedBy = "games")
 	private List<User> users;
-	
+
 	private List<PlayerGame> players;
-	
+
 	private State state;
 
 	// TODO : ajouter le sens du jeu (et le joueur courant?)
@@ -99,23 +111,23 @@ public class Game implements Serializable {
 	public Game() {
 		this("No name given");
 	}
-	
-	public Game(String name){
+
+	public Game(String name) {
 		Util.checkString(name);
-		this.name=name;
+		this.name = name;
 		this.startDate = new Date();
-		this.state=State.INITIAL;
+		this.state = State.INITIAL;
 	}
 
-	public User getPlayer(User u){
+	public User getPlayer(User u) {
 		return users.get(users.indexOf(u));
 	}
-	
-	public List<User> getPlayers(){
+
+	public List<User> getPlayers() {
 		return this.users;
 	}
-	
-  	public int getId() {
+
+	public int getId() {
 		return id;
 	}
 
@@ -142,15 +154,15 @@ public class Game implements Serializable {
 		this.winner = winner;
 	}
 
-	public void setState(State s){
-		this.state=s;
+	public void setState(State s) {
+		this.state = s;
 	}
-	
-	public State getState(){
+
+	public State getState() {
 		return this.state;
 	}
-	
- 	public User getCurrentUser() {
+
+	public User getCurrentUser() {
 		return users.get(currentUser);
 	}
 
@@ -158,17 +170,16 @@ public class Game implements Serializable {
 		this.currentUser = currentUser;
 	}
 
-	
 	public boolean addPlayer(User user) {
 		return state.addPlayer(user, this);
 	}
-	
-	public boolean startGame(){
+
+	public boolean startGame() {
 		return state.startGame(this);
 	}
-	
+
 	@Override
- 	public int hashCode() {
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
