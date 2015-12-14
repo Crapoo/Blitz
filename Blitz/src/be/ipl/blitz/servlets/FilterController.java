@@ -23,19 +23,23 @@ public class FilterController implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		/*if (!(request instanceof HttpServletRequest)) {
-			request.setAttribute("error-message",
-					"Veuillez ne pas essayer de pirater le serveur et de passer par de l'HTTP.");
-			request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
-			return;
-		}*/
+		/*
+		 * if (!(request instanceof HttpServletRequest)) {
+		 * request.setAttribute("error-message",
+		 * "Veuillez ne pas essayer de pirater le serveur et de passer par de l'HTTP."
+		 * );
+		 * request.getServletContext().getNamedDispatcher("error.html").forward(
+		 * request, response); return; }
+		 */
 
 		HttpServletRequest req = (HttpServletRequest) request;
-		/*if (!req.isRequestedSessionIdFromCookie()) {
-			request.setAttribute("error-message", "Cookies. Il te faut des cookies. Ok ?");
-			request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
-			return;
-		}*/
+		/*
+		 * if (!req.isRequestedSessionIdFromCookie()) {
+		 * request.setAttribute("error-message",
+		 * "Cookies. Il te faut des cookies. Ok ?");
+		 * request.getServletContext().getNamedDispatcher("error.html").forward(
+		 * request, response); return; }
+		 */
 
 		String name = req.getServletPath();
 		String[] pages = { "/index.html", "/login.html", "/signin.html", "/signup.html" };
@@ -46,14 +50,14 @@ public class FilterController implements Filter {
 			request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
 			return;
 		}
-		
+
 		// If not logged, send to login.html
 		/*HttpSession session = req.getSession();
-		if (session.getAttribute("connected") == null || (boolean) session.getAttribute("connected") == false) {
+		if (session.getAttribute("connected") == null) {
 			request.getServletContext().getNamedDispatcher("login.html").forward(request, response);
 			return;
 		}*/
-		
+
 		chain.doFilter(request, response);
 	}
 

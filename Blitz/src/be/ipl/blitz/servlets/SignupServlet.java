@@ -55,7 +55,8 @@ public class SignupServlet extends HttpServlet {
 			getServletContext().setAttribute("error-message", "Veuillez remplir les champs correctement");
 		}
 
-		//request.getRequestDispatcher("login.html").forward(request, response);
+		// request.getRequestDispatcher("login.html").forward(request,
+		// response);
 		getServletContext().getNamedDispatcher("login.html").forward(request, response);
 	}
 
