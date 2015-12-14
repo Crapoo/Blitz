@@ -54,10 +54,7 @@ public class Game implements Serializable {
 		boolean addPlayer(User u, Game g){
 			return false;
 		}
-		boolean ajouterJoueur(User u,Game game) {
-			return false;
-		}
-		boolean commencerPartie(Game game) {
+		boolean startGame(Game game) {
 			return false;
 		}
 		boolean commencerTourSuivant(Game game) {
@@ -114,9 +111,11 @@ public class Game implements Serializable {
 		return users.get(users.indexOf(u));
 	}
 	
+	public List<User> getPlayers(){
+		return this.users;
+	}
 	
-	
- 	public int getId() {
+  	public int getId() {
 		return id;
 	}
 
@@ -151,8 +150,8 @@ public class Game implements Serializable {
 		return this.state;
 	}
 	
- 	public int getCurrentUser() {
-		return currentUser;
+ 	public User getCurrentUser() {
+		return users.get(currentUser);
 	}
 
 	public void setCurrentUser(int currentUser) {
@@ -164,9 +163,12 @@ public class Game implements Serializable {
 		return state.addPlayer(user, this);
 	}
 	
+	public boolean startGame(){
+		return state.startGame(this);
+	}
 	
 	@Override
-	public int hashCode() {
+ 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
