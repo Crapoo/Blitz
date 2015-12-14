@@ -13,4 +13,6 @@ public interface CardsUcc {
 
 	public void discard(Card card);
 
+	public Card stealCardFrom(String username);
+
 }

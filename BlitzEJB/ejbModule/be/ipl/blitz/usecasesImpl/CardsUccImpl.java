@@ -7,14 +7,22 @@ import java.util.List;
 import javax.ejb.EJB;
 
 import be.ipl.blitz.daoImpl.CardDaoImpl;
+import be.ipl.blitz.daoImpl.GameDaoImpl;
+import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.domaine.Card;
+import be.ipl.blitz.domaine.Game;
+import be.ipl.blitz.domaine.User;
 import be.ipl.blitz.usecases.CardsUcc;
 
 public class CardsUccImpl implements CardsUcc {
 
 	@EJB
 	CardDaoImpl cardDao;
-	
+	@EJB
+	UserDaoImpl userDao;
+	@EJB
+	GameDaoImpl gameDao;
+
 	private List<Card> deck;
 	
 	public CardsUccImpl() {
@@ -34,6 +42,11 @@ public class CardsUccImpl implements CardsUcc {
 	@Override
 	public void discard(Card card) {
 		deck.add(card);
+	}
+	
+	@Override
+	public Card stealCardFrom(String username) {
+		return null;
 	}
 
 }
