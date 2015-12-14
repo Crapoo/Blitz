@@ -28,12 +28,16 @@ public class CardsUccImpl implements CardsUcc {
 	GameDaoImpl gameDao;
 
 	private List<Card> deck;
-	
+
 	public CardsUccImpl() {
+	}
+
+	@Override
+	public void shuffleDeck() {
 		deck = cardDao.getAll();
 		Collections.shuffle(deck);
 	}
-	
+
 	@Override
 	public List<Card> pickCard(int nb) {
 		List<Card> cards = new ArrayList<>();
@@ -47,7 +51,7 @@ public class CardsUccImpl implements CardsUcc {
 	public void discard(Card card) {
 		deck.add(card);
 	}
-	
+
 	@Override
 	public Card stealCardFrom(String username) {
 		return null;
