@@ -18,6 +18,7 @@ import be.ipl.blitz.utils.Util;
  */
 @WebServlet("/signup.html")
 public class SignupServlet extends HttpServlet {
+	private String errorMessage;
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -42,21 +43,23 @@ public class SignupServlet extends HttpServlet {
 			Util.checkString(passwordRepeat);
 			if (password.equals(passwordRepeat)) {
 				try {
-					userUcc.saveUser(nickname, password);
+					if(!userUcc.saveUser(nickname, password)){
+						throw new Exception();
+					}
 					login(nickname, request, response);
 					return;
 				} catch (Exception e) {
-					getServletContext().setAttribute("status", "signup-error");
-					getServletContext().setAttribute("error-message", "Erreur lors de la cr&eacute;ation d'un compte");
+					errorMessage="Erreur lors de la cr&eacute;ation d'un compte";
 				}
 			}
 		} catch (NullPointerException | IllegalArgumentException e) {
-			getServletContext().setAttribute("status", "signup-error");
-			getServletContext().setAttribute("error-message", "Veuillez remplir les champs correctement");
+			errorMessage="Erreur lors de la cr&eacute;ation d'un compte";
 		}
 
 		// request.getRequestDispatcher("login.html").forward(request,
 		// response);
+		getServletContext().setAttribute("status", "signup-error");
+		getServletContext().setAttribute("error-message", errorMessage);
 		getServletContext().getNamedDispatcher("login.html").forward(request, response);
 	}
 

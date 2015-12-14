@@ -29,5 +29,6 @@ public class UserDaoImpl extends DaoImpl<Integer, User>{
 		String queryString = "SELECT u FROM User u WHERE u.name = ?1";
 		return search(queryString, s);
 	}
+
 	
 }

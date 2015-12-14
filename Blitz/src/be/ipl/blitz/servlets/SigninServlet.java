@@ -15,6 +15,7 @@ import be.ipl.blitz.utils.Util;
 
 @WebServlet("/signin.html")
 public class SigninServlet extends HttpServlet {
+	private String errorMessage;
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -36,23 +37,22 @@ public class SigninServlet extends HttpServlet {
 			Util.checkString(nickname);
 			Util.checkString(password);
 			try {
-				if (userUcc.login(nickname, password)) {
+				if (userUcc.login(nickname, password) != null) {
 					login(nickname, request, response);
 					return;
 				} else {
-					getServletContext().setAttribute("status", "signin-error");
-					getServletContext().setAttribute("error-message", "Mauvais Pseudo ou Mot-de-passe");
+					errorMessage= "Mauvais Pseudo ou Mot-de-passe";
 				}
 			} catch (Exception e) {
-				getServletContext().setAttribute("status", "signin-error");
-				getServletContext().setAttribute("error-message", "Erreur de connection");
+				errorMessage= "Erreur de connection";
 			}
 		} catch (NullPointerException | IllegalArgumentException e) {
-			getServletContext().setAttribute("status", "signin-error");
-			getServletContext().setAttribute("error-message", "Veuillez remplir les champs correctement");
+			errorMessage= "Erreur de connection";
 		}
 
 		// }
+		getServletContext().setAttribute("status", "signin-error");
+		getServletContext().setAttribute("error-message", errorMessage);
 		request.getRequestDispatcher("login.html").forward(request, response);
 	}
 
