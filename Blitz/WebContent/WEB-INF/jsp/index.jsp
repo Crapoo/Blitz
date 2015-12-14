@@ -31,14 +31,14 @@
         <div class="modal-body">
           <form class="form" id="create-game-form" role="form" method="post" action="create-game.html">
             <div class="form-group">
-              <label for="create-game-label-name">Nom de la partie :</label>
-              <input type="text" class="form-control" id="create-game-label-name">
+              <label for="create-game-name">Nom de la partie :</label>
+              <input type="text" class="form-control" id="create-game-name" name="create-game-name">
               </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-            <button type="button" class="btn btn-primary" form="create-game-form">Cr&eacute;er</button>
+            <button type="submit" class="btn btn-primary" form="create-game-form">Cr&eacute;er</button>
           </div>
         </div>
       </div>
