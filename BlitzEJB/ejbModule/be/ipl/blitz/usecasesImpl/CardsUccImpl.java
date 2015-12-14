@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 
 import be.ipl.blitz.daoImpl.CardDaoImpl;
 import be.ipl.blitz.daoImpl.GameDaoImpl;
@@ -14,6 +16,8 @@ import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.User;
 import be.ipl.blitz.usecases.CardsUcc;
 
+@Singleton
+@Startup
 public class CardsUccImpl implements CardsUcc {
 
 	@EJB
