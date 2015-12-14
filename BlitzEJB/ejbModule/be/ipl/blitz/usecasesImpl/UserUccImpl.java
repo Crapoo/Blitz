@@ -3,6 +3,8 @@ package be.ipl.blitz.usecasesImpl;
 import java.util.Arrays;
 
 import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.ejb.Stateless;
 
 import be.ipl.blitz.daoImpl.UserDaoImpl;
@@ -11,7 +13,8 @@ import be.ipl.blitz.usecases.UserUcc;
 import be.ipl.blitz.utils.PasswordTools;
 import be.ipl.blitz.utils.Util;
 
-@Stateless
+@Singleton
+@Startup
 public class UserUccImpl implements UserUcc {
 
 	@EJB

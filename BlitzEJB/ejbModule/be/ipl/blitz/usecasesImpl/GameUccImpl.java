@@ -8,7 +8,8 @@ import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.ejb.Lock;
 import javax.ejb.LockType;
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 
 import be.ipl.blitz.daoImpl.GameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
@@ -17,7 +18,8 @@ import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.domaine.User;
 import be.ipl.blitz.usecases.GameUcc;
 
-@Stateless
+@Singleton
+@Startup
 public class GameUccImpl implements GameUcc {
 	private Game game;
 	@EJB
@@ -26,10 +28,8 @@ public class GameUccImpl implements GameUcc {
 	private UserDaoImpl userDao;
 
 	public GameUccImpl() {
-
 	}
 
-	// TODO: save when proble (update)
 	@PostConstruct
 	public void postconstruct() {
 		System.out.println("GestionPartieImpl created");
@@ -47,9 +47,12 @@ public class GameUccImpl implements GameUcc {
 		if (game == null || game.getState() == State.OVER) {
 			return false;
 		}
-		game = new Game(gameName);
 		User player = userDao.search(pseudo);
-		return game.addPlayer(player);
+		if(game.addPlayer(player)){
+			gameDao.update(game);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -72,7 +75,11 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		game = gameDao.findById(game.getId());
-		return game.startGame();
+		if(game.startGame()){
+			gameDao.update(game);
+			return true;
+		}
+		return false;
 	}
 
 	public String getCurrentPlayer() {
@@ -91,7 +98,7 @@ public class GameUccImpl implements GameUcc {
 		if (game == null)
 			return false;
 		game = gameDao.findById(game.getId());
-		return game.throwDice();
+		return game.throwDice();//TODO javier update(game) even if modified is playerGame?
 	}
 
 	@Override
@@ -102,25 +109,6 @@ public class GameUccImpl implements GameUcc {
 						 * game.deleteDie(num); return result;
 						 */
 		return false;
-	}
-
-	@Override
-	public int myScore() {/*
-							 * if (game == null) return 0; game =
-							 * gameDao.findById(game.getId()); return
-							 * game.getPoints(game.getJoueurCourant());
-							 */
-		return 0;
-	}
-
-	@Override
-	public int score(
-			String pseudo) {/*
-							 * if (game == null) return 0; game =
-							 * gameDao.findById(game.getId()); return
-							 * game.getPoints(game.getJoueur(pseudo));
-							 */
-		return 0;
 	}
 
 	@Override
@@ -163,12 +151,16 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		this.game = new Game(gameName);
-		gameDao.save(game);
+		game = gameDao.save(game);
 		return true;
 	}
 
 	@Override
+	@Lock(LockType.READ)
 	public State getState() {
+		if (game == null) {
+			return null;
+		}
 		return game.getState();
 	}
 

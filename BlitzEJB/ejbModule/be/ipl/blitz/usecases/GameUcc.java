@@ -19,8 +19,6 @@ public interface GameUcc {
 	boolean throwDice();
 	Game getCurrentGame();
 	boolean deleteDie(int numero);
-	int myScore();
-	int score(String pseudo);
 	boolean nextPlayer();
 	String winner();
 	List<String> listPlayers();

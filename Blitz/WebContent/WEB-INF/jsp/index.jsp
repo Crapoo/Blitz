@@ -3,21 +3,23 @@
 <body>
   <script type="text/javascript" src="lib/js/refresh-index.js"></script>
 
-  <div class="container-fluid">
-    <div>
-      <h4 class="pull-left">Bonjour ${sessionScope['nickname']}</h4>
-      <button class="btn btn-warning pull-right">Se D&eacute;connecter</button>
-    </div>
-
-    <div class="container text-center">
-      <div class="well" id="is-game-in-progress"></div>
-
-      <div class="btn-group-vertical btn-group-lg">
-        <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#create-game-modal">Cr&eacute;er une partie</button>
-        <!--<button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#join-game-modal">Rejoindre une partie</button>-->
-        <button type="button" class="btn btn-lg btn-primary">Historique</button>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-nav">
+        <p class="navbar-text">Bonjour ${sessionScope['nickname']}</p>
       </div>
+      <span class="navbar-nav navbar-right"><button class="btn navbar-btn">Se D&eacute;connecter</button></span>
     </div>
+  </nav>
+
+  <div class="container text-center">
+
+    <div class="btn-group-vertical btn-group-lg" id="create-join-buttons">
+      <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#create-game-modal">Cr&eacute;er une partie</button>
+      <!--<button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#join-game-modal">Rejoindre une partie</button>-->
+      <button type="button" class="btn btn-lg btn-primary">Historique</button>
+    </div>
+    <div class="well" id="is-game-in-progress"></div>
   </div>
 
   <!-- CREATE GAME FORM -->
@@ -43,3 +45,5 @@
         </div>
       </div>
     </div>
+
+    <link href="lib/css/index.css" type="text/css" rel="stylesheet">

@@ -31,12 +31,13 @@ public class Game implements Serializable {
 				game.users.add(user);
 				return true;
 			}
+
 			@Override
 			boolean startGame(Game game) {
 				game.state = State.IN_PROGRESS;
 				Random r = new Random();
 				game.currentUser = r.nextInt(game.players.size());
-				for(User u:game.users){
+				for (User u : game.users) {
 					game.players.add(new PlayerGame(u, game));
 				}
 				return true;
@@ -47,13 +48,15 @@ public class Game implements Serializable {
 			boolean startNextTurn(Game game) {
 				return true;
 			}
+
 			@Override
 			boolean throwDice(Game game) {
-				PlayerGame p=game.players.get(game.currentUser);
-				List<Face> facesThrown=new ArrayList<>();
-				
+				PlayerGame p = game.players.get(game.currentUser);
+				List<Face> facesThrown = new ArrayList<>();
+
 				return true;
 			}
+
 			@Override
 			boolean ecarterDe(int num, Game game) {
 				return false;
@@ -213,6 +216,13 @@ public class Game implements Serializable {
 
 	public boolean throwDice() {
 		return state.throwDice(this);
-		
 	}
+
+	@Override
+	public String toString() {
+		return "Game [name=" + name + ", id=" + id + ", startDate=" + startDate + ", winner=" + winner
+				+ ", currentUser=" + currentUser + ", users=" + users + ", players=" + players + ", state=" + state
+				+ "]";
+	}
+
 }
