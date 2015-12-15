@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.utils.Util;
@@ -42,8 +43,11 @@ public class Game implements Serializable {
 				Util.checkObject(user);
 				Util.checkObject(game);
 
-				//TODO: check si limite de joueurs dans la partie est atteinte
-			/*	// pour pas ajouter deux fois le meme utilisateur
+				Blitz b = new Blitz();
+				if (b.maxPlayers == game.users.size()) {
+					return null;
+				}
+				// pour pas ajouter deux fois le meme utilisateur
 				if (game.users != null) {
 					for (PlayerGame p : game.users) {
 						if (p.getUser().equals(user)) {
@@ -51,7 +55,7 @@ public class Game implements Serializable {
 						}
 					}
 				}
-*/
+
 				PlayerGame p = new PlayerGame(user, game);
 				game.users.add(p);
 				return p;
@@ -95,13 +99,12 @@ public class Game implements Serializable {
 
 			@Override
 			boolean deleteDice(int num, String username, Game game) {
-				// PlayerGame p =
-				// game.users.get(game.users.indexOf(game.userDao.findByName(username)));
-				// int tmp = 0;
-				// while (p.removeDie() && tmp < num) {
-				// tmp++;
-				// }
-				return false;
+				PlayerGame p = game.users.get(game.users.indexOf(game.userDao.findByName(username)));
+				int tmp = 0;
+				while (p.removeDie() && tmp < num) {
+					tmp++;
+				}
+				return true;
 			}
 
 			@Override
@@ -165,6 +168,9 @@ public class Game implements Serializable {
 	@Transient
 	private int currentUser;
 
+	@Transient
+	private UserDaoImpl userDao;
+
 	public List<PlayerGame> getUsers() {
 		return users;
 	}
@@ -193,6 +199,7 @@ public class Game implements Serializable {
 		this.startDate = new Date();
 		this.state = State.INITIAL;
 		users = new ArrayList<>();
+		userDao = new UserDaoImpl();
 	}
 
 	public int getId() {
