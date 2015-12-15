@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.ejb.EJB;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -173,6 +174,7 @@ public class Game implements Serializable {
 
 	@Column
 	@NotNull
+	@Enumerated
 	private State state;
 
 	@OneToMany(mappedBy = "game")
