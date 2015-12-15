@@ -59,12 +59,8 @@ public class GameUccImpl implements GameUcc {
 
 		System.out.println("PLAYER : " + player);
 
-		PlayerGame playerGame = game.addPlayer(player);
-		if (playerGame == null) {
-			return false;
-		}
+		PlayerGame playerGame = new PlayerGame(player, game);
 
-		System.out.println("PLAYERGAME : " + playerGame);
 		gameDao.update(game);
 		playerGameDao.save(playerGame);
 		return true;
