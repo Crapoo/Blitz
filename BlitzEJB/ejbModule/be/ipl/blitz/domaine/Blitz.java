@@ -5,23 +5,33 @@
 // Généré le : 2015.12.14 à 11:46:14 AM CET 
 //
 
-
 package be.ipl.blitz.domaine;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Classe Java pour anonymous complex type.
+ * <p>
+ * Classe Java pour anonymous complex type.
  * 
- * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+ * <p>
+ * Le fragment de schéma suivant indique le contenu attendu figurant dans cette
+ * classe.
  * 
  * <pre>
  * &lt;complexType>
@@ -44,167 +54,201 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "die",
-    "card"
-})
+@XmlType(name = "", propOrder = { "die", "card" })
 @XmlRootElement(name = "blitz")
-public class Blitz {
+@Entity
+@Table(name = "BLITZ", schema = "BLITZ")
+public class Blitz implements Serializable {
 
-    @XmlElement(required = true)
-    protected Die die;
-    @XmlElement(required = true)
-    protected List<Card> card;
-    @XmlAttribute(name = "goal")
-    protected String goal;
-    @XmlAttribute(name = "nbCardsByPlayer", required = true)
-    protected int nbCardsByPlayer;
-    @XmlAttribute(name = "nbTotalCards", required = true)
-    protected int nbTotalCards;
-    @XmlAttribute(name = "minPlayers", required = true)
-    protected int minPlayers;
-    @XmlAttribute(name = "maxPlayers", required = true)
-    protected int maxPlayers;
+	@Id
+	@XmlTransient
+	private int id;
 
-    /**
-     * Obtient la valeur de la propriété die.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Die }
-     *     
-     */
-    public Die getDie() {
-        return die;
-    }
+	@XmlElement(required = true)
+	@Transient
+	protected Die die;
+	@XmlElement(required = true)
+	@Transient
+	protected List<Card> card;
+	@XmlAttribute(name = "goal")
+	@Column
+	@NotNull
+	protected String goal;
+	@XmlAttribute(name = "nbCardsByPlayer", required = true)
+	@Column
+	@NotNull
+	protected int nbCardsByPlayer;
+	@XmlAttribute(name = "nbTotalCards", required = true)
+	@Column
+	@NotNull
+	protected int nbTotalCards;
+	@XmlAttribute(name = "minPlayers", required = true)
+	@Column
+	@NotNull
+	protected int minPlayers;
+	@XmlAttribute(name = "maxPlayers", required = true)
+	@Column
+	@NotNull
+	protected int maxPlayers;
 
-    /**
-     * Définit la valeur de la propriété die.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Die }
-     *     
-     */
-    public void setDie(Die value) {
-        this.die = value;
-    }
+	public Blitz() {
+	}
 
-    /**
-     * Gets the value of the card property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the card property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getCard().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Card }
-     * 
-     * 
-     */
-    public List<Card> getCard() {
-        if (card == null) {
-            card = new ArrayList<Card>();
-        }
-        return this.card;
-    }
+	/**
+	 * Obtient la valeur de la propriété die.
+	 * 
+	 * @return possible object is {@link Die }
+	 * 
+	 */
+	public Die getDie() {
+		return die;
+	}
 
-    /**
-     * Obtient la valeur de la propriété goal.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getGoal() {
-        return goal;
-    }
+	/**
+	 * Définit la valeur de la propriété die.
+	 * 
+	 * @param value
+	 *            allowed object is {@link Die }
+	 * 
+	 */
+	public void setDie(Die value) {
+		this.die = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété goal.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setGoal(String value) {
-        this.goal = value;
-    }
+	/**
+	 * Gets the value of the card property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the card property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getCard().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Card }
+	 * 
+	 * 
+	 */
+	public List<Card> getCard() {
+		if (card == null) {
+			card = new ArrayList<Card>();
+		}
+		return this.card;
+	}
 
-    /**
-     * Obtient la valeur de la propriété nbCardsByPlayer.
-     * 
-     */
-    public int getNbCardsByPlayer() {
-        return nbCardsByPlayer;
-    }
+	/**
+	 * Obtient la valeur de la propriété goal.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getGoal() {
+		return goal;
+	}
 
-    /**
-     * Définit la valeur de la propriété nbCardsByPlayer.
-     * 
-     */
-    public void setNbCardsByPlayer(int value) {
-        this.nbCardsByPlayer = value;
-    }
+	/**
+	 * Définit la valeur de la propriété goal.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setGoal(String value) {
+		this.goal = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété nbTotalCards.
-     * 
-     */
-    public int getNbTotalCards() {
-        return nbTotalCards;
-    }
+	/**
+	 * Obtient la valeur de la propriété nbCardsByPlayer.
+	 * 
+	 */
+	public int getNbCardsByPlayer() {
+		return nbCardsByPlayer;
+	}
 
-    /**
-     * Définit la valeur de la propriété nbTotalCards.
-     * 
-     */
-    public void setNbTotalCards(int value) {
-        this.nbTotalCards = value;
-    }
+	/**
+	 * Définit la valeur de la propriété nbCardsByPlayer.
+	 * 
+	 */
+	public void setNbCardsByPlayer(int value) {
+		this.nbCardsByPlayer = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété minPlayers.
-     * 
-     */
-    public int getMinPlayers() {
-        return minPlayers;
-    }
+	/**
+	 * Obtient la valeur de la propriété nbTotalCards.
+	 * 
+	 */
+	public int getNbTotalCards() {
+		return nbTotalCards;
+	}
 
-    /**
-     * Définit la valeur de la propriété minPlayers.
-     * 
-     */
-    public void setMinPlayers(int value) {
-        this.minPlayers = value;
-    }
+	/**
+	 * Définit la valeur de la propriété nbTotalCards.
+	 * 
+	 */
+	public void setNbTotalCards(int value) {
+		this.nbTotalCards = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété maxPlayers.
-     * 
-     */
-    public int getMaxPlayers() {
-        return maxPlayers;
-    }
+	/**
+	 * Obtient la valeur de la propriété minPlayers.
+	 * 
+	 */
+	public int getMinPlayers() {
+		return minPlayers;
+	}
 
-    /**
-     * Définit la valeur de la propriété maxPlayers.
-     * 
-     */
-    public void setMaxPlayers(int value) {
-        this.maxPlayers = value;
-    }
+	/**
+	 * Définit la valeur de la propriété minPlayers.
+	 * 
+	 */
+	public void setMinPlayers(int value) {
+		this.minPlayers = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété maxPlayers.
+	 * 
+	 */
+	public int getMaxPlayers() {
+		return maxPlayers;
+	}
+
+	/**
+	 * Définit la valeur de la propriété maxPlayers.
+	 * 
+	 */
+	public void setMaxPlayers(int value) {
+		this.maxPlayers = value;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Blitz other = (Blitz) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 
 }

@@ -13,6 +13,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.JAXBIntrospector;
 import javax.xml.transform.stream.StreamSource;
 
+import be.ipl.blitz.daoImpl.BlitzDaoImpl;
 import be.ipl.blitz.daoImpl.CardDaoImpl;
 import be.ipl.blitz.daoImpl.DieDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
@@ -27,6 +28,8 @@ public class Startup {
 	private CardDaoImpl cardDao;
 	@EJB
 	private UserDaoImpl userDao;
+	@EJB
+	BlitzDaoImpl blitzDao;
 
 	public Startup() {
 	}
@@ -36,6 +39,8 @@ public class Startup {
 		InputStream is = new FileInputStream("../standalone/deployments/BlitzEAR.ear/BlitzEJB.jar/blitz.xml");
 
 		Blitz blitz = fromStream(Blitz.class, is);
+
+		blitzDao.save(blitz);
 
 		// enregistrement des dés
 		for (int i = 0; i < blitz.getDie().getNbTotalDice(); i++) {
