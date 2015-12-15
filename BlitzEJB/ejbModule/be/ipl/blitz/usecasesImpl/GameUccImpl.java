@@ -73,16 +73,15 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	@Lock(LockType.READ)
 	public List<String> listPlayers() {
-		// if (game == null) {
-		// return null;
-		// }
-		// List<User> users = game.;
-		// List<String> pseudos = new ArrayList<String>();
-		// for (User u : users) {
-		// pseudos.add(u.getName());
-		// }
-		// return pseudos;
-		return null;
+		if (game == null) {
+			return null;
+		}
+		List<PlayerGame> playerGames = game.getUsers();
+		List<String> pseudos = new ArrayList<String>();
+		for (PlayerGame pl : playerGames) {
+			pseudos.add(pl.getUser().getName());
+		}
+		return pseudos;
 	}
 
 	@Override

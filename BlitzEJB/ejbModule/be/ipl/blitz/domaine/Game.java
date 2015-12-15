@@ -60,12 +60,12 @@ public class Game implements Serializable {
 			boolean startGame(Game game) {
 				game.state = State.IN_PROGRESS;
 				Random r = new Random();
-				game.currentUser = r.nextInt(game.players.size());
+				game.currentUser = r.nextInt(game.users.size());
 				return dealCards(game);
 			}
 
 			private boolean dealCards(Game game) {
-				for (PlayerGame playerGame : game.players) {
+				for (PlayerGame playerGame : game.users) {
 					List<Card> cards = game.drawCard(3);
 					if (cards == null) {
 						return false;
@@ -78,13 +78,13 @@ public class Game implements Serializable {
 		IN_PROGRESS {
 			@Override
 			User nextPlayer(Game game) {
-				game.setCurrentUser((++game.currentUser) % game.players.size());
+				game.setCurrentUser((++game.currentUser) % game.users.size());
 				return game.getCurrentUser();
 			}
 
 			@Override
 			Set<Face> throwDice(Game game) {
-				PlayerGame p = game.players.get(game.currentUser);
+				PlayerGame p = game.users.get(game.currentUser);
 				Set<Face> faces = new HashSet<Face>();
 				for (Die d : p.getDice()) {
 					faces.add(d.throwDice());
@@ -95,12 +95,12 @@ public class Game implements Serializable {
 			@Override
 			boolean deleteDice(int num, String username, Game game) {
 				// PlayerGame p =
-				// game.players.get(game.players.indexOf(game.userDao.findByName(username)));
+				// game.users.get(game.users.indexOf(game.userDao.findByName(username)));
 				// int tmp = 0;
 				// while (p.removeDie() && tmp < num) {
 				// tmp++;
 				// }
-				return true;
+				return false;
 			}
 
 			@Override
@@ -164,8 +164,13 @@ public class Game implements Serializable {
 	@Transient
 	private int currentUser;
 
-	@Transient
-	private List<PlayerGame> players;
+	public List<PlayerGame> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<PlayerGame> users) {
+		this.users = users;
+	}
 
 	@Column
 	@NotNull
@@ -185,8 +190,7 @@ public class Game implements Serializable {
 		this.name = name;
 		this.startDate = new Date();
 		this.state = State.INITIAL;
-
-		players = new ArrayList<>();
+		users = new ArrayList<>();
 	}
 
 	public int getId() {
