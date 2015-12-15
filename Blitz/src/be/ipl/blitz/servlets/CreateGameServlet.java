@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import be.ipl.blitz.domaine.Blitz;
 import be.ipl.blitz.domaine.Game.State;
+import be.ipl.blitz.usecases.BlitzUcc;
 import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.utils.Util;
 
@@ -21,6 +22,8 @@ public class CreateGameServlet extends HttpServlet {
 
 	@EJB
 	private GameUcc gameUcc;
+	@EJB
+	private BlitzUcc blitzUcc;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -44,11 +47,9 @@ public class CreateGameServlet extends HttpServlet {
 		synchronized (context) {
 			State gameState = null;
 			if (gameUcc.createGame(gameName)) {
-				Blitz blitz = new Blitz();
-
 				context.setAttribute("game-name", gameName);
-				context.setAttribute("max-players", blitz.getMaxPlayers());
-				context.setAttribute("min-players", blitz.getMinPlayers());
+				context.setAttribute("max-players", blitzUcc.getMaxPlayers());
+				context.setAttribute("min-players", blitzUcc.getMinPlayers());
 				response.sendRedirect(request.getContextPath() + "/join-lobby.html");
 
 				return;

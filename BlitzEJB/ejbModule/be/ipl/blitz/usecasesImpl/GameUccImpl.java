@@ -77,7 +77,7 @@ public class GameUccImpl implements GameUcc {
 		List<String> pseudos = new ArrayList<String>();
 
 		for (PlayerGame pl : playerGames) {
-			pl = playerGameDao.reload(new PlayerGamePK(game.getId(), pl.getUserId()));
+			pl = playerGameDao.reload(new PlayerGamePK(pl.getUserId(), game.getId()));
 			pseudos.add(pl.getUser().getName());
 		}
 		return pseudos;

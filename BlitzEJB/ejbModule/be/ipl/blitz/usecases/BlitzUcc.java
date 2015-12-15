@@ -1,5 +1,8 @@
 package be.ipl.blitz.usecases;
 
+import javax.ejb.Remote;
+
+@Remote
 public interface BlitzUcc {
 	/**
 	 * Récupère le nombre maximum de joueurs dans une partie.
