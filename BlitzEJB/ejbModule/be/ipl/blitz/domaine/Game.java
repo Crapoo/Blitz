@@ -28,10 +28,10 @@ public class Game implements Serializable {
 
 	@EJB
 	private PlayerGameDaoImpl playerGameDao;
-	
+
 	@EJB
 	private UserDaoImpl userDao;
-	
+
 	public enum State {
 		INITIAL {
 			@Override
@@ -39,7 +39,7 @@ public class Game implements Serializable {
 				if (game.getPlayer(user) != null)
 					return false;
 				game.users.add(user);
-				PlayerGame p=new PlayerGame(user, game);
+				PlayerGame p = new PlayerGame(user, game);
 				game.players.add(p);
 				game.playerGameDao.save(p);
 				return true;
@@ -56,24 +56,25 @@ public class Game implements Serializable {
 		IN_PROGRESS {
 			@Override
 			User nextPlayer(Game game) {
-				game.setCurrentUser((++game.currentUser)%game.players.size());
+				game.setCurrentUser((++game.currentUser) % game.players.size());
 				return game.getCurrentUser();
 			}
+
 			@Override
 			Set<Face> throwDice(Game game) {
 				PlayerGame p = game.players.get(game.currentUser);
-				Set<Face> faces= new HashSet<Face>();
-				for(Die d:p.getDice()){
+				Set<Face> faces = new HashSet<Face>();
+				for (Die d : p.getDice()) {
 					faces.add(d.throwDice());
-				}				
+				}
 				return faces;
 			}
 
 			@Override
-			boolean deleteDice(int num, String username,Game game) {
-				PlayerGame p=game.players.get(game.players.indexOf(game.userDao.findByName(username)));
-				int tmp=0;
-				while(p.removeDie() && tmp<num){
+			boolean deleteDice(int num, String username, Game game) {
+				PlayerGame p = game.players.get(game.players.indexOf(game.userDao.findByName(username)));
+				int tmp = 0;
+				while (p.removeDie() && tmp < num) {
 					tmp++;
 				}
 				return true;
@@ -102,7 +103,7 @@ public class Game implements Serializable {
 			return null;
 		}
 
-		boolean deleteDice(int num,String id, Game game) {
+		boolean deleteDice(int num, String id, Game game) {
 			return false;
 		}
 
@@ -239,8 +240,8 @@ public class Game implements Serializable {
 	public Set<Face> throwDice() {
 		return state.throwDice(this);
 	}
-	
-	public User nextPlayer(){
+
+	public User nextPlayer() {
 		return state.nextPlayer(this);
 	}
 
