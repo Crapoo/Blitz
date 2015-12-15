@@ -36,7 +36,7 @@ public class Game implements Serializable {
 	@EJB
 	@Transient
 	private GameUcc gameUcc;
-	
+
 	@EJB
 	@Transient
 	private BlitzUcc blitzUcc;
@@ -48,18 +48,13 @@ public class Game implements Serializable {
 				Util.checkObject(user);
 				Util.checkObject(game);
 
-		/*		if (game.users !=null && game.blitzUcc.getMaxPlayers() == game.users.size()) {
-					return null;
-				}
-				// pour pas ajouter deux fois le meme utilisateur
-				if (game.users != null) {
-					for (PlayerGame p : game.users) {
-						if (p.getUser().equals(user)) {
-							return null;
-						}
-					}
-				}
-*/
+				/*
+				 * if (game.users !=null && game.blitzUcc.getMaxPlayers() ==
+				 * game.users.size()) { return null; } // pour pas ajouter deux
+				 * fois le meme utilisateur if (game.users != null) { for
+				 * (PlayerGame p : game.users) { if (p.getUser().equals(user)) {
+				 * return null; } } }
+				 */
 				PlayerGame p = new PlayerGame(user, game);
 				game.users.add(p);
 				return p;
