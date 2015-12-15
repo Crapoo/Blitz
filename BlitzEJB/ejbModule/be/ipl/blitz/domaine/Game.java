@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import be.ipl.blitz.daoImpl.UserDaoImpl;
+import be.ipl.blitz.usecases.BlitzUcc;
 import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.utils.Util;
@@ -35,6 +36,10 @@ public class Game implements Serializable {
 	@EJB
 	@Transient
 	private GameUcc gameUcc;
+	
+	@EJB
+	@Transient
+	private BlitzUcc blitzUcc;
 
 	public enum State {
 		INITIAL {
@@ -43,8 +48,7 @@ public class Game implements Serializable {
 				Util.checkObject(user);
 				Util.checkObject(game);
 
-				Blitz b = new Blitz();
-				if (b.maxPlayers == game.users.size()) {
+		/*		if (game.users !=null && game.blitzUcc.getMaxPlayers() == game.users.size()) {
 					return null;
 				}
 				// pour pas ajouter deux fois le meme utilisateur
@@ -55,7 +59,7 @@ public class Game implements Serializable {
 						}
 					}
 				}
-
+*/
 				PlayerGame p = new PlayerGame(user, game);
 				game.users.add(p);
 				return p;
