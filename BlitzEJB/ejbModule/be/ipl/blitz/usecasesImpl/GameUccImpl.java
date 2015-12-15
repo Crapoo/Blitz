@@ -59,8 +59,8 @@ public class GameUccImpl implements GameUcc {
 		if (playerGame == null) {
 			return false;
 		}
+		playerGameDao.save(playerGame);
 		gameDao.update(game);
-		//playerGameDao.save(playerGame);
 		return true;
 	}
 
@@ -155,6 +155,7 @@ public class GameUccImpl implements GameUcc {
 		if (game != null) {
 			return false;
 		}
+		
 		this.game = new Game(gameName);
 		game = gameDao.save(game);
 

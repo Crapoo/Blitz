@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 public class PlayerGamePK implements Serializable {
 
+	@Override
+	public String toString() {
+		return "PlayerGamePK [userId=" + userId + ", gameId=" + gameId + "]";
+	}
+
 	private int userId;
 	private int gameId;
 
