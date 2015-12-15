@@ -23,7 +23,7 @@
 		</taglib>
 		<taglib>
 			<taglib-uri>http://java.sun.com/jsp/jstl/xml</taglib-uri>
-			<taglib-location>/WEB-INF/tld/x.tld</taglib-location>
+			<taglib-location>/WEB-INF/tld/x.tl d</taglib-location>
 		</taglib>
 		<taglib>
 			<taglib-uri>http://java.sun.com/jsp/jstl/sql</taglib-uri>
@@ -62,6 +62,14 @@
 	<servlet-mapping>
 		<servlet-name>error.html</servlet-name>
 		<url-pattern>/error.html</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>lobby.html</servlet-name>
+		<jsp-file>/WEB-INF/jsp/lobby.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>lobby.html</servlet-name>
+		<url-pattern>/lobby.html</url-pattern>
 	</servlet-mapping>
 	<session-config>
 		<cookie-config>

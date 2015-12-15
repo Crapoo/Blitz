@@ -55,8 +55,7 @@ public class SigninServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.sendRedirect("index.html");
-		request.getRequestDispatcher("index.html").forward(request, response);
+		response.sendRedirect("index.html");
 	}
 
 	private void login(String nickname, HttpServletRequest request, HttpServletResponse response)
@@ -66,7 +65,6 @@ public class SigninServlet extends HttpServlet {
 			session.setAttribute("nickname", nickname);
 			session.setAttribute("connected", true);
 		}
-		//response.sendRedirect("index.html");
-		request.getRequestDispatcher("index.html").forward(request, response);
+		response.sendRedirect("index.html");
 	}
 }
