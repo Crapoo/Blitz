@@ -47,6 +47,7 @@ public class CreateGameServlet extends HttpServlet {
 				if (gameState == null) {
 					gameState = State.OVER;
 				}
+				gameUcc.joinGame(gameName, (String) request.getSession().getAttribute("nickname"));
 			} else {
 				// Shouldn't happen but hey..
 				request.setAttribute("error-message", "Cookies. Il te faut des cookies. Ok ?");
