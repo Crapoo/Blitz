@@ -21,30 +21,19 @@ public class JoinLobbyServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*final ServletContext context = getServletContext();
-		synchronized (context) {
-			// TODO Add security - Przemek
-			gameUcc.joinGame((String) context.getAttribute("game-name"),
-					(String) request.getSession().getAttribute("nickname"));
-			context.setAttribute("players-list", gameUcc.listPlayers());
-			context.setAttribute("players-count", gameUcc.listPlayers().size());
-		}
-
-		response.sendRedirect("lobby.html");*/
-		//getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
 		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//doGet(request, response);
+		// doGet(request, response);
 		final ServletContext context = getServletContext();
 		synchronized (context) {
 			// TODO Add security - Przemek
 			gameUcc.joinGame((String) context.getAttribute("game-name"),
 					(String) request.getSession().getAttribute("nickname"));
-			context.setAttribute("players-list", gameUcc.listPlayers());
-			context.setAttribute("players-count", gameUcc.listPlayers().size());
+			/*context.setAttribute("players-list", gameUcc.listPlayers());
+			context.setAttribute("players-count", gameUcc.listPlayers().size());*/
 		}
 
 		response.sendRedirect("lobby.html");
