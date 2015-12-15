@@ -5,13 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -37,7 +33,7 @@ public class PlayerGame implements Serializable {
 	private CardsUccImpl cardUcc;
 
 	@ManyToOne
-	@PrimaryKeyJoinColumn(name = "PLAYERID", referencedColumnName = "ID")
+	@PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "ID")
 	// @JoinColumn(name = "userId", updatable = false, insertable = false)
 	private User user;
 	@ManyToOne

@@ -22,7 +22,7 @@ public class UserUccImpl implements UserUcc {
 	public boolean saveUser(String username, String pwd) throws Exception {
 		Util.checkString(username);
 		Util.checkString(pwd);
-		if (dao.findByName(username) == null) {
+		if (dao.findByName(username) != null) {
 
 			return false;
 		}
