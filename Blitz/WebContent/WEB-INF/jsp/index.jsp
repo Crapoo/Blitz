@@ -8,7 +8,7 @@
       <div class="navbar-nav">
         <p class="navbar-text">Bonjour ${sessionScope['nickname']}</p>
       </div>
-      <span class="navbar-nav navbar-right"><button class="btn navbar-btn">Se D&eacute;connecter</button></span>
+      <span class="navbar-nav navbar-right"><a href="disconnect.html"><button type="button" class="btn btn-lg btn-primary">Se D&eacute;connecter</button></a></span>
     </div>
   </nav>
   

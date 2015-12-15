@@ -43,6 +43,14 @@
     <servlet-name>index.html</servlet-name>
     <url-pattern>/index.html</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <servlet-name>disconnect.html</servlet-name>
+	<jsp-file>/WEB-INF/jsp/disconnect.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>disconnect.html</servlet-name>
+    <url-pattern>/disconnect.html</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>rejoindre.html</servlet-name>
     <jsp-file>/WEB-INF/jsp/enAttente.jsp</jsp-file>
