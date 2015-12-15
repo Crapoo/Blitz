@@ -23,10 +23,13 @@ public class RefreshIndexServlet extends HttpServlet {
 	@EJB
 	private GameUcc gameUcc;
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		doPost(request, response);
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("application/json");
@@ -44,10 +47,10 @@ public class RefreshIndexServlet extends HttpServlet {
 		if (state != null) {
 			oBuilder.add("game-state", gameUcc.getState().toString());
 		} else {
-			oBuilder.add("game-state", "");
+			oBuilder.add("game-state", "OVER");
 		}
 		JsonObject json = oBuilder.build();
-
+		
 		response.getWriter().print(json.toString());
 	}
 
