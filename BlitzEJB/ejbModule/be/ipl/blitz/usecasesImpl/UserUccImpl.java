@@ -21,9 +21,6 @@ public class UserUccImpl implements UserUcc {
 	private UserDaoImpl dao;
 
 	public boolean saveUser(String username, String pwd) throws Exception {
-		if (username == null || pwd == null) {
-			System.err.println("lol, nul");
-		}
 		Util.checkString(username);
 		Util.checkString(pwd);
 		if (dao.findByName(username) == null) {

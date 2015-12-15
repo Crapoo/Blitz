@@ -12,6 +12,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 import be.ipl.blitz.dao.Dao;
+import be.ipl.blitz.utils.Util;
 
 @SuppressWarnings("serial")
 public abstract class DaoImpl<K, E> implements Dao<K, E> {
