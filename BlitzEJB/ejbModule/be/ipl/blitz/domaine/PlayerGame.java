@@ -24,13 +24,13 @@ public class PlayerGame implements Serializable {
 	private int player;
 	@Id
 	private int game;
-	
+
 	@Transient
 	@EJB
 	private CardsUccImpl cardUcc;
-	
+
 	@Transient
-	private int nbDice=0;
+	private int nbDice = 0;
 
 	@ManyToMany
 	@JoinTable(schema = "BLITZ")
@@ -40,18 +40,19 @@ public class PlayerGame implements Serializable {
 	private List<Card> cards;
 
 	public PlayerGame(User u, Game g) {
-		this.game=g.getId();
-		this.player=u.getId();
+		this.game = g.getId();
+		this.player = u.getId();
 		dice = new ArrayList<Die>();
-		//instanciation d'un dé pour recuperer le nombre de dé par personne
-		Die d=new Die();
-		for(int i=0;i<d.getNbByPlayer();i++){
+		// instanciation d'un dé pour recuperer le nombre de dé par personne
+		Die d = new Die();
+		for (int i = 0; i < d.getNbByPlayer(); i++) {
 			dice.add(new Die());
 		}
 		cards = cardUcc.drawCard(3);
 	}
-	public PlayerGame(){
-		
+
+	public PlayerGame() {
+
 	}
 
 	public int getPlayer() {
@@ -74,14 +75,14 @@ public class PlayerGame implements Serializable {
 		return dice;
 	}
 
-	public boolean removeDie(){
-		if(dice.isEmpty()){
+	public boolean removeDie() {
+		if (dice.isEmpty()) {
 			return false;
 		}
 		this.dice.remove(0);
 		return true;
 	}
-	
+
 	public void setDice(List<Die> dice) {
 		this.dice = dice;
 	}
@@ -92,5 +93,13 @@ public class PlayerGame implements Serializable {
 
 	public void setCards(List<Card> cards) {
 		this.cards = cards;
+	}
+
+	public void addCard(Card card) {
+		cards.add(card);
+	}
+
+	public Card removeCard(int index) {
+		return cards.remove(index);
 	}
 }
