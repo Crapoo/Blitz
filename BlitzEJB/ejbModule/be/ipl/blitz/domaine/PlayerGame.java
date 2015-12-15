@@ -8,10 +8,10 @@ import javax.ejb.EJB;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -33,12 +33,12 @@ public class PlayerGame implements Serializable {
 	private CardsUccImpl cardUcc;
 
 	@ManyToOne
-	@PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "ID")
-	// @JoinColumn(name = "userId", updatable = false, insertable = false)
+//	@PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "ID")
+	 @JoinColumn(name = "userId", updatable = false, insertable = false)
 	private User user;
 	@ManyToOne
-	@PrimaryKeyJoinColumn(name = "GAMEID", referencedColumnName = "ID")
-	// @JoinColumn(name = "gameId", updatable = false, insertable = false)
+	//@PrimaryKeyJoinColumn(name = "GAMEID", referencedColumnName = "ID")
+	 @JoinColumn(name = "gameId", updatable = false, insertable = false)
 	private Game game;
 
 	@Transient
@@ -52,6 +52,8 @@ public class PlayerGame implements Serializable {
 	private List<Card> cards;
 
 	public PlayerGame(User u, Game g) {
+		userId = u.getId();
+		gameId = g.getId();
 		dice = new ArrayList<Die>();
 		// instanciation d'un dé pour recuperer le nombre de dé par personne
 		Die d = new Die();
@@ -127,4 +129,12 @@ public class PlayerGame implements Serializable {
 	public Card removeCard(int index) {
 		return cards.remove(index);
 	}
+
+	@Override
+	public String toString() {
+		return "PlayerGame [userId=" + userId + ", gameId=" + gameId + ", cardUcc=" + cardUcc + ", user=" + user
+				+ ", game=" + game + ", nbDice=" + nbDice + ", dice=" + dice + ", cards=" + cards + "]";
+	}
+	
+	
 }
