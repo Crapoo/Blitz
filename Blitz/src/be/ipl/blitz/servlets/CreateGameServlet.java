@@ -46,18 +46,25 @@ public class CreateGameServlet extends HttpServlet {
 				gameState = gameUcc.getState();
 				if (gameState == null) {
 					gameState = State.OVER;
+				} else {
+					// TODO do something if null - Przemek
+					// gameUcc.joinGame(gameName, (String)
+					// request.getSession().getAttribute("nickname"));
 				}
-				gameUcc.joinGame(gameName, (String) request.getSession().getAttribute("nickname"));
 			} else {
 				// Shouldn't happen but hey..
-				request.setAttribute("error-message", "Cookies. Il te faut des cookies. Ok ?");
+				request.setAttribute("error-message", "Partie déjà en cours!");
 				request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
 				return;
 			}
 
 			context.setAttribute("game-status", gameState);
+			context.setAttribute("game-name", gameName);
+			context.getNamedDispatcher("join-lobby.html").forward(request, response);
+			return;
 		}
-		getServletContext().getNamedDispatcher("index.html").forward(request, response);
+		// getServletContext().getNamedDispatcher("index.html").forward(request,
+		// response);
 	}
 
 }
