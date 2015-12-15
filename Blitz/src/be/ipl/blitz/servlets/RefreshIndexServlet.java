@@ -1,6 +1,7 @@
 package be.ipl.blitz.servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.json.Json;
@@ -17,22 +18,31 @@ import be.ipl.blitz.usecases.GameUcc;
 @WebServlet("/refresh-index.html")
 public class RefreshIndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
 	private GameUcc gameUcc;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("application/json");
 
 		JsonObjectBuilder oBuilder = Json.createObjectBuilder();
-		
-		oBuilder.add("payers-count", gameUcc.listPlayers().size());
+
+		List<String> playersList = gameUcc.listPlayers();
+
+		if (playersList == null) {
+			oBuilder.add("payers-count", 0);
+		} else {
+			oBuilder.add("payers-count", gameUcc.listPlayers().size());
+		}
+
 		oBuilder.add("game-state", gameUcc.getState().toString());
 		JsonObject json = oBuilder.build();
-		
+
 		response.getWriter().print(json.toString());
 	}
 
