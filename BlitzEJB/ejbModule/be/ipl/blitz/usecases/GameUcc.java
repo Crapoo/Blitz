@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.ejb.Remote;
 
+import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.domaine.Face;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
@@ -91,7 +92,7 @@ public interface GameUcc {
 	 * 
 	 * @return Le nom du gagnant.
 	 */
-	String winner();
+	String getWinner();
 
 	/**
 	 * Récupère les noms de tous les joueurs participant à la partie courante.
@@ -106,4 +107,11 @@ public interface GameUcc {
 	 * @return Le joueur courant.
 	 */
 	String getCurrentPlayer();
+
+	/**
+	 * Tire une carte dans la pioche
+	 * 
+	 * @return une liste des cartes a tirer, null si il n'y a pas de cartes dans la pioche
+	 */
+	List<Card> drawCard(int num);
 }

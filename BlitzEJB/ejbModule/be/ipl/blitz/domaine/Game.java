@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 
 import be.ipl.blitz.daoImpl.PlayerGameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
+import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.utils.Util;
 
 @Entity
@@ -31,6 +32,9 @@ public class Game implements Serializable {
 	
 	@EJB
 	private UserDaoImpl userDao;
+	
+	@EJB
+	private CardsUcc cardUcc;
 	
 	public enum State {
 		INITIAL {
@@ -59,6 +63,7 @@ public class Game implements Serializable {
 				game.setCurrentUser((++game.currentUser)%game.players.size());
 				return game.getCurrentUser();
 			}
+			
 			@Override
 			Set<Face> throwDice(Game game) {
 				PlayerGame p = game.players.get(game.currentUser);
@@ -78,8 +83,12 @@ public class Game implements Serializable {
 				}
 				return true;
 			}
+			
+			@Override
+			List<Card> drawCard(int num, Game game){
+				return game.cardUcc.drawCard(num);
+			}
 		},
-
 		OVER {
 			@Override
 			User getWinner(Game game) {
@@ -88,6 +97,10 @@ public class Game implements Serializable {
 		};
 		boolean addPlayer(User u, Game g) {
 			return false;
+		}
+
+		List<Card> drawCard(int num,Game game) {
+			return null;
 		}
 
 		boolean startGame(Game game) {
@@ -255,4 +268,11 @@ public class Game implements Serializable {
 		return state.deleteDice(num, username, this);
 	}
 
+	public List<Card> drawCard(int num){
+		return state.drawCard(num, this);
+	}
+	
+	public void cancel(){
+		state=State.OVER;
+	}
 }

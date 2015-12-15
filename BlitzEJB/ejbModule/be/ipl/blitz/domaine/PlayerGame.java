@@ -48,7 +48,7 @@ public class PlayerGame implements Serializable {
 		for(int i=0;i<d.getNbByPlayer();i++){
 			dice.add(new Die());
 		}
-		cards = cardUcc.pickCard(3);
+		cards = cardUcc.drawCard(3);
 	}
 	public PlayerGame(){
 		

@@ -12,8 +12,6 @@ import be.ipl.blitz.daoImpl.CardDaoImpl;
 import be.ipl.blitz.daoImpl.GameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.domaine.Card;
-import be.ipl.blitz.domaine.Game;
-import be.ipl.blitz.domaine.User;
 import be.ipl.blitz.usecases.CardsUcc;
 
 @Singleton

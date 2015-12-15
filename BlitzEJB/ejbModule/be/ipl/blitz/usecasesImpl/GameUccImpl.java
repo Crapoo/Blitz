@@ -14,6 +14,7 @@ import javax.ejb.Startup;
 
 import be.ipl.blitz.daoImpl.GameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
+import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.domaine.Face;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
@@ -29,7 +30,6 @@ public class GameUccImpl implements GameUcc {
 	private GameDaoImpl gameDao;
 	@EJB
 	private UserDaoImpl userDao;
-
 	@EJB
 	private CardsUcc cardsUcc;
 
@@ -109,34 +109,39 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public boolean deleteDice(int num, String username) {
-		if (game == null)
+		if (game == null) {
 			return false;
+		}
 		game = gameDao.reload(game.getId());
 		return game.deleteDice(num, username);
 	}
 
 	@Override
 	public User nextPlayer() {
-		if (game == null)
+		if (game == null) {
 			return null;
+		}
 		game = gameDao.findById(game.getId());
 		return game.nextPlayer();
 	}
 
 	@Override
-	public String winner() {/*
-							 * if (game == null) return null; game =
-							 * gameDao.findById(game.getId()); User u =
-							 * game.estVainqueur(); if (u == null) return null;
-							 * return u.getName();
-							 */
-		return null;
+	public String getWinner() {
+		if (game == null) {
+			return null;
+		}
+		game = gameDao.findById(game.getId());
+		User u = game.getWinner();
+		if (u == null)
+			return null;
+		return u.getName();
 	}
 
 	@Override
-	public void cancelGame() {/*
-								 * if (game != null) game.annuler();
-								 */
+	public void cancelGame() {
+		if (game != null) {
+			game.cancel();
+		}
 	}
 
 	@Override
@@ -163,5 +168,10 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public Game getCurrentGame() {
 		return this.game;
+	}
+
+	@Override
+	public List<Card> drawCard(int num) {
+		return game.drawCard(num);
 	}
 }
