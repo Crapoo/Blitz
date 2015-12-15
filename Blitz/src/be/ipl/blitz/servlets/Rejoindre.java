@@ -71,9 +71,9 @@ public class Rejoindre extends HttpServlet {
 		}
 		
 		logger.info(gucc.getCurrentGame().toString());
-		logger.info(uucc.findByNick(nickname).getName());
+		logger.info(uucc.findByName(nickname).getName());
 		
-		gucc.getCurrentGame().addPlayer(uucc.findByNick(nickname));
+		gucc.getCurrentGame().addPlayer(uucc.findByName(nickname));
 
 		
 		

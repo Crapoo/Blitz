@@ -43,8 +43,10 @@ public class PlayerGame implements Serializable {
 		this.game=g.getId();
 		this.player=u.getId();
 		dice = new ArrayList<Die>();
+		//instanciation d'un dé pour recuperer le nombre de dé par personne
 		Die d=new Die();
 		for(int i=0;i<d.getNbByPlayer();i++){
+			
 		}
 		cards = cardUcc.pickCard(3);
 	}

@@ -10,6 +10,6 @@ public interface UserUcc {
 
 	User login(String login, String pwd) throws Exception;
 
-	User findByNick(String nickname);
+	User findByName(String nickname);
 
 }

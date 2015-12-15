@@ -48,7 +48,7 @@ public class UserUccImpl implements UserUcc {
 	}
 
 	@Override
-	public User findByNick(String nickname) {
+	public User findByName(String nickname) {
 		return dao.findByName(nickname);
 	}
 }
