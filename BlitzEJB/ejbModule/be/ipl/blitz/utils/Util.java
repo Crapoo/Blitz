@@ -9,7 +9,7 @@ public final class Util {
 	public static void checkString(String s) {
 		checkObject(s);
 		if (s.trim().equals(""))
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("STRING EST NUUUUUULL");
 	}
 
 	public static void checkNegativeOrZero(double d) {
