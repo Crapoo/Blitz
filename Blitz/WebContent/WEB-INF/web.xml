@@ -51,6 +51,14 @@
     <servlet-name>rejoindre.html</servlet-name>
     <url-pattern>/rejoindre.html</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>disconnect.html</servlet-name>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>disconnect.html</servlet-name>
+    <url-pattern>/disconnect.html</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>login.html</servlet-name>
     <jsp-file>/WEB-INF/jsp/login.jsp</jsp-file>
