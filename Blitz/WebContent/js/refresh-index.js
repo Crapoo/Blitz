@@ -5,29 +5,24 @@ function refresh() {
     dataType: "json",
   });
   $request.done(function (response, textStatus, xhr) {
-    //$('#is-game-in-progress').html(response);
-    console.log(response);
+    var htmlResponse = "";
+    switch(response['game-state']) {
+      case "OVER":
+      htmlResponse = '<p class="bg-primary"><strong>Aucune partie en cours</p></strong>';
+      break;
+      case "INITIAL":
+      htmlResponse = '<p class="bg-success"><strong>Partie en attente</p></strong>';
+      break;
+      case "IN_PROGERSS":
+      htmlResponse = '<p class="bg-danger"><strong>Partie en cours</p></strong>';
+      break;
+    }
+    $('#is-game-in-progress').html(htmlResponse);
   });
   $request.fail(function (xhr, textStatus, errorThrown) {
     alert(errorThrown);
   });
 }
-
-/*var $request = $.ajax({
-url: "refresh-index.html",
-type: 'POST',
-dataType: 'json',
-data: data,
-contentType: 'application/json',
-mimeType: 'application/json',
-
-success: function (data) {
-console.log(data);
-},
-error:function(data,status,er) {
-alert("error: "+data+" status: "+status+" er:"+er);
-}
-});*/
 
 $(function () {
   refresh();
