@@ -49,7 +49,8 @@ public class CreateGameServlet extends HttpServlet {
 				context.setAttribute("game-name", gameName);
 				context.setAttribute("max-players", blitz.getMaxPlayers());
 				context.setAttribute("min-players", blitz.getMinPlayers());
-				context.getNamedDispatcher("join-lobby.html").forward(request, response);
+				response.sendRedirect(request.getContextPath() + "/join-lobby.html");
+
 				return;
 			} else {
 				request.getServletContext().getNamedDispatcher("index.html").forward(request, response);

@@ -19,5 +19,5 @@
       </div>
     </div>
 
-    <script src="js/refresh-lobby.js"></script>
+    <!--  <script src="js/refresh-lobby.js"></script>-->
     <link href="css/lobby.css" rel="stylesheet" type="text/css">

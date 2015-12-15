@@ -18,6 +18,7 @@ function refresh() {
       break;
     }
     $('#is-game-in-progress').html(htmlResponse);
+    console.log(response['players-count']);
   });
   $request.fail(function (xhr, textStatus, errorThrown) {
     alert(errorThrown);
