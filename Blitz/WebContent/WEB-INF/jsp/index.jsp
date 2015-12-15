@@ -20,21 +20,8 @@
       <a href="join-lobby.html"><button type="button" class="btn btn-lg btn-primary" value="join-game-button">Rejoindre une partie</button></a>
       <button type="button" class="btn btn-lg btn-primary">Historique</button>
     </div>
-    <div class="well" id="is-game-in-progress"></div>
+    <div id="is-game-in-progress"></div>
   </div>
-
-  <!--<div class="container">
-  <div class="row">
-
-  <div class="span4 offset4">
-
-  <ul class="list-group text-center span4 offset4">
-  <li class="list-group-item">gamers : </li>
-
-</ul>
-</div>
-</div>
-</div>-->
 
 <!-- CREATE GAME FORM -->
 <div class="modal fade" id="create-game-modal" tabindex="-1" role="dialog">
