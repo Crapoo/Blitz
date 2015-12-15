@@ -56,7 +56,7 @@ public class SignupServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.sendRedirect(req.getContextPath() + "index.html");
+		resp.sendRedirect(req.getContextPath() + "/index.html");
 	}
 
 	private void login(String nickname, HttpServletRequest req, HttpServletResponse resp)
@@ -66,7 +66,7 @@ public class SignupServlet extends HttpServlet {
 			session.setAttribute("nickname", nickname);
 			session.setAttribute("connected", true);
 		}
-		resp.sendRedirect(req.getContextPath() + "index.html");
+		resp.sendRedirect(req.getContextPath() + "/index.html");
 	}
 
 }
