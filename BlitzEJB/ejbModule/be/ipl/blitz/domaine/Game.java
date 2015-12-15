@@ -117,7 +117,8 @@ public class Game implements Serializable {
 	@Transient
 	private List<PlayerGame> players;
 
-	@Transient
+	@Column
+	@NotNull
 	private State state;
 
 	// TODO : ajouter le sens du jeu (et le joueur courant?)
