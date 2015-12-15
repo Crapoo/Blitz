@@ -14,7 +14,7 @@
   
   
 
-  <div class="container text-center">
+  <div class="menu container text-center">
 
     <div class="btn-group-vertical btn-group-lg" id="create-join-buttons">
       <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#create-game-modal">Cr&eacute;er une partie</button>
@@ -26,10 +26,18 @@
     <div class="well" id="is-game-in-progress"></div>
   </div>
   
-  <ul class="list text-center">
-  		<li>errors : </li>
+  <div class="container">
+  	<div class="row">
   
-  </ul>
+  		<div class="span4 offset4">
+  
+    		<ul class="list-group text-center span4 offset4">
+  				<li class="list-group-item">gamers : </li>
+  
+  			</ul>
+  		</div>
+  	</div>
+  </div>
 
   <!-- CREATE GAME FORM -->
   <div class="modal fade" id="create-game-modal" tabindex="-1" role="dialog">
