@@ -15,9 +15,10 @@
         <!-- TIMER AND ADDITIONAL INFO -->
         <div class="col-md-6">
           <h2>Minimum : ${applicationScope['min-players']} joueurs</h2>
+          <h1><span id="players-count"></span> / ${applicationScope['max-players']} joueurs</h1>
         </div>
       </div>
     </div>
 
-    <!--  <script src="js/refresh-lobby.js"></script>-->
+    <script src="js/refresh-lobby.js"></script>
     <link href="css/lobby.css" rel="stylesheet" type="text/css">

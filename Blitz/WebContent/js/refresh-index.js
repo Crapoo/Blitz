@@ -11,14 +11,13 @@ function refresh() {
       htmlResponse = '<p class="bg-primary"><strong>Aucune partie en cours</p></strong>';
       break;
       case "INITIAL":
-      htmlResponse = '<p class="bg-success"><strong>Partie en attente</p></strong>';
+      htmlResponse = '<p class="bg-success"><strong>Partie en attente</p> Joueurs : ' + response['players-count'] +'</strong>';
       break;
       case "IN_PROGERSS":
       htmlResponse = '<p class="bg-danger"><strong>Partie en cours</p></strong>';
       break;
     }
     $('#is-game-in-progress').html(htmlResponse);
-    console.log(response['players-count']);
   });
   $request.fail(function (xhr, textStatus, errorThrown) {
     alert(errorThrown);

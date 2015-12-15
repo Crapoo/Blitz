@@ -42,6 +42,7 @@ public class Game implements Serializable {
 				Util.checkObject(user);
 				Util.checkObject(game);
 
+				//TODO: check si limite de joueurs dans la partie est atteinte
 			/*	// pour pas ajouter deux fois le meme utilisateur
 				if (game.users != null) {
 					for (PlayerGame p : game.users) {
