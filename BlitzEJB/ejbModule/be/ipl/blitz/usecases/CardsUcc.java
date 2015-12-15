@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import be.ipl.blitz.domaine.Card;
+import be.ipl.blitz.domaine.PlayerGame;
 
 @Remote
 public interface CardsUcc {
@@ -21,7 +22,7 @@ public interface CardsUcc {
 	 *            Nombre de cartes à piocher.
 	 * @return Liste des cartes piochées.
 	 */
-	public List<Card> pickCard(int nb);
+	public List<Card> drawCard(int nb);
 
 	/**
 	 * Replace une carte en dessous du paquet de jeu.
@@ -32,12 +33,14 @@ public interface CardsUcc {
 	public void discard(Card card);
 
 	/**
-	 * Prends une carte au hasard dans les cartes du joueur donné.
+	 * Vole une carte dans le jeu du volé et les rajoute dans le jeu du voleur.
 	 * 
-	 * @param username
-	 *            Joueur à qui voler une carte.
-	 * @return La carte volée au joueur.
+	 * @param thief
+	 *            Joueur qui vole la carte.
+	 * @param victim
+	 *            Joueur chez qui on vole la carte.
+	 * @return La carte rajoutée au jeu du voleur.
 	 */
-	public Card stealCardFrom(String username);
+	public Card stealCardFrom(PlayerGame thief, PlayerGame victim);
 
 }
