@@ -3,35 +3,29 @@ package be.ipl.blitz.domaine;
 import java.io.Serializable;
 
 public class PlayerGamePK implements Serializable {
-	private int player;
-	private int game;
 
-	public PlayerGamePK() {
+	private int userId;
+	private int gameId;
+
+	public int getUserId() {
+		return userId;
 	}
 
-	public int getPlayer() {
-		return player;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
-	public void setPlayer(int player) {
-		this.player = player;
+	public int getGameId() {
+		return gameId;
 	}
 
-	public int getGame() {
-		return game;
-	}
-
-	public void setGame(int game) {
-		this.game = game;
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + game;
-		result = prime * result + player;
-		return result;
+		return (int) (userId + gameId);
 	}
 
 	@Override
@@ -43,9 +37,9 @@ public class PlayerGamePK implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		PlayerGamePK other = (PlayerGamePK) obj;
-		if (game != other.game)
+		if (gameId != other.gameId)
 			return false;
-		if (player != other.player)
+		if (userId != other.userId)
 			return false;
 		return true;
 	}

@@ -1,6 +1,7 @@
 package be.ipl.blitz.domaine;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -9,11 +10,13 @@ import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -21,6 +24,7 @@ import javax.validation.constraints.NotNull;
 import be.ipl.blitz.daoImpl.PlayerGameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.usecases.CardsUcc;
+import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.utils.Util;
 
 @Entity
@@ -28,46 +32,59 @@ import be.ipl.blitz.utils.Util;
 public class Game implements Serializable {
 
 	@EJB
-	private PlayerGameDaoImpl playerGameDao;
-
-	@EJB
-	private UserDaoImpl userDao;
-	
-	@EJB
 	@Transient
 	private CardsUcc cardUcc;
+	@EJB
+	@Transient
+	private GameUcc gameUcc;
 
 	public enum State {
 		INITIAL {
 			@Override
-			boolean addPlayer(User user, Game game) {
-				if (game.getPlayer(user) != null)
-					return false;
-				game.users.add(user);
-				PlayerGame p = new PlayerGame(user, game);
-				game.players.add(p);
-				game.playerGameDao.save(p);
-				return true;
+			PlayerGame addPlayer(User user, Game game) {
+				// Util.checkObject(user);
+				// Util.checkObject(game);
+				//
+				// if (game.getPlayer(user) != null) {
+				// return null;
+				// }
+				//
+				// game.users.add(user);
+				// PlayerGame p = new PlayerGame(user, game);
+				// game.players.add(p);
+				// return p;
+				return null;
 			}
 
 			@Override
 			boolean startGame(Game game) {
 				game.state = State.IN_PROGRESS;
 				Random r = new Random();
-				game.currentUser = r.nextInt(game.players.size());
+				game.currentUser = r.nextInt(game.users.size());
+				return dealCards(game);
+			}
+
+			private boolean dealCards(Game game) {
+				for (PlayerGame playerGame : game.users) {
+					List<Card> cards = game.drawCard(3);
+					if (cards == null) {
+						return false;
+					}
+					playerGame.setCards(cards);
+				}
 				return true;
 			}
 		},
 		IN_PROGRESS {
 			@Override
 			User nextPlayer(Game game) {
-				game.setCurrentUser((++game.currentUser) % game.players.size());
+				game.setCurrentUser((++game.currentUser) % game.users.size());
 				return game.getCurrentUser();
 			}
 
 			@Override
 			Set<Face> throwDice(Game game) {
-				PlayerGame p = game.players.get(game.currentUser);
+				PlayerGame p = game.users.get(game.currentUser);
 				Set<Face> faces = new HashSet<Face>();
 				for (Die d : p.getDice()) {
 					faces.add(d.throwDice());
@@ -77,16 +94,17 @@ public class Game implements Serializable {
 
 			@Override
 			boolean deleteDice(int num, String username, Game game) {
-				PlayerGame p = game.players.get(game.players.indexOf(game.userDao.findByName(username)));
-				int tmp = 0;
-				while (p.removeDie() && tmp < num) {
-					tmp++;
-				}
-				return true;
+				// PlayerGame p =
+				// game.users.get(game.users.indexOf(game.userDao.findByName(username)));
+				// int tmp = 0;
+				// while (p.removeDie() && tmp < num) {
+				// tmp++;
+				// }
+				return false;
 			}
-			
+
 			@Override
-			List<Card> drawCard(int num, Game game){
+			List<Card> drawCard(int num, Game game) {
 				return game.cardUcc.drawCard(num);
 			}
 		},
@@ -96,11 +114,11 @@ public class Game implements Serializable {
 				return null;
 			}
 		};
-		boolean addPlayer(User u, Game g) {
-			return false;
+		PlayerGame addPlayer(User u, Game g) {
+			return null;
 		}
 
-		List<Card> drawCard(int num,Game game) {
+		List<Card> drawCard(int num, Game game) {
 			return null;
 		}
 
@@ -146,15 +164,20 @@ public class Game implements Serializable {
 	@Transient
 	private int currentUser;
 
-	@ManyToMany(mappedBy = "games")
-	private List<User> users;
+	public List<PlayerGame> getUsers() {
+		return users;
+	}
 
-	@Transient
-	private List<PlayerGame> players;
+	public void setUsers(List<PlayerGame> users) {
+		this.users = users;
+	}
 
 	@Column
 	@NotNull
 	private State state;
+
+	@OneToMany(mappedBy = "game")
+	private List<PlayerGame> users;
 
 	// TODO : ajouter le sens du jeu
 
@@ -167,14 +190,7 @@ public class Game implements Serializable {
 		this.name = name;
 		this.startDate = new Date();
 		this.state = State.INITIAL;
-	}
-
-	public User getPlayer(User u) {
-		return users.get(users.indexOf(u));
-	}
-
-	public List<User> getPlayers() {
-		return this.users;
+		users = new ArrayList<>();
 	}
 
 	public int getId() {
@@ -213,14 +229,14 @@ public class Game implements Serializable {
 	}
 
 	public User getCurrentUser() {
-		return users.get(currentUser);
+		return null;
 	}
 
 	public void setCurrentUser(int currentUser) {
 		this.currentUser = currentUser;
 	}
 
-	public boolean addPlayer(User user) {
+	public PlayerGame addPlayer(User user) {
 		return state.addPlayer(user, this);
 	}
 
@@ -258,22 +274,15 @@ public class Game implements Serializable {
 		return state.nextPlayer(this);
 	}
 
-	@Override
-	public String toString() {
-		return "Game [name=" + name + ", id=" + id + ", startDate=" + startDate + ", winner=" + winner
-				+ ", currentUser=" + currentUser + ", users=" + users + ", players=" + players + ", state=" + state
-				+ "]";
-	}
-
 	public boolean deleteDice(int num, String username) {
 		return state.deleteDice(num, username, this);
 	}
 
-	public List<Card> drawCard(int num){
+	public List<Card> drawCard(int num) {
 		return state.drawCard(num, this);
 	}
-	
-	public void cancel(){
-		state=State.OVER;
+
+	public void cancel() {
+		state = State.OVER;
 	}
 }

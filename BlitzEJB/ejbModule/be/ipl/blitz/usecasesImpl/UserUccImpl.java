@@ -20,7 +20,10 @@ public class UserUccImpl implements UserUcc {
 	private UserDaoImpl dao;
 
 	public boolean saveUser(String username, String pwd) throws Exception {
-		if (dao.findByName(username) != null) {
+		Util.checkString(username);
+		Util.checkString(pwd);
+		if (dao.findByName(username) == null) {
+
 			return false;
 		}
 		User u = new User(username, pwd);

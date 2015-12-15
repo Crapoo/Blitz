@@ -9,6 +9,7 @@ import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.domaine.Face;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
+import be.ipl.blitz.domaine.PlayerGame;
 import be.ipl.blitz.domaine.User;
 
 @Remote

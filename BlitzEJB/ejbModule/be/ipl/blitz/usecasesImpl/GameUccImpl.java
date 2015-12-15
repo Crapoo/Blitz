@@ -13,14 +13,17 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 import be.ipl.blitz.daoImpl.GameDaoImpl;
+import be.ipl.blitz.daoImpl.PlayerGameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.domaine.Face;
 import be.ipl.blitz.domaine.Game;
+import be.ipl.blitz.domaine.PlayerGame;
 import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.domaine.User;
 import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
+import be.ipl.blitz.usecases.UserUcc;
 import be.ipl.blitz.utils.Util;
 
 @Singleton
@@ -32,36 +35,39 @@ public class GameUccImpl implements GameUcc {
 	@EJB
 	private UserDaoImpl userDao;
 	@EJB
+	private PlayerGameDaoImpl playerGameDao;
+
+	@EJB
+	private UserUcc userUcc;
+	@EJB
 	private CardsUcc cardsUcc;
 
 	public GameUccImpl() {
 	}
 
-	@PostConstruct
-	public void postconstruct() {
-		System.out.println("GestionPartieImpl created");
-	}
-
-	@PreDestroy
-	public void predestroy() {
-		System.out.println("GestionPartieImpl destroyed");
-	}
-
 	public boolean joinGame(String gameName, String username) {
 		Util.checkString(username);
 		Util.checkString(gameName);
-		if (game != null && game.getState() == State.IN_PROGRESS) {
+		if (game == null) {
 			return false;
 		}
-		if (game == null || game.getState() == State.OVER) {
+		State gameState = game.getState();
+		if (gameState == State.IN_PROGRESS || gameState == State.OVER) {
 			return false;
 		}
-		User player = userDao.search(username);
-		if (game.addPlayer(player)) {
-			gameDao.update(game);
-			return true;
+		User player = userUcc.findByName(username);
+
+		System.out.println("PLAYER : " + player);
+
+		PlayerGame playerGame = game.addPlayer(player);
+		if (playerGame == null) {
+			return false;
 		}
-		return false;
+
+		System.out.println("PLAYERGAME : " + playerGame);
+		gameDao.update(game);
+		playerGameDao.save(playerGame);
+		return true;
 	}
 
 	@Override
@@ -70,10 +76,10 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return null;
 		}
-		List<User> users = game.getPlayers();
+		List<PlayerGame> playerGames = game.getUsers();
 		List<String> pseudos = new ArrayList<String>();
-		for (User u : users) {
-			pseudos.add(u.getName());
+		for (PlayerGame pl : playerGames) {
+			pseudos.add(pl.getUser().getName());
 		}
 		return pseudos;
 	}
@@ -181,4 +187,5 @@ public class GameUccImpl implements GameUcc {
 		Util.checkPositiveOrZero(num);
 		return game.drawCard(num);
 	}
+
 }
