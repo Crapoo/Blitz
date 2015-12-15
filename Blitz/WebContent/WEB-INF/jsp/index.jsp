@@ -11,8 +11,6 @@
     </div>
   </nav>
 
-
-
   <div class="container text-center">
 
     <div class="row" id="create-join-buttons">
@@ -48,4 +46,4 @@
     </div>
 
     <link href="css/index.css" type="text/css" rel="stylesheet">
-    <script type="text/javascript" src="js/refresh-index.js"></script>
+      <script type="text/javascript" src="js/refresh-index.js"></script>

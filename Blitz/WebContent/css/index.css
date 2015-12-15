@@ -14,7 +14,7 @@ body {
 }*/
 
 #create-join-buttons button {
-  padding: 3em;
+  padding: 2em;
   border-radius: 0;
 }
 
@@ -23,7 +23,7 @@ body {
 }
 
 #is-game-in-progress {
-  padding: 2em;
+  padding: 1.8em;
   margin-top: 2em;
 }
 
