@@ -108,20 +108,20 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public boolean deleteDice(int num, int id) {
+	public boolean deleteDice(int num, String username) {
 		if (game == null)
 			return false;
-		game = gameDao.findById(game.getId());
-		return game.deleteDice(num,id);
+		game = gameDao.reload(game.getId());
+		return game.deleteDice(num, username);
 	}
 
 	@Override
-	public boolean nextPlayer() {/*
-									 * if (game== null) return false; game =
-									 * gameDao.findById(game.getId()); return
-									 * game.commencerTourSuivant();
-									 */
-		return false;
+	public User nextPlayer() {/*
+								 * if (game== null) return false; game =
+								 * gameDao.findById(game.getId()); return
+								 * game.commencerTourSuivant();
+								 */
+		return null;
 	}
 
 	@Override
@@ -132,15 +132,6 @@ public class GameUccImpl implements GameUcc {
 							 * return u.getName();
 							 */
 		return null;
-	}
-
-	@Override
-	public boolean isOver() {/*
-								 * if (game == null) return true; game =
-								 * gameDao.findById(game.getId()); return
-								 * game.getEtat() == Etat.FINIE;
-								 */
-		return false;
 	}
 
 	@Override
