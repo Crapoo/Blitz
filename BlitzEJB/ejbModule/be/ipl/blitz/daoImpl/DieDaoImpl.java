@@ -16,7 +16,6 @@ public class DieDaoImpl extends DaoImpl<Integer, Die> {
 
 	@Override
 	public Die findById(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

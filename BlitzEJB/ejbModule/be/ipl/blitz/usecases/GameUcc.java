@@ -1,9 +1,11 @@
 package be.ipl.blitz.usecases;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Remote;
 
+import be.ipl.blitz.domaine.Face;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
 
@@ -16,7 +18,7 @@ public interface GameUcc {
 	boolean startGame();
 	boolean isOver();
 	void cancelGame();
-	boolean throwDice();
+	Set<Face> throwDice();
 	Game getCurrentGame();
 	boolean deleteDie(int numero);
 	boolean nextPlayer();

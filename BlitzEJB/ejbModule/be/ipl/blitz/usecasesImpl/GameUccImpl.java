@@ -2,6 +2,7 @@ package be.ipl.blitz.usecasesImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -13,6 +14,7 @@ import javax.ejb.Startup;
 
 import be.ipl.blitz.daoImpl.GameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
+import be.ipl.blitz.domaine.Face;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.domaine.User;
@@ -27,7 +29,7 @@ public class GameUccImpl implements GameUcc {
 	private GameDaoImpl gameDao;
 	@EJB
 	private UserDaoImpl userDao;
-	
+
 	@EJB
 	private CardsUcc cardsUcc;
 
@@ -98,22 +100,19 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public boolean throwDice() {
+	public Set<Face> throwDice() {
 		if (game == null)
-			return false;
+			return null;
 		game = gameDao.findById(game.getId());
-		return game.throwDice();// TODO javier update(game) even if modified is
-								// playerGame?
+		return game.throwDice();
 	}
 
 	@Override
-	public boolean deleteDie(
-			int num) {/*
-						 * if (game == null) return false; game =
-						 * partieDao.findById(game.getId()); boolean result =
-						 * game.deleteDie(num); return result;
-						 */
-		return false;
+	public boolean deleteDice(int num, int id) {
+		if (game == null)
+			return false;
+		game = gameDao.findById(game.getId());
+		return game.deleteDice(num,id);
 	}
 
 	@Override
@@ -157,7 +156,7 @@ public class GameUccImpl implements GameUcc {
 		}
 		this.game = new Game(gameName);
 		game = gameDao.save(game);
-		
+
 		cardsUcc.shuffleDeck();
 		return true;
 	}

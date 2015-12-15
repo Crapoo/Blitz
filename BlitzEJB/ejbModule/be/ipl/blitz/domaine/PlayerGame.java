@@ -46,7 +46,7 @@ public class PlayerGame implements Serializable {
 		//instanciation d'un dé pour recuperer le nombre de dé par personne
 		Die d=new Die();
 		for(int i=0;i<d.getNbByPlayer();i++){
-			
+			dice.add(new Die());
 		}
 		cards = cardUcc.pickCard(3);
 	}
@@ -74,6 +74,14 @@ public class PlayerGame implements Serializable {
 		return dice;
 	}
 
+	public boolean removeDie(){
+		if(dice.isEmpty()){
+			return false;
+		}
+		this.dice.remove(0);
+		return true;
+	}
+	
 	public void setDice(List<Die> dice) {
 		this.dice = dice;
 	}

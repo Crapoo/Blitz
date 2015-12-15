@@ -1,11 +1,13 @@
 package be.ipl.blitz.domaine;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
+import javax.ejb.EJB;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,12 +18,20 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import be.ipl.blitz.daoImpl.PlayerGameDaoImpl;
+import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.utils.Util;
 
 @Entity
 @Table(name = "GAMES", schema = "BLITZ")
 public class Game implements Serializable {
 
+	@EJB
+	private PlayerGameDaoImpl playerGameDao;
+	
+	@EJB
+	private UserDaoImpl userDao;
+	
 	public enum State {
 		INITIAL {
 			@Override
@@ -29,6 +39,9 @@ public class Game implements Serializable {
 				if (game.getPlayer(user) != null)
 					return false;
 				game.users.add(user);
+				PlayerGame p=new PlayerGame(user, game);
+				game.players.add(p);
+				game.playerGameDao.save(p);
 				return true;
 			}
 
@@ -37,9 +50,6 @@ public class Game implements Serializable {
 				game.state = State.IN_PROGRESS;
 				Random r = new Random();
 				game.currentUser = r.nextInt(game.players.size());
-				for (User u : game.users) {
-					game.players.add(new PlayerGame(u, game));
-				}
 				return true;
 			}
 		},
@@ -48,18 +58,24 @@ public class Game implements Serializable {
 			boolean startNextTurn(Game game) {
 				return true;
 			}
-
 			@Override
-			boolean throwDice(Game game) {
+			Set<Face> throwDice(Game game) {
 				PlayerGame p = game.players.get(game.currentUser);
-				List<Face> facesThrown = new ArrayList<>();
-
-				return true;
+				Set<Face> faces= new HashSet<Face>();
+				for(Die d:p.getDice()){
+					faces.add(d.throwDice());
+				}				
+				return faces;
 			}
 
 			@Override
-			boolean ecarterDe(int num, Game game) {
-				return false;
+			boolean deleteDice(int num, String username,Game game) {
+				PlayerGame p=game.players.get(game.players.indexOf(game.userDao.findByName(username)));
+				int tmp=0;
+				while(p.removeDie() && tmp<num){
+					tmp++;
+				}
+				return true;
 			}
 		},
 
@@ -81,11 +97,11 @@ public class Game implements Serializable {
 			return false;
 		}
 
-		boolean throwDice(Game game) {
-			return false;
+		Set<Face> throwDice(Game game) {
+			return null;
 		}
 
-		boolean ecarterDe(int numero, Game game) {
+		boolean deleteDice(int num,String id, Game game) {
 			return false;
 		}
 
@@ -121,7 +137,7 @@ public class Game implements Serializable {
 	@NotNull
 	private State state;
 
-	// TODO : ajouter le sens du jeu (et le joueur courant?)
+	// TODO : ajouter le sens du jeu
 
 	public Game() {
 		this("No name given");
@@ -215,7 +231,7 @@ public class Game implements Serializable {
 		return true;
 	}
 
-	public boolean throwDice() {
+	public Set<Face> throwDice() {
 		return state.throwDice(this);
 	}
 
@@ -224,6 +240,10 @@ public class Game implements Serializable {
 		return "Game [name=" + name + ", id=" + id + ", startDate=" + startDate + ", winner=" + winner
 				+ ", currentUser=" + currentUser + ", users=" + users + ", players=" + players + ", state=" + state
 				+ "]";
+	}
+
+	public boolean deleteDice(int num, String username) {
+		return state.deleteDice(num, username, this);
 	}
 
 }
