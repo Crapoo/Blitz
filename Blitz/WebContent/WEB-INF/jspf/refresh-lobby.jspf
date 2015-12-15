@@ -3,5 +3,5 @@
   <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
   <c:forEach var="player" items="${applicationScope['players-list']}">
-     <li class="list-group-item"><c:out value="${window}"/></li>
+     <li class="list-group-item"><c:out value="${player}"/></li>
  </c:forEach>

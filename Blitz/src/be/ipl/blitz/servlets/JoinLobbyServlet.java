@@ -21,16 +21,17 @@ public class JoinLobbyServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("SALAM");
 		final ServletContext context = getServletContext();
 		synchronized (context) {
 			// TODO Add security - Przemek
 			gameUcc.joinGame((String) context.getAttribute("game-name"),
 					(String) request.getSession().getAttribute("nickname"));
 			context.setAttribute("players-list", gameUcc.listPlayers());
+			context.setAttribute("players-count", gameUcc.listPlayers().size());
 		}
 
-		getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
+		response.sendRedirect("lobby.html");
+		//getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
 	xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp"
@@ -48,15 +47,6 @@
 		<servlet-name>index.html</servlet-name>
 		<url-pattern>/index.html</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>rejoindre.html</servlet-name>
-		<jsp-file>/WEB-INF/jsp/enAttente.jsp</jsp-file>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>rejoindre.html</servlet-name>
-		<url-pattern>/rejoindre.html</url-pattern>
-	</servlet-mapping>
 	<servlet>
 		<servlet-name>login.html</servlet-name>
 		<jsp-file>/WEB-INF/jsp/login.jsp</jsp-file>
@@ -73,19 +63,10 @@
 		<servlet-name>error.html</servlet-name>
 		<url-pattern>/error.html</url-pattern>
 	</servlet-mapping>
-	<servlet>
-		<servlet-name>refresh-index.html</servlet-name>
-		<jsp-file>/WEB-INF/jspf/refresh-index.jspf</jsp-file>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>refresh-index.html</servlet-name>
-		<url-pattern>/refresh-index.html</url-pattern>
-	</servlet-mapping>
 	<session-config>
 		<cookie-config>
 			<http-only>true</http-only>
 		</cookie-config>
 		<tracking-mode>COOKIE</tracking-mode>
 	</session-config>
-
 </web-app>

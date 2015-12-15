@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import be.ipl.blitz.domaine.Blitz;
 import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.utils.Util;
@@ -43,28 +44,28 @@ public class CreateGameServlet extends HttpServlet {
 		synchronized (context) {
 			State gameState = null;
 			if (gameUcc.createGame(gameName)) {
-				gameState = gameUcc.getState();
-				if (gameState == null) {
-					gameState = State.OVER;
-				} else {
-					// TODO do something if null - Przemek
-					// gameUcc.joinGame(gameName, (String)
-					// request.getSession().getAttribute("nickname"));
-				}
+				/*
+				 * gameState = gameUcc.getState(); if (gameState == null) {
+				 * gameState = State.OVER; } else { // TODO do something if null
+				 * - Przemek // gameUcc.joinGame(gameName, (String) //
+				 * request.getSession().getAttribute("nickname")); }
+				 */
+				Blitz blitz = new Blitz();
+
+				// context.setAttribute("game-status", gameState);
+				context.setAttribute("game-name", gameName);
+				context.setAttribute("max-players", blitz.getMaxPlayers());
+				context.setAttribute("min-players", blitz.getMinPlayers());
+				context.getNamedDispatcher("join-lobby.html").forward(request, response);
+				return;
 			} else {
-				// Shouldn't happen but hey..
-				request.setAttribute("error-message", "Partie déjà en cours!");
-				request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
+				// request.setAttribute("error-message", "Partie déjà en
+				// cours!");
+				request.getServletContext().getNamedDispatcher("index.html").forward(request, response);
 				return;
 			}
 
-			context.setAttribute("game-status", gameState);
-			context.setAttribute("game-name", gameName);
-			context.getNamedDispatcher("join-lobby.html").forward(request, response);
-			return;
 		}
-		// getServletContext().getNamedDispatcher("index.html").forward(request,
-		// response);
 	}
 
 }

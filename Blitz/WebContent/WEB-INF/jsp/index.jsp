@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <body>
-  <script type="text/javascript" src="lib/js/refresh-index.js"></script>
 
   <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -61,4 +60,5 @@
     </div>
   </div>
 
-  <link href="lib/css/index.css" type="text/css" rel="stylesheet">
+  <link href="css/index.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="js/refresh-index.js"></script>
