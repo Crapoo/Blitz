@@ -42,7 +42,8 @@ public class FilterController implements Filter {
 		 */
 
 		String name = req.getServletPath();
-		String[] pages = { "/index.html", "/login.html", "/signin.html", "/signup.html", "/refresh-index.html",
+		
+		String[] pages = { "/index.html", "disconnect.html", "/login.html", "/signin.html", "/signup.html", "/refresh-index.html",
 				"/create-game.html", "/refresh-lobby.html", "/lobby.html", "/join-lobby.html" };
 
 		//if (!name.contains("/lib/") && !Arrays.asList(pages).contains(name)) {

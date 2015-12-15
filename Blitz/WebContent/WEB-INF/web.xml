@@ -67,14 +67,6 @@
     <servlet-name>refresh-index.html</servlet-name>
     <url-pattern>/refresh-index.html</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>refresh-lobby.html</servlet-name>
-    <jsp-file>/WEB-INF/jspf/refresh-lobby.jspf</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>refresh-lobby.html</servlet-name>
-    <url-pattern>/refresh-lobby.html</url-pattern>
-  </servlet-mapping>
   <session-config>
     <cookie-config>
       <http-only>true</http-only>
