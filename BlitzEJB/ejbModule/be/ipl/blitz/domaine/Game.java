@@ -34,6 +34,7 @@ public class Game implements Serializable {
 	private UserDaoImpl userDao;
 	
 	@EJB
+	@Transient
 	private CardsUcc cardUcc;
 
 	public enum State {
