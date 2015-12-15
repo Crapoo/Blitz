@@ -59,14 +59,6 @@
     <servlet-name>error.html</servlet-name>
     <url-pattern>/error.html</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>refresh-index.html</servlet-name>
-    <jsp-file>/WEB-INF/jspf/refresh-index.jspf</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>refresh-index.html</servlet-name>
-    <url-pattern>/refresh-index.html</url-pattern>
-  </servlet-mapping>
   <session-config>
     <cookie-config>
       <http-only>true</http-only>

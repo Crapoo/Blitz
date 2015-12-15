@@ -21,7 +21,6 @@ public class JoinLobbyServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("SALAM");
 		final ServletContext context = getServletContext();
 		synchronized (context) {
 			// TODO Add security - Przemek
