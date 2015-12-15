@@ -3,7 +3,7 @@
   <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
   <body>
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <!-- PLAYERS LIST -->
         <div class="col-md-6">

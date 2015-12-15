@@ -6,16 +6,27 @@ body {
 .navbar {
   border-bottom: 3px solid grey;
   border-radius: 0;
+  padding: 10px;
 }
 
-#create-join-buttons {
+/*#create-join-buttons {
     margin-top: 200px;
-}
+}*/
 
 #create-join-buttons button {
   padding: 3em;
+  border-radius: 0;
+}
+
+.glyphicon {
+  margin-right: 1.5em;
 }
 
 #is-game-in-progress {
+  padding: 2em;
   margin-top: 2em;
+}
+
+#is-game-in-progress p {
+  padding: 2em;
 }

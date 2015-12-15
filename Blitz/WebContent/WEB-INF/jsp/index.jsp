@@ -7,18 +7,18 @@
       <div class="navbar-nav">
         <p class="navbar-text">Bonjour ${sessionScope['nickname']}</p>
       </div>
-      <span class="navbar-nav navbar-right"><a href="disconnect.html"><button type="button" class="btn btn-lg btn-default">Se D&eacute;connecter</button></a></span>
+      <span class="navbar-nav navbar-right"><a href="disconnect.html"><button type="button" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Se D&eacute;connecter</button></a></span>
     </div>
   </nav>
 
 
 
-  <div class="menu container text-center">
+  <div class="container text-center">
 
-    <div class="btn-group-vertical btn-group-lg" id="create-join-buttons">
-      <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#create-game-modal">Cr&eacute;er une partie</button>
-      <a href="join-lobby.html"><button type="button" class="btn btn-lg btn-primary" value="join-game-button">Rejoindre une partie</button></a>
-      <button type="button" class="btn btn-lg btn-primary">Historique</button>
+    <div class="row" id="create-join-buttons">
+      <button type="button" class="btn btn-lg btn-primary col-md-6" data-toggle="modal" data-target="#create-game-modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Cr&eacute;er une partie</button>
+      <a href="join-lobby.html"><button type="button" class="btn btn-lg btn-primary col-md-6" value="join-game-button"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>Rejoindre une partie</button></a>
+      <button type="button" class="btn btn-lg btn-primary col-md-12"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>Historique</button>
     </div>
     <div id="is-game-in-progress"></div>
   </div>
@@ -48,4 +48,4 @@
     </div>
 
     <link href="css/index.css" type="text/css" rel="stylesheet">
-      <script type="text/javascript" src="js/refresh-index.js"></script>
+    <script type="text/javascript" src="js/refresh-index.js"></script>
