@@ -10,19 +10,15 @@ import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import be.ipl.blitz.daoImpl.PlayerGameDaoImpl;
-import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.utils.Util;
@@ -42,18 +38,21 @@ public class Game implements Serializable {
 		INITIAL {
 			@Override
 			PlayerGame addPlayer(User user, Game game) {
-				// Util.checkObject(user);
-				// Util.checkObject(game);
-				//
-				// if (game.getPlayer(user) != null) {
-				// return null;
-				// }
-				//
-				// game.users.add(user);
-				// PlayerGame p = new PlayerGame(user, game);
-				// game.players.add(p);
-				// return p;
-				return null;
+				Util.checkObject(user);
+				Util.checkObject(game);
+
+			/*	// pour pas ajouter deux fois le meme utilisateur
+				if (game.users != null) {
+					for (PlayerGame p : game.users) {
+						if (p.getUser().equals(user)) {
+							return null;
+						}
+					}
+				}
+*/
+				PlayerGame p = new PlayerGame(user, game);
+				game.users.add(p);
+				return p;
 			}
 
 			@Override
@@ -237,6 +236,7 @@ public class Game implements Serializable {
 	}
 
 	public PlayerGame addPlayer(User user) {
+		Util.checkObject(user);
 		return state.addPlayer(user, this);
 	}
 

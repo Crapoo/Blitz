@@ -7,6 +7,9 @@ public class PlayerGamePK implements Serializable {
 	private int userId;
 	private int gameId;
 
+	public PlayerGamePK() {
+	}
+	
 	public int getUserId() {
 		return userId;
 	}

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.ejb.Lock;
 import javax.ejb.LockType;
@@ -18,8 +16,8 @@ import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.domaine.Face;
 import be.ipl.blitz.domaine.Game;
-import be.ipl.blitz.domaine.PlayerGame;
 import be.ipl.blitz.domaine.Game.State;
+import be.ipl.blitz.domaine.PlayerGame;
 import be.ipl.blitz.domaine.User;
 import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
@@ -57,12 +55,12 @@ public class GameUccImpl implements GameUcc {
 		}
 		User player = userUcc.findByName(username);
 
-		System.out.println("PLAYER : " + player);
-
-		PlayerGame playerGame = new PlayerGame(player, game);
-
+		PlayerGame playerGame = game.addPlayer(player);
+		if (playerGame == null) {
+			return false;
+		}
 		gameDao.update(game);
-		playerGameDao.save(playerGame);
+		//playerGameDao.save(playerGame);
 		return true;
 	}
 
