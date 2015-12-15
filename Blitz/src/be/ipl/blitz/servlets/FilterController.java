@@ -42,7 +42,8 @@ public class FilterController implements Filter {
 		 */
 
 		String name = req.getServletPath();
-		String[] pages = { "/index.html", "/login.html", "/signin.html", "/signup.html", "/refresh-index.html", "/create-game.html", "/rejoindre.html" };
+		String[] pages = { "/index.html", "/login.html", "/signin.html", "/signup.html", "/refresh-index.html",
+				"/create-game.html", "/refresh-lobby.html", "/lobby.html", "/join-lobby.html" };
 
 		if (!name.contains("/lib/") && !Arrays.asList(pages).contains(name)) {
 			request.setAttribute("error-message",
@@ -52,11 +53,12 @@ public class FilterController implements Filter {
 		}
 
 		// If not logged, send to login.html
-		/*HttpSession session = req.getSession();
-		if (session.getAttribute("connected") == null) {
-			request.getServletContext().getNamedDispatcher("login.html").forward(request, response);
-			return;
-		}*/
+		/*
+		 * HttpSession session = req.getSession(); if
+		 * (session.getAttribute("connected") == null) {
+		 * request.getServletContext().getNamedDispatcher("login.html").forward(
+		 * request, response); return; }
+		 */
 
 		chain.doFilter(request, response);
 	}
