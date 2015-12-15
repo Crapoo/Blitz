@@ -21,6 +21,7 @@ import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.domaine.User;
 import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
+import be.ipl.blitz.utils.Util;
 
 @Singleton
 @Startup
@@ -46,14 +47,16 @@ public class GameUccImpl implements GameUcc {
 		System.out.println("GestionPartieImpl destroyed");
 	}
 
-	public boolean joinGame(String gameName, String pseudo) {
+	public boolean joinGame(String gameName, String username) {
+		Util.checkString(username);
+		Util.checkString(gameName);
 		if (game != null && game.getState() == State.IN_PROGRESS) {
 			return false;
 		}
 		if (game == null || game.getState() == State.OVER) {
 			return false;
 		}
-		User player = userDao.search(pseudo);
+		User player = userDao.search(username);
 		if (game.addPlayer(player)) {
 			gameDao.update(game);
 			return true;
@@ -109,6 +112,8 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public boolean deleteDice(int num, String username) {
+		Util.checkPositiveOrZero(num);
+		Util.checkString(username);
 		if (game == null) {
 			return false;
 		}
@@ -146,6 +151,7 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public boolean createGame(String gameName) {
+		Util.checkString(gameName);
 		if (game != null) {
 			return false;
 		}
@@ -172,6 +178,7 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public List<Card> drawCard(int num) {
+		Util.checkPositiveOrZero(num);
 		return game.drawCard(num);
 	}
 }
