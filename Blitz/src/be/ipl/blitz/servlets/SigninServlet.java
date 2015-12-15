@@ -54,17 +54,17 @@ public class SigninServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		getServletContext().getNamedDispatcher("index.html").forward(req, resp);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect("index.html");
 	}
 
-	private void login(String nickname, HttpServletRequest req, HttpServletResponse resp)
+	private void login(String nickname, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = req.getSession();
+		HttpSession session = request.getSession();
 		synchronized (session) {
 			session.setAttribute("nickname", nickname);
 			session.setAttribute("connected", true);
 		}
-		getServletContext().getNamedDispatcher("index.html").forward(req, resp);
+		response.sendRedirect("index.html");
 	}
 }

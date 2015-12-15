@@ -81,5 +81,4 @@
 
 				</div>
 
-				<link href="lib/css/login.css" rel="stylesheet" type="text/css">
-					
+				<link href="css/login.css" rel="stylesheet" type="text/css">

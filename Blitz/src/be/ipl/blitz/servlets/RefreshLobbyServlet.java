@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import be.ipl.blitz.domaine.Blitz;
 import be.ipl.blitz.usecases.GameUcc;
 
 /**
@@ -29,6 +30,7 @@ public class RefreshLobbyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final ServletContext context = getServletContext();
 		context.setAttribute("player-list", gameUcc.listPlayers());
+		context.setAttribute("players-count", gameUcc.listPlayers().size());
 	}
 
 }

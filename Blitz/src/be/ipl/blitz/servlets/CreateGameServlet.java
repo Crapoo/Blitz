@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import be.ipl.blitz.domaine.Blitz;
 import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.utils.Util;
@@ -57,14 +58,16 @@ public class CreateGameServlet extends HttpServlet {
 				request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
 				return;
 			}
+			
+			Blitz blitz = new Blitz();
 
 			context.setAttribute("game-status", gameState);
 			context.setAttribute("game-name", gameName);
+			context.setAttribute("max-players", blitz.getMaxPlayers());
+			context.setAttribute("min-players", blitz.getMinPlayers());
 			context.getNamedDispatcher("join-lobby.html").forward(request, response);
 			return;
 		}
-		// getServletContext().getNamedDispatcher("index.html").forward(request,
-		// response);
 	}
 
 }

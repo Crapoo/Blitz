@@ -45,12 +45,13 @@ public class FilterController implements Filter {
 		String[] pages = { "/index.html", "/login.html", "/signin.html", "/signup.html", "/refresh-index.html",
 				"/create-game.html", "/refresh-lobby.html", "/lobby.html", "/join-lobby.html" };
 
-		if (!name.contains("/lib/") && !Arrays.asList(pages).contains(name)) {
+		//if (!name.contains("/lib/") && !Arrays.asList(pages).contains(name)) {
+		/*if (!Arrays.asList(pages).contains(name)) {
 			request.setAttribute("error-message",
 					"Bonjour, la page que vous recherchez n'est actuellement pas disponible, veuillez retourner demain ou bien le jour qui vient après le jour de demain. Eventuellement, changez de fournisseurs d'accès internet et émmigrez au Kenya.");
 			request.getServletContext().getNamedDispatcher("error.html").forward(request, response);
 			return;
-		}
+		}*/
 
 		// If not logged, send to login.html
 		/*

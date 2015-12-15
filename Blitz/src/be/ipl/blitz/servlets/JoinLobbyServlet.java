@@ -28,9 +28,11 @@ public class JoinLobbyServlet extends HttpServlet {
 			gameUcc.joinGame((String) context.getAttribute("game-name"),
 					(String) request.getSession().getAttribute("nickname"));
 			context.setAttribute("players-list", gameUcc.listPlayers());
+			context.setAttribute("players-count", gameUcc.listPlayers().size());
 		}
 
-		getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
+		response.sendRedirect("lobby.html");
+		//getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
