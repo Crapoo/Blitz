@@ -8,6 +8,8 @@
 
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="lib/js/jquery-ui.min.js"></script>
+  <script src="lib/js/ajax.js"></script>
   <script>
   $(function() {
     $('[data-toggle="popover"]').popover( { html : true} );

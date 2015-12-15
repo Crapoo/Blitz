@@ -2,6 +2,9 @@ package be.ipl.blitz.servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +26,28 @@ public class Rejoindre extends HttpServlet {
 	private GameUcc gucc;
 	private UserUcc uucc;
 	
-       
+    Logger logger = Logger.getLogger("MyLog");  
+    FileHandler fh;  
+    {
+    try {  
+
+        // This block configure the logger with handler and formatter  
+        fh = new FileHandler("/tmp/MyLogFile.log");  
+        logger.addHandler(fh);
+        SimpleFormatter formatter = new SimpleFormatter();  
+        fh.setFormatter(formatter);  
+
+        // the following statement is used to log any messages  
+        logger.info("My first log");  
+
+    } catch (SecurityException ex) {  
+        ex.printStackTrace();  
+    } catch (IOException ex) {  
+        ex.printStackTrace();  
+    }  
+    }
+
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,8 +67,11 @@ public class Rejoindre extends HttpServlet {
 		
 		HttpSession se = request.getSession();
 		synchronized (se) {
-			nickname = (String) se.getAttribute("nickname");
+			nickname = (String) se.getAttribute("nickName");
 		}
+		
+		logger.info(gucc.getCurrentGame().toString());
+		logger.info(uucc.findByNick(nickname).getName());
 		
 		gucc.getCurrentGame().addPlayer(uucc.findByNick(nickname));
 

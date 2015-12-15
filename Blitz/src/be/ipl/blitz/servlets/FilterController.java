@@ -42,7 +42,7 @@ public class FilterController implements Filter {
 		 */
 
 		String name = req.getServletPath();
-		String[] pages = { "/index.html", "/login.html", "/signin.html", "/signup.html", "/refresh-index.html", "/create-game.html" };
+		String[] pages = { "/index.html", "/login.html", "/signin.html", "/signup.html", "/refresh-index.html", "/create-game.html", "/rejoindre.html" };
 
 		if (!name.contains("/lib/") && !Arrays.asList(pages).contains(name)) {
 			request.setAttribute("error-message",

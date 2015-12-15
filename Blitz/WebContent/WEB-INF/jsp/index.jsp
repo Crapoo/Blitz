@@ -11,16 +11,25 @@
       <span class="navbar-nav navbar-right"><button class="btn navbar-btn">Se D&eacute;connecter</button></span>
     </div>
   </nav>
+  
+  
 
   <div class="container text-center">
 
     <div class="btn-group-vertical btn-group-lg" id="create-join-buttons">
       <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#create-game-modal">Cr&eacute;er une partie</button>
-      <!--<button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#join-game-modal">Rejoindre une partie</button>-->
+      <form class="fRejoindre" method="get" action="rejoindre.html">
+      	<button type="submit" class="btn btn-lg btn-primary" data-toggle="modal" value="${sessionScope['nickname']}">Rejoindre une partie</button>
+      </form>
       <button type="button" class="btn btn-lg btn-primary">Historique</button>
     </div>
     <div class="well" id="is-game-in-progress"></div>
   </div>
+  
+  <ul class="list text-center">
+  		<li>errors : </li>
+  
+  </ul>
 
   <!-- CREATE GAME FORM -->
   <div class="modal fade" id="create-game-modal" tabindex="-1" role="dialog">
