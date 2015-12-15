@@ -14,7 +14,13 @@ public class PlayerGamePK implements Serializable {
 
 	public PlayerGamePK() {
 	}
-	
+
+	public PlayerGamePK(int userId, int gameId) {
+		super();
+		this.userId = userId;
+		this.gameId = gameId;
+	}
+
 	public int getUserId() {
 		return userId;
 	}

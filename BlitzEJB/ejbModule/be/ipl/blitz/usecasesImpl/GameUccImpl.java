@@ -18,6 +18,7 @@ import be.ipl.blitz.domaine.Face;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.domaine.PlayerGame;
+import be.ipl.blitz.domaine.PlayerGamePK;
 import be.ipl.blitz.domaine.User;
 import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
@@ -60,6 +61,7 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		playerGameDao.save(playerGame);
+		playerGameDao.update(playerGame);
 		gameDao.update(game);
 		return true;
 	}
@@ -71,8 +73,11 @@ public class GameUccImpl implements GameUcc {
 			return null;
 		}
 		List<PlayerGame> playerGames = game.getUsers();
+
 		List<String> pseudos = new ArrayList<String>();
+
 		for (PlayerGame pl : playerGames) {
+			pl = playerGameDao.reload(new PlayerGamePK(game.getId(), pl.getUserId()));
 			pseudos.add(pl.getUser().getName());
 		}
 		return pseudos;
@@ -155,7 +160,7 @@ public class GameUccImpl implements GameUcc {
 		if (game != null) {
 			return false;
 		}
-		
+
 		this.game = new Game(gameName);
 		game = gameDao.save(game);
 
