@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.usecases.GameUcc;
 
 @WebServlet("/refresh-index.html")
@@ -39,8 +40,12 @@ public class RefreshIndexServlet extends HttpServlet {
 		} else {
 			oBuilder.add("payers-count", gameUcc.listPlayers().size());
 		}
-
-		oBuilder.add("game-state", gameUcc.getState().toString());
+		State state = gameUcc.getState();
+		if (state != null) {
+			oBuilder.add("game-state", gameUcc.getState().toString());
+		} else {
+			oBuilder.add("game-state", "");
+		}
 		JsonObject json = oBuilder.build();
 
 		response.getWriter().print(json.toString());
