@@ -23,7 +23,6 @@ public class UserUccImpl implements UserUcc {
 		Util.checkString(username);
 		Util.checkString(pwd);
 		if (dao.findByName(username) != null) {
-
 			return false;
 		}
 		User u = new User(username, pwd);
@@ -33,6 +32,7 @@ public class UserUccImpl implements UserUcc {
 
 	@Override
 	public User login(String username, String pwd) throws Exception {
+		//TODO: matteo verif username is case insensitive
 		Util.checkString(username);
 		Util.checkString(pwd);
 		User u = dao.findByName(username);
