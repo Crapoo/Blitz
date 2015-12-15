@@ -116,12 +116,11 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public User nextPlayer() {/*
-								 * if (game== null) return false; game =
-								 * gameDao.findById(game.getId()); return
-								 * game.commencerTourSuivant();
-								 */
-		return null;
+	public User nextPlayer() {
+		if (game == null)
+			return null;
+		game = gameDao.findById(game.getId());
+		return game.nextPlayer();
 	}
 
 	@Override

@@ -55,8 +55,9 @@ public class Game implements Serializable {
 		},
 		IN_PROGRESS {
 			@Override
-			boolean startNextTurn(Game game) {
-				return true;
+			User nextPlayer(Game game) {
+				game.setCurrentUser((++game.currentUser)%game.players.size());
+				return game.getCurrentUser();
 			}
 			@Override
 			Set<Face> throwDice(Game game) {
@@ -106,6 +107,10 @@ public class Game implements Serializable {
 		}
 
 		User getWinner(Game game) {
+			return null;
+		}
+
+		User nextPlayer(Game game) {
 			return null;
 		}
 	}
@@ -233,6 +238,10 @@ public class Game implements Serializable {
 
 	public Set<Face> throwDice() {
 		return state.throwDice(this);
+	}
+	
+	public User nextPlayer(){
+		return state.nextPlayer(this);
 	}
 
 	@Override
