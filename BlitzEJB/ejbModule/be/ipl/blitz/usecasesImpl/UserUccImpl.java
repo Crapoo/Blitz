@@ -36,6 +36,9 @@ public class UserUccImpl implements UserUcc {
 		Util.checkString(username);
 		Util.checkString(pwd);
 		User u = dao.findByName(username);
+		if (u == null) {
+			return null;
+		}
 		byte[] encryptedAttemptedPassword = PasswordTools.hash(pwd, u.getSalt());
 		if (Arrays.equals(u.getPwd(), encryptedAttemptedPassword)) {
 			return u;
