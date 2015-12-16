@@ -148,4 +148,20 @@ public interface GameUcc {
 	 * @return true si ca a reussit, faux si le joueur ne possede pas la carte.
 	 */
 	boolean discard(String username, int effectCode);
+	
+	/**
+	 * Donne un dé a un joueur
+	 * @param username
+	 * @param num nombre de dé a donner
+	 */
+	void giveDice(String username, int num);
+
+	/**
+	 * Récupere le nombre dés d'un utilisateur
+	 * @param username
+	 * @return le nombre de dé
+	 */
+	int getNbDice(String username);
+	
+	
 }

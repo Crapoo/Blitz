@@ -69,6 +69,14 @@ public class PlayerGame implements Serializable {
 
 	}
 
+	public int getNbDice() {
+		return nbDice;
+	}
+
+	public void setNbDice(int nbDice) {
+		this.nbDice = nbDice;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -101,22 +109,6 @@ public class PlayerGame implements Serializable {
 		return userId;
 	}
 
-	public List<Die> getDice() {
-		return dice;
-	}
-
-	public boolean removeDie() {
-		if (dice.isEmpty()) {
-			return false;
-		}
-		this.dice.remove(0);
-		return true;
-	}
-
-	public void setDice(List<Die> dice) {
-		this.dice = dice;
-	}
-
 	public List<Card> getCards() {
 		return cards;
 	}
@@ -131,6 +123,20 @@ public class PlayerGame implements Serializable {
 
 	public Card removeCard(int index) {
 		return cards.remove(index);
+	}
+
+	public void addDie(int num) {
+		nbDice += num;
+	}
+
+	public boolean removeDie(int num) {
+		for (int i = 0; i < num; i++) {
+			if (nbDice > 0) {
+				nbDice--;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

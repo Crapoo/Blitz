@@ -3,10 +3,8 @@ package be.ipl.blitz.domaine;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,13 +23,15 @@ import be.ipl.blitz.utils.Util;
 @Table(name = "GAMES", schema = "BLITZ")
 public class Game implements Serializable {
 
-/*	@EJB
-	@Transient
-	private CardsUcc cardUcc;
-	@EJB
-	@Transient
-	private GameUcc gameUcc;
-*/
+	/*
+	 * @EJB
+	 * 
+	 * @Transient private CardsUcc cardUcc;
+	 * 
+	 * @EJB
+	 * 
+	 * @Transient private GameUcc gameUcc;
+	 */
 	public enum State {
 		INITIAL {
 			@Override
@@ -46,7 +46,7 @@ public class Game implements Serializable {
 				PlayerGame p = new PlayerGame(user, game);
 
 				// Evite d'ajouter deux fois le même joueur
-				if(game.users.contains(p)){
+				if (game.users.contains(p)) {
 					System.out.println("Déjà dans la partie");
 					return null;
 				}
@@ -71,22 +71,8 @@ public class Game implements Serializable {
 			}
 
 			@Override
-			Set<Face> throwDice(Game game) {
-				PlayerGame p = game.users.get(game.currentUser);
-				Set<Face> faces = new HashSet<Face>();
-				for (Die d : p.getDice()) {
-					faces.add(d.throwDice());
-				}
-				return faces;
-			}
-
-			@Override
-			boolean deleteDice(int num, PlayerGame pg, Game game) {
-				int tmp = 0;
-				while (pg.removeDie() && tmp < num) {
-					tmp++;
-				}
-				return true;
+			void removeDie(int num, PlayerGame pg, Game game) {
+				pg.removeDie(num);
 			}
 
 		},
@@ -108,12 +94,7 @@ public class Game implements Serializable {
 			return false;
 		}
 
-		Set<Face> throwDice(Game game) {
-			return null;
-		}
-
-		boolean deleteDice(int num, PlayerGame pg, Game game) {
-			return false;
+		void removeDie(int num, PlayerGame pg, Game game) {
 		}
 
 		User getWinner(Game game) {
@@ -142,8 +123,8 @@ public class Game implements Serializable {
 	@Transient
 	private int currentUser;
 
-	//@Transient
-//	private UserDaoImpl userDao;
+	// @Transient
+	// private UserDaoImpl userDao;
 
 	public List<PlayerGame> getUsers() {
 		return users;
@@ -173,7 +154,7 @@ public class Game implements Serializable {
 		this.startDate = new Date();
 		this.state = State.INITIAL;
 		users = new ArrayList<>();
-	//	userDao = new UserDaoImpl();
+		// userDao = new UserDaoImpl();
 	}
 
 	public int getId() {
@@ -250,23 +231,19 @@ public class Game implements Serializable {
 		return true;
 	}
 
-	public Set<Face> throwDice() {
-		return state.throwDice(this);
-	}
-
 	public PlayerGame nextPlayer() {
 		return state.nextPlayer(this);
 	}
 
-	public boolean deleteDice(int num, PlayerGame pg) {
-		return state.deleteDice(num, pg, this);
+	public void deleteDice(int num, PlayerGame pg) {
+		state.removeDie(num, pg, this);
 	}
 
 	public void cancel() {
 		state = State.OVER;
 	}
-	
-	public PlayerGame getPlayer(PlayerGame player){
+
+	public PlayerGame getPlayer(PlayerGame player) {
 		return users.get(users.indexOf(player));
 	}
 }

@@ -1,7 +1,9 @@
 package be.ipl.blitz.usecasesImpl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import javax.ejb.EJB;
@@ -80,16 +82,14 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return null;
 		}
-		// gameDao.loadUsers(game);
 		List<PlayerGame> playerGames = game.getUsers();
 
-		List<String> pseudos = new ArrayList<String>();
+		List<String> usernames = new ArrayList<String>();
 
 		for (PlayerGame pl : playerGames) {
-			pl = playerGameDao.reload(new PlayerGamePK(pl.getUserId(), game.getId()));
-			pseudos.add(pl.getUser().getName());
+			usernames.add(pl.getUser().getName());
 		}
-		return pseudos;
+		return usernames;
 	}
 
 	@Override
@@ -99,18 +99,28 @@ public class GameUccImpl implements GameUcc {
 		}
 		if (game.startGame()) {
 			cardsUcc.shuffleDeck();
-			if (dealCards(game, game.getUsers())) {
+			System.out.println("seck shuffled");
+			giveInitalDice(game.getUsers());
+			System.out.println("dice given");
+			if (dealCards(game.getUsers())) {
 				gameDao.update(game);
 				return true;
 			}
 		}
 		return false;
 	}
+	
+	private void giveInitalDice(List<PlayerGame> pg){
+		Util.checkObject(pg);
+		for (PlayerGame player : pg) {
+			player.addDie(dicePerPlayer);
+			playerGameDao.update(player);
+		}
+	}
 
-	private boolean dealCards(Game game, List<PlayerGame> gp) {
+	private boolean dealCards(List<PlayerGame> gp) {
 		Util.checkObject(gp);
 		for (PlayerGame player : gp) {
-			player = playerGameDao.reload(new PlayerGamePK(player.getUserId(), game.getId()));
 			List<Card> cards = drawCard(player.getUser().getName(), nbCardsByPlayer);
 			System.out.println("GameUccImpl.dealCards(): cards drawn");
 			if (cards == null) {
@@ -131,11 +141,20 @@ public class GameUccImpl implements GameUcc {
 		return u.getName();
 	}
 
+	private PlayerGame getPlayerGame(String username){
+		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(getCurrentPlayer()).getId(),game.getId()));
+	}
+	
 	@Override
 	public Set<Face> throwDice() {
+		Set<Face> nFaces=new HashSet<>();
 		if (game == null)
 			return null;
-		return game.throwDice();
+		Random r = new Random();
+		for(int i=0; i<getPlayerGame(getCurrentPlayer()).getNbDice();i++){
+			nFaces.add(faces.get(r.nextInt(6)));
+		}
+		return nFaces;
 	}
 
 	@Override
@@ -145,12 +164,21 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return false;
 		}
-		PlayerGame pg = playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
-		if (game.deleteDice(num, pg)) {
-			playerGameDao.update(pg);
-			return true;
-		}
-		return false;
+		PlayerGame pg = getPlayerGame(username);
+		game.deleteDice(num, pg);
+		playerGameDao.update(pg);
+		return true;
+	}
+
+	@Override
+	public void giveDice(String username, int num){
+		getPlayerGame(username).addDie(num);
+		playerGameDao.update(getPlayerGame(username));
+	}
+	
+	@Override
+	public int getNbDice(String username){
+		return getPlayerGame(username).getNbDice();
 	}
 
 	@Override
@@ -217,8 +245,7 @@ public class GameUccImpl implements GameUcc {
 	public boolean discard(String username, int effectCode) {
 		Util.checkString(username);
 		Util.checkPositiveOrZero(effectCode);
-		PlayerGame pg = playerGameDao.find(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
-		playerGameDao.loadCards(pg);
+		PlayerGame pg = getPlayerGame(username);
 		for (Card c : pg.getCards()) {
 			if (c.getEffectCode() == effectCode) {
 				pg.removeCard(c.getId());
@@ -276,15 +303,15 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public List<Card> getCardsOf(String username) {
-		PlayerGame pg = playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
-		playerGameDao.loadCards(pg);
-		return pg.getCards();
+		PlayerGame p = getPlayerGame(username);
+		playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
+		return p.getCards();
 	}
 
 	@Override
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
-		PlayerGame p = playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
-		playerGameDao.loadCards(p);
+		PlayerGame p = getPlayerGame(getCurrentPlayer());
+		playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
 		for (Card c : cards) {
 			p.addCard(c);
 		}
@@ -292,6 +319,8 @@ public class GameUccImpl implements GameUcc {
 		return p.getCards();
 	}
 
+	
+	
 	public static void setFaces(List<Face> value) {
 		faces = value;
 	}
