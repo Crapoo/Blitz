@@ -1,37 +1,64 @@
 #info-nav {
+	
+}
 
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -25%;
 }
 
 .card {
-    /* TODO DO the card css - Przemek*/
-  border: 1px solid black;
+	border: 1px solid black;
+	display: inline-block;
+	width: 20%;
+	height: 100%;
+}
+
+.cost {
+	list-style: none;
+	padding-left: 0;
+}
+
+.cost li {
+	display: inline;
+}
+
+.cost li img {
+	max-height: 10%;
+	max-width: 20%;
 }
 
 .enemy {
-  border: 1px solid black;
+	border: 1px solid black;
 }
 
 .enemy.avatar {
-
-  border: 1px solid black;
+	border: 1px solid black;
 }
 
 .enemy.info-panel {
-
-  border: 1px solid black;
+	border: 1px solid black;
 }
 
 .enemy.info {
-
-  border: 1px solid black;
+	border: 1px solid black;
 }
 
 .enemy.buttons {
-  border: 1px solid black;
-
+	border: 1px solid black;
 }
 
 #my-board {
-  border: 1px solid black;
-
+	border: 1px solid black;
+	overflow-x: scroll;
+	height: 25%;
+	background-color: red;
 }

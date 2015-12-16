@@ -11,6 +11,7 @@ function initialise() {
 		$.each(response.players, function(i, player) {
 			$('#enemy-row').append(createEnemy(player, nbCards, nbDice, ""));
 		});
+		createMyCards(response.myCards);
 	});
 
 	$request.fail(function(xhr, textStatus, errorThrown) {
@@ -22,10 +23,13 @@ function initialise() {
 function createEnemy(username, nbCards, nbDice, avatarPath) {
 	var enemy = $('<div class="enemy col-md-3" id="' + username + '">');
 	enemy
-	.append('<div class="col-md-4 avatar"><img src="" alt="" class="img-responsive"><h3>' + username + '</h3></div>');
+			.append('<div class="col-md-4 avatar"><img src="" alt="" class="img-responsive"><h3>'
+					+ username + '</h3></div>');
 	var infoPanel = $('<div class="col-md-8 info-panel">');
 	var infoRow = $('<div class="row info">');
-	infoRow.append('<p>Cartes : <span class="nb-cards">' + nbCards + '</span></p><p>D&eacute;s : <span class="nb-dice">' + nbDice + '</span></p>');
+	infoRow.append('<p>Cartes : <span class="nb-cards">' + nbCards
+			+ '</span></p><p>D&eacute;s : <span class="nb-dice">' + nbDice
+			+ '</span></p>');
 	var buttons = $('<div class="row buttons">');
 	infoPanel.append(infoRow);
 	infoPanel.append(buttons);
@@ -36,11 +40,24 @@ function createEnemy(username, nbCards, nbDice, avatarPath) {
 }
 
 function createMyCards(cards) {
-		var myCards = $('#myCards');
+	var myCards = $('#my-cards');
 
-		$.each(cards, function(i, card) {
-			// TODO DO STUFF - Gaetan
-		});
+	$.each(cards, function(i, card) {
+
+		var cardDiv = $('<div class="card"></div>');
+		var cost;
+		if (card.cost == 0) {
+			cost = $('<p>Gratuit</p>');
+		} else {
+			cost = $('<ul class="cost"></ul>');
+			for (var i = 0; i < card.cost; i++) {
+				var costLi = $('<li><img src="images/shekel.png"/></li>')
+				cost.append(costLi);
+			}
+		}
+		cardDiv.append(cost);
+		myCards.append(cardDiv);
+	});
 }
 
 $(function() {
