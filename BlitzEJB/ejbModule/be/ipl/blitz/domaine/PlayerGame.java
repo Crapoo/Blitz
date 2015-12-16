@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -32,11 +33,11 @@ public class PlayerGame implements Serializable {
 	@EJB
 	private CardsUccImpl cardUcc;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	// @PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "ID")
 	@JoinColumn(name = "userId", updatable = false, insertable = false)
 	private User user;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	// @PrimaryKeyJoinColumn(name = "GAMEID", referencedColumnName = "ID")
 	@JoinColumn(name = "gameId", updatable = false, insertable = false)
 	private Game game;
@@ -44,10 +45,10 @@ public class PlayerGame implements Serializable {
 	@Transient
 	private int nbDice = 0;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(schema = "BLITZ")
 	private List<Die> dice;
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(schema = "BLITZ")
 	private List<Card> cards;
 

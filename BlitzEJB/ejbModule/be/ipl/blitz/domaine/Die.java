@@ -143,9 +143,9 @@ public class Die implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	public Face throwDice(){
-		Random r=new Random();
+
+	public Face throwDice() {
+		Random r = new Random();
 		return this.face.get(r.nextInt(6));
 	}
 
