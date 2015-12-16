@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -318,4 +322,9 @@ public class Card implements Serializable {
 		return true;
 	}
 
+	public JsonObject toJson() {
+		JsonObjectBuilder builder = Json.createObjectBuilder();
+		builder.add("id", id).add("cost", cost).add("effect", effect).add("effectCode", effectCode);
+		return builder.build();
+	}
 }

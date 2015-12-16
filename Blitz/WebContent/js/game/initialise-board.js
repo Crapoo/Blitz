@@ -35,6 +35,14 @@ function createEnemy(username, nbCards, nbDice, avatarPath) {
 	return enemy;
 }
 
+function createMyCards(cards) {
+		var myCards = $('#myCards');
+
+		$.each(cards, function(i, card) {
+			// TODO DO STUFF - Gaetan
+		});
+}
+
 $(function() {
 	initialise();
 });

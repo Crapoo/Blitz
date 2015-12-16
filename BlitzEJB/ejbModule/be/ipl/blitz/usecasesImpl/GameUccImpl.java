@@ -87,6 +87,7 @@ public class GameUccImpl implements GameUcc {
 		List<String> usernames = new ArrayList<String>();
 
 		for (PlayerGame pl : playerGames) {
+
 			usernames.add(pl.getUser().getName());
 		}
 		return usernames;

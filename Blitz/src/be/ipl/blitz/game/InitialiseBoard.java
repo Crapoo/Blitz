@@ -41,6 +41,7 @@ public class InitialiseBoard extends HttpServlet {
 		 * 		
 		 * }
 		 */
+		gameUcc.startGame();
 
 		String username = (String) request.getSession().getAttribute("username");
 
@@ -57,7 +58,7 @@ public class InitialiseBoard extends HttpServlet {
 			// On ne s'intéresse qu'au carte du joueur connecté
 			if (player.equals(username)) {
 				for (Card card : gameUcc.getCardsOf(username)) {
-					aCardsBuilder.add((JsonValue) card);
+					aCardsBuilder.add(card.toJson());
 				}
 			} else {
 				aPlayersBuilder.add(player);
@@ -70,7 +71,7 @@ public class InitialiseBoard extends HttpServlet {
 
 		String json = oBuilder.build().toString();
 
-		// System.out.println(json);
+		System.out.println(json);
 		response.getWriter().print(json);
 	}
 
