@@ -33,11 +33,11 @@ public class PlayerGame implements Serializable {
 	@EJB
 	private CardsUccImpl cardUcc;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	// @PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "ID")
 	@JoinColumn(name = "userId", updatable = false, insertable = false)
 	private User user;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	// @PrimaryKeyJoinColumn(name = "GAMEID", referencedColumnName = "ID")
 	@JoinColumn(name = "gameId", updatable = false, insertable = false)
 	private Game game;
@@ -45,10 +45,10 @@ public class PlayerGame implements Serializable {
 	@Transient
 	private int nbDice = 0;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.REFRESH)
 	@JoinTable(schema = "BLITZ")
 	private List<Die> dice;
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.REFRESH)
 	@JoinTable(schema = "BLITZ")
 	private List<Card> cards;
 
