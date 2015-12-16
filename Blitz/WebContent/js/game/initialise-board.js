@@ -43,21 +43,31 @@ function createMyCards(cards) {
 	var myCards = $('#my-cards');
 
 	$.each(cards, function(i, card) {
-
-		var cardDiv = $('<div class="card"></div>');
-		var cost;
-		if (card.cost == 0) {
-			cost = $('<p>Gratuit</p>');
-		} else {
-			cost = $('<ul class="cost"></ul>');
-			for (var i = 0; i < card.cost; i++) {
-				var costLi = $('<li><img src="images/shekel.png"/></li>')
-				cost.append(costLi);
-			}
-		}
-		cardDiv.append(cost);
-		myCards.append(cardDiv);
+		var cardElt = createCard(card);
+		myCards.append(cardElt);
 	});
+}
+
+function createCard(card) {
+	var cardElt = $('<div class="card col-xs-4 col-md-2"></div>');
+	var cost = $('<ul class="cost"></ul>');
+	if (card.cost == 0) {
+		cost.append($('<li>Gratuit</li>'));
+	} else {
+		for (var i = 0; i < card.cost; i++) {
+			var costLi = $('<li><img src="images/shekel.png"/></li>')
+			cost.append(costLi);
+		}
+	}
+	cardElt.append(cost);
+	// TODO : Matt - Ajouter des images?
+	// cardElt.append($('<img src="' + card.src + '" />'));
+	cardElt.append($('<p>' + card.effect + '</p>'));
+
+	// TODO : Matt - rendre cliquable uniquement si tour du joueur ET peut payer
+	// le prix
+	cardElt.append($('<button class="btn">Utiliser</button>'));
+	return cardElt;
 }
 
 $(function() {

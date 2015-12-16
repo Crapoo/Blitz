@@ -9,17 +9,26 @@ html, body {
 }
 
 #wrap {
-	min-height: 100%;
+	min-height: 75%;
 	height: auto !important;
+	height: 75%;
+}
+
+#my-board {
+	border: 1px solid black;
+	overflow-x: scroll;
+	height: 25%;
+}
+
+#my-cards {
 	height: 100%;
-	margin: 0 auto -25%;
 }
 
 .card {
 	border: 1px solid black;
-	display: inline-block;
-	width: 20%;
-	height: 100%;
+	min-height: 80%;
+	margin: 10px;
+	padding: 10px;
 }
 
 .cost {
@@ -54,11 +63,4 @@ html, body {
 
 .enemy.buttons {
 	border: 1px solid black;
-}
-
-#my-board {
-	border: 1px solid black;
-	overflow-x: scroll;
-	height: 25%;
-	background-color: red;
 }
