@@ -31,6 +31,8 @@ public class UpdateGame extends HttpServlet {
 			throws ServletException, IOException {
 		String currentPlayer = gameUcc.getCurrentPlayer();
 		List<String> players = gameUcc.listPlayers();
+		
+		// TODO Store the current player in the context to minimise DB access and only update it on each end of turn - François
 
 		String myUsername = (String) request.getServletContext().getAttribute("username");
 		List<Card> myCards = gameUcc.getCardsOf(myUsername);
