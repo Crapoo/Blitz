@@ -53,23 +53,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "face" })
 @XmlRootElement(name = "die")
-@Entity
-@Table(name = "DICE", schema = "BLITZ")
 public class Die implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@XmlTransient
-	private int id;
-
 	@XmlElement(required = true)
-	@Transient
 	protected List<Face> face;
 	@XmlAttribute(name = "nbByPlayer", required = true)
-	@Transient
 	protected int nbByPlayer;
 	@XmlAttribute(name = "nbTotalDice", required = true)
-	@Transient
 	protected int nbTotalDice;
 
 	public Die() {
@@ -136,39 +126,9 @@ public class Die implements Serializable {
 		this.nbTotalDice = value;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public Face throwDice() {
 		Random r = new Random();
 		return this.face.get(r.nextInt(6));
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Die other = (Die) obj;
-		if (id != other.id)
-			return false;
-		return true;
 	}
 
 }

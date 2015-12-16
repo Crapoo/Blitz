@@ -101,11 +101,11 @@ public class GameUccImpl implements GameUcc {
 		if (game.startGame()) {
 			cardsUcc.shuffleDeck();
 			giveInitalDice(game.getUsers());
-			
-			for(PlayerGame p:game.getUsers()){
+
+			for (PlayerGame p : game.getUsers()) {
 				System.err.println(p.toString());
-			}		
-			
+			}
+
 			if (dealCards(game.getUsers())) {
 				gameDao.update(game);
 				return true;
@@ -113,8 +113,8 @@ public class GameUccImpl implements GameUcc {
 		}
 		return false;
 	}
-	
-	private void giveInitalDice(List<PlayerGame> pg){
+
+	private void giveInitalDice(List<PlayerGame> pg) {
 		Util.checkObject(pg);
 		for (PlayerGame player : pg) {
 			player.addDie(dicePerPlayer);
@@ -129,11 +129,7 @@ public class GameUccImpl implements GameUcc {
 			if (cards == null) {
 				return false;
 			}
-			System.err.println(p.toString());
-
 			player.setCards(cards);
-			System.err.println(p.toString());
-
 			playerGameDao.update(player);
 		}
 		return true;
@@ -148,17 +144,17 @@ public class GameUccImpl implements GameUcc {
 		return u.getName();
 	}
 
-	private PlayerGame getPlayerGame(String username){
-		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(),game.getId()));
+	private PlayerGame getPlayerGame(String username) {
+		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
 	}
-	
+
 	@Override
 	public Set<Face> throwDice() {
-		Set<Face> nFaces=new HashSet<>();
+		Set<Face> nFaces = new HashSet<>();
 		if (game == null)
 			return null;
 		Random r = new Random();
-		for(int i=0; i<getPlayerGame(getCurrentPlayer()).getNbDice();i++){
+		for (int i = 0; i < getPlayerGame(getCurrentPlayer()).getNbDice(); i++) {
 			nFaces.add(faces.get(r.nextInt(6)));
 		}
 		return nFaces;
@@ -178,13 +174,13 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public void giveDice(String username, int num){
+	public void giveDice(String username, int num) {
 		getPlayerGame(username).addDie(num);
 		playerGameDao.update(getPlayerGame(username));
 	}
-	
+
 	@Override
-	public int getNbDice(String username){
+	public int getNbDice(String username) {
 		return getPlayerGame(username).getNbDice();
 	}
 
@@ -311,21 +307,21 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public List<Card> getCardsOf(String username) {
 		PlayerGame p = getPlayerGame(username);
-		p=playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
+		p = playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
 		return p.getCards();
 	}
 
 	@Override
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
 		PlayerGame p = getPlayerGame(getCurrentPlayer());
-		p=playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
+		p = playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
 		for (Card c : cards) {
 			p.addCard(c);
 		}
-		p=playerGameDao.update(p);
+		p = playerGameDao.update(p);
 		return p.getCards();
 	}
-	
+
 	public static void setFaces(List<Face> value) {
 		faces = value;
 	}

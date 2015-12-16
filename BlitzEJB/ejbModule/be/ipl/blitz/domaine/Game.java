@@ -38,7 +38,6 @@ public class Game implements Serializable {
 
 				// Evite d'ajouter deux fois le même joueur
 				if (game.users.contains(p)) {
-					System.out.println("Déjà dans la partie");
 					return null;
 				}
 				game.users.add(p);

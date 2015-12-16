@@ -34,7 +34,6 @@ public abstract class DaoImpl<K, E> implements Dao<K, E> {
 	}
 
 	public E update(E entity) {
-		System.out.println(entity);
 		return entityManager.merge(entity);
 	}
 

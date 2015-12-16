@@ -51,9 +51,6 @@ public class PlayerGame implements Serializable {
 
 	@ManyToMany(cascade = CascadeType.REFRESH)
 	@JoinTable(schema = "BLITZ")
-	private List<Die> dice;
-	@ManyToMany(cascade = CascadeType.REFRESH)
-	@JoinTable(schema = "BLITZ")
 	private List<Card> cards;
 
 	public PlayerGame(User u, Game g) {
@@ -61,12 +58,6 @@ public class PlayerGame implements Serializable {
 		gameId = g.getId();
 		this.user = u;
 		this.game = g;
-		dice = new ArrayList<Die>();
-		// instanciation d'un dé pour recuperer le nombre de dé par personne
-		Die d = new Die();
-		for (int i = 0; i < d.getNbByPlayer(); i++) {
-			dice.add(new Die());
-		}
 	}
 
 	public PlayerGame() {
@@ -172,7 +163,7 @@ public class PlayerGame implements Serializable {
 	@Override
 	public String toString() {
 		return "PlayerGame [userId=" + userId + ", gameId=" + gameId + ", cardUcc=" + cardUcc + ", user=" + user
-				+ ", game=" + game + ", nbDice=" + nbDice + ", dice=" + dice + ", cards=" + cards + "]";
+				+ ", game=" + game + ", nbDice=" + nbDice + ", cards=" + cards + "]";
 	}
 
 }

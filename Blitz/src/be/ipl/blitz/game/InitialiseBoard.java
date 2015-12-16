@@ -70,8 +70,6 @@ public class InitialiseBoard extends HttpServlet {
 		response.setContentType("application/json");
 
 		String json = oBuilder.build().toString();
-
-		System.out.println(json);
 		response.getWriter().print(json);
 	}
 
