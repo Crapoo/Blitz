@@ -49,6 +49,8 @@ public class Face {
     @XmlAttribute(name = "nbFaces", required = true)
     protected int nbFaces;
 
+    
+    
     /**
      * Obtient la valeur de la propriété figure.
      * 

@@ -6,7 +6,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import be.ipl.blitz.domaine.Card;
-import be.ipl.blitz.utils.Util;
 
 @SuppressWarnings("serial")
 @Stateless
@@ -19,9 +18,7 @@ public class CardDaoImpl extends DaoImpl<Integer, Card> {
 
 	@Override
 	public Card findById(Integer id) {
-		Util.checkPositiveOrZero(id);
-		String queryString = "SELECT c FROM Card c WHERE c.id = ?1";
-		return search(queryString, id);
+		return find(id);
 	}
 
 	public List<Card> getAll() {
