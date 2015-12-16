@@ -1,6 +1,7 @@
 package be.ipl.blitz.servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.json.Json;
@@ -31,13 +32,19 @@ public class RefreshLobbyServlet extends HttpServlet {
 		JsonObjectBuilder oBuilder = Json.createObjectBuilder();
 		JsonArrayBuilder aBuilder = Json.createArrayBuilder();
 
-		for (String player : gameUcc.listPlayers()) {
+		List<String> players = gameUcc.listPlayers();
+		
+		for (String player : players) {
 			aBuilder.add(player);
 		}
 
 		oBuilder.add("players-list", aBuilder);
 		oBuilder.add("players-count", gameUcc.listPlayers().size());
-		response.getWriter().print(oBuilder.build().toString());
+		if (players.size() == gameUcc.getMinPlayers()) {
+			response.sendRedirect(request.getContextPath() + "/game/board.html");
+		} else {
+			response.getWriter().print(oBuilder.build().toString());
+		}
 	}
 
 }
