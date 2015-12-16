@@ -54,8 +54,8 @@ public class PlayerGame implements Serializable {
 	public PlayerGame(User u, Game g) {
 		userId = u.getId();
 		gameId = g.getId();
-		this.user = user;
-		this.game = game;
+		this.user = u;
+		this.game = g;
 		dice = new ArrayList<Die>();
 		// instanciation d'un dé pour recuperer le nombre de dé par personne
 		Die d = new Die();

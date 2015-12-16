@@ -114,7 +114,7 @@ public interface GameUcc {
 	 * @return une liste des cartes a tirer, null si il n'y a pas de cartes dans
 	 *         la pioche
 	 */
-	List<Card> drawCard(int num);
+	List<Card> drawCard(String username,int num);
 
 	int getMaxPlayers();
 
