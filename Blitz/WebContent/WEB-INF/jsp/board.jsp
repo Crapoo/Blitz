@@ -4,10 +4,8 @@
 
   <nav class="navbar navbar-default">
     <div class="container-fluid">
-      <div class="navbar-nav">
-        <p class="navbar-text" id="turn-info">Test turn</p>
-      </div>
-      <span class="navbar-nav navbar-right"><a href="disconnect.html"><button type="button" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Abandonner</button></a></span>
+      <p class="navbar-text" id="turn-info">Test turn</p>
+      <a href="disconnect.html"><button type="button" class="btn btn-default navbar-btn navbar-right"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Abandonner</button></a>
     </div>
   </nav>
 
