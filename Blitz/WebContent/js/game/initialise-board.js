@@ -1,7 +1,7 @@
 $(function() {
 	function initialise() {
 		var $request = $.ajax({
-			url : "initialise-game.html",
+			url : "initialise-board.html",
 			type : "post",
 			dataType : "json",
 		});

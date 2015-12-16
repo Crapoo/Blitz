@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.usecases.GameUcc;
 
-@WebServlet("/initialise-game.html")
-public class InitialiseGame extends HttpServlet {
+@WebServlet("/initialise-board.html")
+public class InitialiseBoard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
