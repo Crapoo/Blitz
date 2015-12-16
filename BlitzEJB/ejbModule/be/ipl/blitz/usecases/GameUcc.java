@@ -48,7 +48,7 @@ public interface GameUcc {
 	 * @return True si la partie a pu être lancée.
 	 */
 	boolean startGame();
-
+	
 	/**
 	 * Annule la partie précédemment lancée.
 	 */

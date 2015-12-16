@@ -100,9 +100,12 @@ public class GameUccImpl implements GameUcc {
 		}
 		if (game.startGame()) {
 			cardsUcc.shuffleDeck();
-			System.out.println("seck shuffled");
 			giveInitalDice(game.getUsers());
-			System.out.println("dice given");
+			
+			for(PlayerGame p:game.getUsers()){
+				System.err.println(p.toString());
+			}		
+			
 			if (dealCards(game.getUsers())) {
 				gameDao.update(game);
 				return true;
@@ -123,11 +126,14 @@ public class GameUccImpl implements GameUcc {
 		Util.checkObject(gp);
 		for (PlayerGame player : gp) {
 			List<Card> cards = drawCard(player.getUser().getName(), nbCardsByPlayer);
-			System.out.println("GameUccImpl.dealCards(): cards drawn");
 			if (cards == null) {
 				return false;
 			}
+			System.err.println(p.toString());
+
 			player.setCards(cards);
+			System.err.println(p.toString());
+
 			playerGameDao.update(player);
 		}
 		return true;
@@ -143,7 +149,7 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	private PlayerGame getPlayerGame(String username){
-		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(getCurrentPlayer()).getId(),game.getId()));
+		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(),game.getId()));
 	}
 	
 	@Override
@@ -305,22 +311,20 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public List<Card> getCardsOf(String username) {
 		PlayerGame p = getPlayerGame(username);
-		playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
+		p=playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
 		return p.getCards();
 	}
 
 	@Override
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
 		PlayerGame p = getPlayerGame(getCurrentPlayer());
-		playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
+		p=playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
 		for (Card c : cards) {
 			p.addCard(c);
 		}
-		playerGameDao.update(p);
+		p=playerGameDao.update(p);
 		return p.getCards();
 	}
-
-	
 	
 	public static void setFaces(List<Face> value) {
 		faces = value;

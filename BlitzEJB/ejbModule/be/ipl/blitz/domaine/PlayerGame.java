@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -15,8 +16,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import be.ipl.blitz.usecasesImpl.CardsUccImpl;
+import be.ipl.blitz.utils.Util;
 
 @SuppressWarnings("serial")
 @Entity
@@ -42,8 +45,9 @@ public class PlayerGame implements Serializable {
 	@JoinColumn(name = "gameId", updatable = false, insertable = false)
 	private Game game;
 
-	@Transient
-	private int nbDice = 0;
+	@Column
+	@NotNull
+	private int nbDice;
 
 	@ManyToMany(cascade = CascadeType.REFRESH)
 	@JoinTable(schema = "BLITZ")
@@ -126,6 +130,7 @@ public class PlayerGame implements Serializable {
 	}
 
 	public void addDie(int num) {
+		Util.checkPositiveOrZero(num);
 		nbDice += num;
 	}
 
