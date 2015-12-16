@@ -56,43 +56,22 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "die", "card" })
 @XmlRootElement(name = "blitz")
-@Entity
-@Table(name = "BLITZ", schema = "BLITZ")
-public class Blitz implements Serializable {
-
-	@Id
-	@XmlTransient
-	private int id;
+public class Blitz {
 
 	@XmlElement(required = true)
-	@Transient
 	protected Die die;
 	@XmlElement(required = true)
-	@Transient
 	protected List<Card> card;
 	@XmlAttribute(name = "goal")
-	@Column
-	@NotNull
 	protected String goal;
 	@XmlAttribute(name = "nbCardsByPlayer", required = true)
-	@Column
-	@NotNull
 	protected int nbCardsByPlayer;
 	@XmlAttribute(name = "nbTotalCards", required = true)
-	@Column
-	@NotNull
 	protected int nbTotalCards;
 	@XmlAttribute(name = "minPlayers", required = true)
-	@Column
-	@NotNull
 	protected int minPlayers;
 	@XmlAttribute(name = "maxPlayers", required = true)
-	@Column
-	@NotNull
 	protected int maxPlayers;
-
-	public Blitz() {
-	}
 
 	/**
 	 * Obtient la valeur de la propriété die.
@@ -162,7 +141,7 @@ public class Blitz implements Serializable {
 	 * 
 	 */
 	public void setGoal(String value) {
-		this.goal = value;
+		goal = value;
 	}
 
 	/**
@@ -178,7 +157,7 @@ public class Blitz implements Serializable {
 	 * 
 	 */
 	public void setNbCardsByPlayer(int value) {
-		this.nbCardsByPlayer = value;
+		nbCardsByPlayer = value;
 	}
 
 	/**
@@ -194,7 +173,7 @@ public class Blitz implements Serializable {
 	 * 
 	 */
 	public void setNbTotalCards(int value) {
-		this.nbTotalCards = value;
+		nbTotalCards = value;
 	}
 
 	/**
@@ -210,7 +189,7 @@ public class Blitz implements Serializable {
 	 * 
 	 */
 	public void setMinPlayers(int value) {
-		this.minPlayers = value;
+		minPlayers = value;
 	}
 
 	/**
@@ -226,29 +205,13 @@ public class Blitz implements Serializable {
 	 * 
 	 */
 	public void setMaxPlayers(int value) {
-		this.maxPlayers = value;
+		maxPlayers = value;
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Blitz other = (Blitz) obj;
-		if (id != other.id)
-			return false;
-		return true;
+	public String toString() {
+		return "Blitz [die=" + die + ", card=" + card + ", goal=" + goal + ", nbCardsByPlayer=" + nbCardsByPlayer
+				+ ", nbTotalCards=" + nbTotalCards + ", minPlayers=" + minPlayers + ", maxPlayers=" + maxPlayers + "]";
 	}
 
 }

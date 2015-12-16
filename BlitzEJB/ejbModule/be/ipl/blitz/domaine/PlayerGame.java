@@ -33,12 +33,12 @@ public class PlayerGame implements Serializable {
 	private CardsUccImpl cardUcc;
 
 	@ManyToOne
-//	@PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "ID")
-	 @JoinColumn(name = "userId", updatable = false, insertable = false)
+	// @PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "ID")
+	@JoinColumn(name = "userId", updatable = false, insertable = false)
 	private User user;
 	@ManyToOne
-	//@PrimaryKeyJoinColumn(name = "GAMEID", referencedColumnName = "ID")
-	 @JoinColumn(name = "gameId", updatable = false, insertable = false)
+	// @PrimaryKeyJoinColumn(name = "GAMEID", referencedColumnName = "ID")
+	@JoinColumn(name = "gameId", updatable = false, insertable = false)
 	private Game game;
 
 	@Transient
@@ -54,8 +54,8 @@ public class PlayerGame implements Serializable {
 	public PlayerGame(User u, Game g) {
 		userId = u.getId();
 		gameId = g.getId();
-		this.user=user;
-		this.game=game;
+		this.user = user;
+		this.game = game;
 		dice = new ArrayList<Die>();
 		// instanciation d'un dé pour recuperer le nombre de dé par personne
 		Die d = new Die();
@@ -133,10 +133,34 @@ public class PlayerGame implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + gameId;
+		result = prime * result + userId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PlayerGame other = (PlayerGame) obj;
+		if (gameId != other.gameId)
+			return false;
+		if (userId != other.userId)
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "PlayerGame [userId=" + userId + ", gameId=" + gameId + ", cardUcc=" + cardUcc + ", user=" + user
 				+ ", game=" + game + ", nbDice=" + nbDice + ", dice=" + dice + ", cards=" + cards + "]";
 	}
-	
-	
+
 }

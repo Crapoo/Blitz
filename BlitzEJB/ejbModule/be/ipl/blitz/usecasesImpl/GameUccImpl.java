@@ -41,6 +41,12 @@ public class GameUccImpl implements GameUcc {
 	@EJB
 	private CardsUcc cardsUcc;
 
+	static int maxPlayers;
+	static int minPlayers;
+	static String goal;
+	static int dicePerPlayer;
+	static int nbCardsByPlayer;
+
 	public GameUccImpl() {
 	}
 
@@ -186,6 +192,51 @@ public class GameUccImpl implements GameUcc {
 	public List<Card> drawCard(int num) {
 		Util.checkPositiveOrZero(num);
 		return game.drawCard(num);
+	}
+
+	@Override
+	public int getMaxPlayers() {
+		return maxPlayers;
+	}
+
+	public static void setMaxPlayers(int maxPlayers) {
+		GameUccImpl.maxPlayers = maxPlayers;
+	}
+
+	@Override
+	public int getMinPlayers() {
+		return minPlayers;
+	}
+
+	public static void setMinPlayers(int minPlayers) {
+		GameUccImpl.minPlayers = minPlayers;
+	}
+
+	@Override
+	public String getGoal() {
+		return goal;
+	}
+
+	public static void setGoal(String goal) {
+		GameUccImpl.goal = goal;
+	}
+
+	@Override
+	public int getDicePerPlayer() {
+		return dicePerPlayer;
+	}
+
+	public static void setDicePerPlayer(int dicePerPlayer) {
+		GameUccImpl.dicePerPlayer = dicePerPlayer;
+	}
+
+	public static void setNbCardsByPlayer(int nbCardsByPlayer) {
+		GameUccImpl.nbCardsByPlayer = nbCardsByPlayer;
+	}
+
+	@Override
+	public int getNbCardsByPlayer() {
+		return nbCardsByPlayer;
 	}
 
 }

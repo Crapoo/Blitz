@@ -13,10 +13,10 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.JAXBIntrospector;
 import javax.xml.transform.stream.StreamSource;
 
-import be.ipl.blitz.daoImpl.BlitzDaoImpl;
 import be.ipl.blitz.daoImpl.CardDaoImpl;
 import be.ipl.blitz.daoImpl.DieDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
+import be.ipl.blitz.usecasesImpl.GameUccImpl;
 
 @javax.ejb.Startup
 @Singleton
@@ -28,8 +28,6 @@ public class Startup {
 	private CardDaoImpl cardDao;
 	@EJB
 	private UserDaoImpl userDao;
-	@EJB
-	BlitzDaoImpl blitzDao;
 
 	public Startup() {
 	}
@@ -40,7 +38,13 @@ public class Startup {
 
 		Blitz blitz = fromStream(Blitz.class, is);
 
-		blitzDao.save(blitz);
+		GameUccImpl.setMaxPlayers(blitz.getMaxPlayers());
+		GameUccImpl.setMinPlayers(blitz.getMinPlayers());
+		GameUccImpl.setDicePerPlayer(blitz.getDie().getNbByPlayer());
+		GameUccImpl.setGoal(blitz.getGoal());
+		GameUccImpl.setNbCardsByPlayer(blitz.getNbCardsByPlayer());
+
+		System.out.println(blitz.toString());
 
 		// enregistrement des dés
 		for (int i = 0; i < blitz.getDie().getNbTotalDice(); i++) {

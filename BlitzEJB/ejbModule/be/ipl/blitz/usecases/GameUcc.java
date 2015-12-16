@@ -112,7 +112,18 @@ public interface GameUcc {
 	/**
 	 * Tire une carte dans la pioche
 	 * 
-	 * @return une liste des cartes a tirer, null si il n'y a pas de cartes dans la pioche
+	 * @return une liste des cartes a tirer, null si il n'y a pas de cartes dans
+	 *         la pioche
 	 */
 	List<Card> drawCard(int num);
+
+	int getMaxPlayers();
+
+	int getMinPlayers();
+
+	String getGoal();
+
+	int getNbCardsByPlayer();
+
+	int getDicePerPlayer();
 }
