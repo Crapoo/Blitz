@@ -313,7 +313,7 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
-		PlayerGame p = getPlayerGame(getCurrentPlayer());
+		PlayerGame p = getPlayerGame(username);
 		p = playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
 		for (Card c : cards) {
 			p.addCard(c);
