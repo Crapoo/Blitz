@@ -25,4 +25,5 @@
     </div>
   </div>
 
-  <script src="js/game/initialise-game.js"></script>
+  <script src="js/game/initialise-board.js"></script>
+  <link href="css/board.css" rel="stylesheet" type="text/css">
