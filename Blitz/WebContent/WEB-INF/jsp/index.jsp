@@ -14,8 +14,8 @@
   <div class="container text-center">
 
     <div class="row" id="create-join-buttons">
-      <button type="button" class="btn btn-lg btn-primary col-md-6" data-toggle="modal" data-target="#create-game-modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Cr&eacute;er une partie</button>
-      <a href="join-lobby.html"><button type="button" class="btn btn-lg btn-primary col-md-6" value="join-game-button"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>Rejoindre une partie</button></a>
+      <button type="button" class="btn btn-lg btn-primary col-md-6" data-toggle="modal" data-target="#create-game-modal" id="create-game-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Cr&eacute;er une partie</button>
+      <a href="join-lobby.html"><button type="button" class="btn btn-lg btn-primary col-md-6" id="join-game-button"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>Rejoindre une partie</button></a>
       <button type="button" class="btn btn-lg btn-primary col-md-12"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>Historique</button>
     </div>
     <div id="is-game-in-progress"></div>

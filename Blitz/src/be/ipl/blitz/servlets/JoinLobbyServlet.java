@@ -28,12 +28,15 @@ public class JoinLobbyServlet extends HttpServlet {
 			throws ServletException, IOException {
 		final ServletContext context = getServletContext();
 		synchronized (context) {
-			// TODO Add security - Przemek
-			gameUcc.joinGame((String) context.getAttribute("game-name"),
-					(String) request.getSession().getAttribute("username"));
+			String gameName = (String) context.getAttribute("game-name");
+
+			if (gameName != null) {
+				if (gameUcc.joinGame(gameName, (String) request.getSession().getAttribute("username"))) {
+					response.sendRedirect(request.getContextPath() + "/lobby.html");
+				}
+			}
 		}
 
-		response.sendRedirect(request.getContextPath() + "/lobby.html");
 	}
 
 }
