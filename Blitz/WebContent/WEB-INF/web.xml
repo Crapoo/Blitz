@@ -68,12 +68,12 @@
     <url-pattern>/lobby.html</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>game/board.html</servlet-name>
-    <jsp-file>/WEB-INF/jsp/game/board.jsp</jsp-file>
+    <servlet-name>board.html</servlet-name>
+    <jsp-file>/WEB-INF/jsp/board.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
-    <servlet-name>game/board.html</servlet-name>
-    <url-pattern>/game/board.html</url-pattern>
+    <servlet-name>board.html</servlet-name>
+    <url-pattern>/board.html</url-pattern>
   </servlet-mapping>
   <session-config>
     <cookie-config>

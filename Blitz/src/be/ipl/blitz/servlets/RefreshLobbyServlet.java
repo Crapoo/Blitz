@@ -33,7 +33,7 @@ public class RefreshLobbyServlet extends HttpServlet {
 		JsonArrayBuilder aBuilder = Json.createArrayBuilder();
 
 		List<String> players = gameUcc.listPlayers();
-		
+
 		for (String player : players) {
 			aBuilder.add(player);
 		}
@@ -41,7 +41,8 @@ public class RefreshLobbyServlet extends HttpServlet {
 		oBuilder.add("players-list", aBuilder);
 		oBuilder.add("players-count", gameUcc.listPlayers().size());
 		if (players.size() == gameUcc.getMinPlayers()) {
-			response.sendRedirect(request.getContextPath() + "/game/board.html");
+			response.sendRedirect(request.getContextPath() + "/board.html");
+			return;
 		} else {
 			response.getWriter().print(oBuilder.build().toString());
 		}

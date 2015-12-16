@@ -33,7 +33,7 @@ public class JoinLobbyServlet extends HttpServlet {
 					(String) request.getSession().getAttribute("username"));
 		}
 
-		response.sendRedirect(request.getServletPath() + "/lobby.html");
+		response.sendRedirect(request.getContextPath() + "/lobby.html");
 	}
 
 }

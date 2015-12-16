@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.usecases.GameUcc;
 
-@WebServlet("/game/initialise-game.html")
+@WebServlet("/initialise-game.html")
 public class InitialiseGame extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -60,7 +60,10 @@ public class InitialiseGame extends HttpServlet {
 			}
 		}
 
-		oBuilder.add("myCards", aBuilder);
+		oBuilder.add("myCards", aBuilder.build());
+		response.setContentType("application/json");
+		
+		System.out.println(oBuilder.build().toString());
 		response.getWriter().print(oBuilder.build().toString());
 	}
 
