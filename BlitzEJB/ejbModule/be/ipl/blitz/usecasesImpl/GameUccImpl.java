@@ -311,7 +311,6 @@ public class GameUccImpl implements GameUcc {
 		return p.getCards();
 	}
 
-	@Override
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
 		PlayerGame p = getPlayerGame(username);
 		p = playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
@@ -324,5 +323,17 @@ public class GameUccImpl implements GameUcc {
 
 	public static void setFaces(List<Face> value) {
 		faces = value;
+	}
+
+	@Override
+	public void giveMeCards(String src, int num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changeDirection() {
+		// TODO Auto-generated method stub
+		
 	}
 }

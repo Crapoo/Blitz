@@ -135,10 +135,11 @@ public interface GameUcc {
 	 */
 	List<Card> getCardsOf(String pseudo);
 	/**
-	 * Donne une liste de cartes a un joueur
-	 * @return La nouvelle liste de cartes du joueur
+	 * Le joueur src donne num cartes au hasard au joueur courrant
 	 */
-	List<Card> giveCardsTo(String pseudo, List<Card> cards);
+	void giveMeCards(String src, int num);
+	
+	void changeDirection();
 	
 	/**
 	 * Supprime une carte du deck du joueur
