@@ -9,6 +9,9 @@
         </div>
     </nav>
 
+    <!-- TODO Use datas to pass elements to functions -->
+    <button type="button" class="btn btn-success" data-id="test" onclick="rollDice(this)"></button>
+
     <div id="wrap" class="container-fluid">
         <div class="row text-center" id="enemy-row">
         </div>
@@ -23,4 +26,5 @@
     </div>
 
     <script src="js/game/initialise-board.js"></script>
+    <script src="js/game/compute-action.js"></script>
     <link href="css/board.css" rel="stylesheet" type="text/css">
