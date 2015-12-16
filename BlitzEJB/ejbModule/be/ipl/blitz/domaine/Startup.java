@@ -3,6 +3,7 @@ package be.ipl.blitz.domaine;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -16,6 +17,7 @@ import javax.xml.transform.stream.StreamSource;
 import be.ipl.blitz.daoImpl.CardDaoImpl;
 import be.ipl.blitz.daoImpl.DieDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
+import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.usecasesImpl.GameUccImpl;
 
 @javax.ejb.Startup
@@ -51,6 +53,16 @@ public class Startup {
 			Die de = new Die();
 			dieDao.save(de);
 		}
+
+		ArrayList<Face> faces = new ArrayList<>();
+
+		for (Face face : blitz.getDie().getFace()) {
+			for (int i = 0; i < face.getNbFaces(); i++) {
+				faces.add(face);
+			}
+		}
+
+		GameUccImpl.setFaces(faces);
 
 		try {
 			userDao.save(new User("em", "em"));

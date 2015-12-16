@@ -47,6 +47,7 @@ public class GameUccImpl implements GameUcc {
 	static String goal;
 	static int dicePerPlayer;
 	static int nbCardsByPlayer;
+	static List<Face> faces;
 
 	public GameUccImpl() {
 	}
@@ -79,7 +80,7 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return null;
 		}
-		//gameDao.loadUsers(game);
+		// gameDao.loadUsers(game);
 		List<PlayerGame> playerGames = game.getUsers();
 
 		List<String> pseudos = new ArrayList<String>();
@@ -120,6 +121,7 @@ public class GameUccImpl implements GameUcc {
 		}
 		return true;
 	}
+
 	@Override
 	public String getCurrentPlayer() {
 		if (game == null) {
@@ -143,8 +145,8 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return false;
 		}
-		PlayerGame pg=playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(),game.getId()));
-		if(game.deleteDice(num, pg)){
+		PlayerGame pg = playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
+		if (game.deleteDice(num, pg)) {
 			playerGameDao.update(pg);
 			return true;
 		}
@@ -205,19 +207,20 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public List<Card> drawCard(String username,int num) {
+	public List<Card> drawCard(String username, int num) {
 		Util.checkString(username);
 		Util.checkPositiveOrZero(num);
 		return giveCardsTo(username, cardsUcc.drawCard(num));
 	}
+
 	@Override
-	public boolean discard(String username, int effectCode){
+	public boolean discard(String username, int effectCode) {
 		Util.checkString(username);
 		Util.checkPositiveOrZero(effectCode);
-		PlayerGame pg = playerGameDao.find(new PlayerGamePK(userDao.findByName(username).getId(),game.getId()));
+		PlayerGame pg = playerGameDao.find(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
 		playerGameDao.loadCards(pg);
-		for(Card c:pg.getCards()){
-			if(c.getEffectCode()==effectCode){
+		for (Card c : pg.getCards()) {
+			if (c.getEffectCode() == effectCode) {
 				pg.removeCard(c.getId());
 				cardsUcc.discard(c);
 				return true;
@@ -225,7 +228,7 @@ public class GameUccImpl implements GameUcc {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public int getMaxPlayers() {
 		return maxPlayers;
@@ -273,14 +276,14 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public List<Card> getCardsOf(String username) {
-		PlayerGame pg = playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(),game.getId()));
+		PlayerGame pg = playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
 		playerGameDao.loadCards(pg);
 		return pg.getCards();
 	}
 
 	@Override
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
-		PlayerGame p = playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(),game.getId()));
+		PlayerGame p = playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
 		playerGameDao.loadCards(p);
 		for (Card c : cards) {
 			p.addCard(c);
@@ -289,4 +292,7 @@ public class GameUccImpl implements GameUcc {
 		return p.getCards();
 	}
 
+	public static void setFaces(List<Face> value) {
+		faces = value;
+	}
 }
