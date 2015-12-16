@@ -4,28 +4,34 @@
 
 .card {
     /* TODO DO the card css - Przemek*/
+  border: 1px solid black;
 }
 
 .enemy {
-
+  border: 1px solid black;
 }
 
 .enemy.avatar {
-  
+
+  border: 1px solid black;
 }
 
 .enemy.info-panel {
 
+  border: 1px solid black;
 }
 
 .enemy.info {
 
+  border: 1px solid black;
 }
 
 .enemy.buttons {
+  border: 1px solid black;
 
 }
 
 #my-board {
+  border: 1px solid black;
 
 }

@@ -6,7 +6,11 @@ function initialise() {
 	});
 
 	$request.done(function(response, textStatus, xhr) {
-		console.log(response);
+		var nbCards = response.nbCards;
+		var nbDice = response.nbDice;
+		$.each(response.players, function(i, player) {
+			$('#enemy-row').append(createEnemy(player, nbCards, nbDice, ""));
+		});
 	});
 
 	$request.fail(function(xhr, textStatus, errorThrown) {
@@ -16,7 +20,7 @@ function initialise() {
 }
 
 function createEnemy(username, nbCards, nbDice, avatarPath) {
-	var enemy = $('<div class="enemy" id="' + username + '">');
+	var enemy = $('<div class="enemy col-md-3" id="' + username + '">');
 	enemy
 	.append('<div class="col-md-4 avatar"><img src="" alt="" class="img-responsive"><h3>' + username + '</h3></div>');
 	var infoPanel = $('<div class="col-md-8 info-panel">');
@@ -27,6 +31,8 @@ function createEnemy(username, nbCards, nbDice, avatarPath) {
 	infoPanel.append(buttons);
 
 	enemy.append(infoPanel);
+
+	return enemy;
 }
 
 $(function() {
