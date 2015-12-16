@@ -7,7 +7,7 @@ function refresh() {
   $request.done(function (response, textStatus, xhr) {
     // Min players -> launch game
     if (response['players-count'] == 2) {
-      window.location.href = "game.html";
+      window.location.href = "board.html";
     }
     var playersList = "";
 
