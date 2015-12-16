@@ -77,7 +77,7 @@ public class Face implements Serializable {
 	@NotNull
 	protected int nbFaces;
 
-	@ManyToOne(cascade = CascadeType.REFRESH)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@XmlTransient
 	public Die die;
 

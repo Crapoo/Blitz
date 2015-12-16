@@ -139,4 +139,13 @@ public interface GameUcc {
 	 * @return La nouvelle liste de cartes du joueur
 	 */
 	List<Card> giveCardsTo(String pseudo, List<Card> cards);
+	
+	/**
+	 * Supprime une carte du deck du joueur
+	 * 
+	 * @param username
+	 * @param effectCode code effect de la carte
+	 * @return true si ca a reussit, faux si le joueur ne possede pas la carte.
+	 */
+	boolean discard(String username, int effectCode);
 }
