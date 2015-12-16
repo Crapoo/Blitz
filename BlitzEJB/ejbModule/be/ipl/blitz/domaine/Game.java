@@ -23,15 +23,6 @@ import be.ipl.blitz.utils.Util;
 @Table(name = "GAMES", schema = "BLITZ")
 public class Game implements Serializable {
 
-	/*
-	 * @EJB
-	 * 
-	 * @Transient private CardsUcc cardUcc;
-	 * 
-	 * @EJB
-	 * 
-	 * @Transient private GameUcc gameUcc;
-	 */
 	public enum State {
 		INITIAL {
 			@Override
@@ -47,7 +38,6 @@ public class Game implements Serializable {
 
 				// Evite d'ajouter deux fois le même joueur
 				if (game.users.contains(p)) {
-					System.out.println("Déjà dans la partie");
 					return null;
 				}
 				game.users.add(p);
@@ -241,9 +231,5 @@ public class Game implements Serializable {
 
 	public void cancel() {
 		state = State.OVER;
-	}
-
-	public PlayerGame getPlayer(PlayerGame player) {
-		return users.get(users.indexOf(player));
 	}
 }

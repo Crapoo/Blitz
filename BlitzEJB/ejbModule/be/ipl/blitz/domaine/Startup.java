@@ -15,17 +15,13 @@ import javax.xml.bind.JAXBIntrospector;
 import javax.xml.transform.stream.StreamSource;
 
 import be.ipl.blitz.daoImpl.CardDaoImpl;
-import be.ipl.blitz.daoImpl.DieDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
-import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.usecasesImpl.GameUccImpl;
 
 @javax.ejb.Startup
 @Singleton
 public class Startup {
 
-	@EJB
-	private DieDaoImpl dieDao;
 	@EJB
 	private CardDaoImpl cardDao;
 	@EJB
@@ -46,12 +42,9 @@ public class Startup {
 		GameUccImpl.setGoal(blitz.getGoal());
 		GameUccImpl.setNbCardsByPlayer(blitz.getNbCardsByPlayer());
 
-		System.out.println(blitz.toString());
-
 		// enregistrement des dés
 		for (int i = 0; i < blitz.getDie().getNbTotalDice(); i++) {
 			Die de = new Die();
-			dieDao.save(de);
 		}
 
 		ArrayList<Face> faces = new ArrayList<>();

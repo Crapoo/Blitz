@@ -51,7 +51,6 @@ public class CardsUccImpl implements CardsUcc {
 		for (int i = 0; i < nb; i++) {
 			cards.add(deck.remove(0));
 		}
-		System.out.println("Number of cards in deck: "+deck.size());
 		return cards;
 	}
 

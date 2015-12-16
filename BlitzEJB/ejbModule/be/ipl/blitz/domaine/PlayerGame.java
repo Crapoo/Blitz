@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -15,8 +16,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import be.ipl.blitz.usecasesImpl.CardsUccImpl;
+import be.ipl.blitz.utils.Util;
 
 @SuppressWarnings("serial")
 @Entity
@@ -42,12 +45,10 @@ public class PlayerGame implements Serializable {
 	@JoinColumn(name = "gameId", updatable = false, insertable = false)
 	private Game game;
 
-	@Transient
-	private int nbDice = 0;
+	@Column
+	@NotNull
+	private int nbDice;
 
-	@ManyToMany(cascade = CascadeType.REFRESH)
-	@JoinTable(schema = "BLITZ")
-	private List<Die> dice;
 	@ManyToMany(cascade = CascadeType.REFRESH)
 	@JoinTable(schema = "BLITZ")
 	private List<Card> cards;
@@ -57,12 +58,6 @@ public class PlayerGame implements Serializable {
 		gameId = g.getId();
 		this.user = u;
 		this.game = g;
-		dice = new ArrayList<Die>();
-		// instanciation d'un dé pour recuperer le nombre de dé par personne
-		Die d = new Die();
-		for (int i = 0; i < d.getNbByPlayer(); i++) {
-			dice.add(new Die());
-		}
 	}
 
 	public PlayerGame() {
@@ -126,6 +121,7 @@ public class PlayerGame implements Serializable {
 	}
 
 	public void addDie(int num) {
+		Util.checkPositiveOrZero(num);
 		nbDice += num;
 	}
 
@@ -167,7 +163,7 @@ public class PlayerGame implements Serializable {
 	@Override
 	public String toString() {
 		return "PlayerGame [userId=" + userId + ", gameId=" + gameId + ", cardUcc=" + cardUcc + ", user=" + user
-				+ ", game=" + game + ", nbDice=" + nbDice + ", dice=" + dice + ", cards=" + cards + "]";
+				+ ", game=" + game + ", nbDice=" + nbDice + ", cards=" + cards + "]";
 	}
 
 }
