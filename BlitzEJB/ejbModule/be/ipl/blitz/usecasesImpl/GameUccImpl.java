@@ -28,7 +28,6 @@ import be.ipl.blitz.utils.Util;
 @Singleton
 @Startup
 public class GameUccImpl implements GameUcc {
-	private final int INITIAL_CARDS_PER_PLAYER = 3;
 
 	private Game game;
 	@EJB
@@ -98,7 +97,11 @@ public class GameUccImpl implements GameUcc {
 		}
 		game = gameDao.findById(game.getId());
 		if (game.startGame()) {
+			System.out.println("gameUccImpl.startGame(): Game started");
+			cardsUcc.shuffleDeck();
+			System.out.println("GameUcc.startGame(): deck shuffled");
 			if (dealCards(game, game.getUsers())) {
+				System.out.println("gameUccImpl.startGame(): cards dealt");
 				gameDao.update(game);
 				return true;
 			}
@@ -107,8 +110,11 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	private boolean dealCards(Game game, List<PlayerGame> gp) {
+		Util.checkObject(gp);
 		for (PlayerGame player : gp) {
-			List<Card> cards = drawCard(INITIAL_CARDS_PER_PLAYER);
+			player = playerGameDao.reload(new PlayerGamePK(player.getUserId(), game.getId()));
+			List<Card> cards = drawCard(player.getUser().getName(), nbCardsByPlayer);
+			System.out.println("GameUccImpl.dealCards(): cards drawn");
 			if (cards == null) {
 				return false;
 			}
@@ -122,10 +128,7 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return null;
 		}
-		User u = game.getCurrentUser();
-		if (u == null) {
-			return null;
-		}
+		User u = game.getUsers().get(game.getCurrentUser()).getUser();
 		return u.toString();
 	}
 
@@ -145,7 +148,7 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		game = gameDao.reload(game.getId());
-		PlayerGame pg=playerGameDao.findByUserAndGame(userDao.findByName(username),game);
+		PlayerGame pg=playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(),game.getId()));
 		if(game.deleteDice(num, pg)){
 			playerGameDao.update(pg);
 			return true;
@@ -159,7 +162,7 @@ public class GameUccImpl implements GameUcc {
 			return null;
 		}
 		game = gameDao.findById(game.getId());
-		return game.nextPlayer();
+		return game.nextPlayer().getUser();
 	}
 
 	@Override
@@ -210,9 +213,9 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public List<Card> drawCard(int num) {
+	public List<Card> drawCard(String username,int num) {
 		Util.checkPositiveOrZero(num);
-		return giveCardsTo(game.getCurrentUser().getName(), cardsUcc.drawCard(num));
+		return giveCardsTo(username, cardsUcc.drawCard(num));
 	}
 
 	@Override
@@ -262,12 +265,12 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public List<Card> getCardsOf(String username) {
-		return playerGameDao.findByUserAndGame(userDao.findByName(username), game).getCards();
+		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(),game.getId())).getCards();
 	}
 
 	@Override
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
-		PlayerGame p = playerGameDao.findByUserAndGame(userDao.findByName(username), game);
+		PlayerGame p = playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(),game.getId()));
 		for (Card c : cards) {
 			p.addCard(c);
 		}

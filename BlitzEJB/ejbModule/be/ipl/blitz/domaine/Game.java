@@ -47,7 +47,7 @@ public class Game implements Serializable {
 
 				// Evite d'ajouter deux fois le même joueur
 				if(game.users.contains(p)){
-					System.out.println("Déjà dans la partiie");
+					System.out.println("Déjà dans la partie");
 					return null;
 				}
 				game.users.add(p);
@@ -65,9 +65,9 @@ public class Game implements Serializable {
 		},
 		IN_PROGRESS {
 			@Override
-			User nextPlayer(Game game) {
+			PlayerGame nextPlayer(Game game) {
 				game.setCurrentUser((++game.currentUser) % game.users.size());
-				return game.getCurrentUser();
+				return game.users.get(game.getCurrentUser());
 			}
 
 			@Override
@@ -120,7 +120,7 @@ public class Game implements Serializable {
 			return null;
 		}
 
-		User nextPlayer(Game game) {
+		PlayerGame nextPlayer(Game game) {
 			return null;
 		}
 	}
@@ -211,8 +211,8 @@ public class Game implements Serializable {
 		return this.state;
 	}
 
-	public User getCurrentUser() {
-		return null;
+	public int getCurrentUser() {
+		return currentUser;
 	}
 
 	public void setCurrentUser(int currentUser) {
@@ -254,7 +254,7 @@ public class Game implements Serializable {
 		return state.throwDice(this);
 	}
 
-	public User nextPlayer() {
+	public PlayerGame nextPlayer() {
 		return state.nextPlayer(this);
 	}
 
