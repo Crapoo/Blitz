@@ -29,5 +29,11 @@ public class GameDaoImpl extends DaoImpl<Integer, Game> {
 		String queryString = "SELECT * FROM Game g";
 		return list(queryString);
 	}
+	
+	public Game loadUsers(Game g) {
+		g = findById(g.getId());
+		g.getUsers().size();
+		return g;
+	}
 
 }

@@ -49,8 +49,9 @@ public class CardsUccImpl implements CardsUcc {
 	public List<Card> drawCard(int nb) {
 		List<Card> cards = new ArrayList<>();
 		for (int i = 0; i < nb; i++) {
-			cards.add(deck.get(0));
+			cards.add(deck.remove(0));
 		}
+		System.out.println("Number of cards in deck: "+deck.size());
 		return cards;
 	}
 
