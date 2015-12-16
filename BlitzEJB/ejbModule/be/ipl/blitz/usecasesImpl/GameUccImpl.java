@@ -95,13 +95,10 @@ public class GameUccImpl implements GameUcc {
 		if (game == null || game.getState() != State.INITIAL) {
 			return false;
 		}
-		game = gameDao.findById(game.getId());
+		game = gameDao.reload(game.getId());
 		if (game.startGame()) {
-			System.out.println("gameUccImpl.startGame(): Game started");
 			cardsUcc.shuffleDeck();
-			System.out.println("GameUcc.startGame(): deck shuffled");
 			if (dealCards(game, game.getUsers())) {
-				System.out.println("gameUccImpl.startGame(): cards dealt");
 				gameDao.update(game);
 				return true;
 			}
@@ -128,15 +125,16 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return null;
 		}
+		game = gameDao.reload(game.getId());
 		User u = game.getUsers().get(game.getCurrentUser()).getUser();
-		return u.toString();
+		return u.getName();
 	}
 
 	@Override
 	public Set<Face> throwDice() {
 		if (game == null)
 			return null;
-		game = gameDao.findById(game.getId());
+		game = gameDao.reload(game.getId());
 		return game.throwDice();
 	}
 
@@ -161,7 +159,7 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return null;
 		}
-		game = gameDao.findById(game.getId());
+		game = gameDao.reload(game.getId());
 		return game.nextPlayer().getUser();
 	}
 
@@ -170,7 +168,7 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return null;
 		}
-		game = gameDao.findById(game.getId());
+		game = gameDao.reload(game.getId());
 		User u = game.getWinner();
 		if (u == null)
 			return null;
@@ -179,6 +177,7 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public void cancelGame() {
+		game=gameDao.reload(game.getId());
 		if (game != null) {
 			game.cancel();
 		}
@@ -193,7 +192,6 @@ public class GameUccImpl implements GameUcc {
 
 		this.game = new Game(gameName);
 		game = gameDao.save(game);
-
 		cardsUcc.shuffleDeck();
 		return true;
 	}
@@ -265,12 +263,15 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public List<Card> getCardsOf(String username) {
-		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(),game.getId())).getCards();
+		PlayerGame pg = playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(),game.getId()));
+		playerGameDao.loadCards(pg);
+		return pg.getCards();
 	}
 
 	@Override
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
 		PlayerGame p = playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(),game.getId()));
+		playerGameDao.loadCards(p);
 		for (Card c : cards) {
 			p.addCard(c);
 		}
