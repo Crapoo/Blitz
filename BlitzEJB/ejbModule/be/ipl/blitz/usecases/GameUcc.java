@@ -9,7 +9,6 @@ import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.domaine.Face;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
-import be.ipl.blitz.domaine.PlayerGame;
 import be.ipl.blitz.domaine.User;
 
 @Remote
@@ -126,4 +125,18 @@ public interface GameUcc {
 	int getNbCardsByPlayer();
 
 	int getDicePerPlayer();
+	
+	/**
+	 * Récupère les cartes pour le joueur passé en paramètre
+	 * 
+	 * @param pseudo
+	 * 
+	 * @return La liste des cartes de ce joueur
+	 */
+	List<Card> getCardsOf(String pseudo);
+	/**
+	 * Donne une liste de cartes a un joueur
+	 * @return La nouvelle liste de cartes du joueur
+	 */
+	List<Card> giveCardsTo(String pseudo, List<Card> cards);
 }

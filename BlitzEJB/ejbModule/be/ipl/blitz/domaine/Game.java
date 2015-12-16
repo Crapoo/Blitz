@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import javax.ejb.EJB;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -20,22 +19,19 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import be.ipl.blitz.daoImpl.UserDaoImpl;
-import be.ipl.blitz.usecases.CardsUcc;
-import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.utils.Util;
 
 @Entity
 @Table(name = "GAMES", schema = "BLITZ")
 public class Game implements Serializable {
 
-	@EJB
+/*	@EJB
 	@Transient
 	private CardsUcc cardUcc;
 	@EJB
 	@Transient
 	private GameUcc gameUcc;
-
+*/
 	public enum State {
 		INITIAL {
 			@Override
@@ -47,19 +43,12 @@ public class Game implements Serializable {
 					game.users = new ArrayList<>();
 				}
 
-//				if (game.users.size() == Blitz.getMaxPlayers()) {
-//					System.out.println("Trop de joueurs");
-//					return null;
-//				}
-
 				PlayerGame p = new PlayerGame(user, game);
 
 				// Evite d'ajouter deux fois le même joueur
-				for (PlayerGame pG : game.users) {
-					if (pG.equals(p)) { // Comparaison sur le gameId et userId
-						System.out.println("Déjà dans la partie");
-						return null;
-					}
+				if(game.users.contains(p)){
+					System.out.println("Déjà dans la partiie");
+					return null;
 				}
 				game.users.add(p);
 				return p;
@@ -70,19 +59,9 @@ public class Game implements Serializable {
 				game.state = State.IN_PROGRESS;
 				Random r = new Random();
 				game.currentUser = r.nextInt(game.users.size());
-				return dealCards(game);
-			}
-
-			private boolean dealCards(Game game) {
-				for (PlayerGame playerGame : game.users) {
-					List<Card> cards = game.drawCard(3);
-					if (cards == null) {
-						return false;
-					}
-					playerGame.setCards(cards);
-				}
 				return true;
 			}
+
 		},
 		IN_PROGRESS {
 			@Override
@@ -102,19 +81,14 @@ public class Game implements Serializable {
 			}
 
 			@Override
-			boolean deleteDice(int num, String username, Game game) {
-				PlayerGame p = game.users.get(game.users.indexOf(game.userDao.findByName(username)));
+			boolean deleteDice(int num, PlayerGame pg, Game game) {
 				int tmp = 0;
-				while (p.removeDie() && tmp < num) {
+				while (pg.removeDie() && tmp < num) {
 					tmp++;
 				}
 				return true;
 			}
 
-			@Override
-			List<Card> drawCard(int num, Game game) {
-				return game.cardUcc.drawCard(num);
-			}
 		},
 		OVER {
 			@Override
@@ -123,10 +97,6 @@ public class Game implements Serializable {
 			}
 		};
 		PlayerGame addPlayer(User u, Game g) {
-			return null;
-		}
-
-		List<Card> drawCard(int num, Game game) {
 			return null;
 		}
 
@@ -142,7 +112,7 @@ public class Game implements Serializable {
 			return null;
 		}
 
-		boolean deleteDice(int num, String id, Game game) {
+		boolean deleteDice(int num, PlayerGame pg, Game game) {
 			return false;
 		}
 
@@ -172,8 +142,8 @@ public class Game implements Serializable {
 	@Transient
 	private int currentUser;
 
-	@Transient
-	private UserDaoImpl userDao;
+	//@Transient
+//	private UserDaoImpl userDao;
 
 	public List<PlayerGame> getUsers() {
 		return users;
@@ -203,7 +173,7 @@ public class Game implements Serializable {
 		this.startDate = new Date();
 		this.state = State.INITIAL;
 		users = new ArrayList<>();
-		userDao = new UserDaoImpl();
+	//	userDao = new UserDaoImpl();
 	}
 
 	public int getId() {
@@ -288,15 +258,15 @@ public class Game implements Serializable {
 		return state.nextPlayer(this);
 	}
 
-	public boolean deleteDice(int num, String username) {
-		return state.deleteDice(num, username, this);
-	}
-
-	public List<Card> drawCard(int num) {
-		return state.drawCard(num, this);
+	public boolean deleteDice(int num, PlayerGame pg) {
+		return state.deleteDice(num, pg, this);
 	}
 
 	public void cancel() {
 		state = State.OVER;
+	}
+	
+	public PlayerGame getPlayer(PlayerGame player){
+		return users.get(users.indexOf(player));
 	}
 }
