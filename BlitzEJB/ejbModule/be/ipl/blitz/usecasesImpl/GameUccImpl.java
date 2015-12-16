@@ -28,6 +28,8 @@ import be.ipl.blitz.utils.Util;
 @Singleton
 @Startup
 public class GameUccImpl implements GameUcc {
+	private final int INITIAL_CARDS_PER_PLAYER = 3;
+
 	private Game game;
 	@EJB
 	private GameDaoImpl gameDao;
@@ -96,10 +98,24 @@ public class GameUccImpl implements GameUcc {
 		}
 		game = gameDao.findById(game.getId());
 		if (game.startGame()) {
-			gameDao.update(game);
-			return true;
+			if (dealCards(game, game.getUsers())) {
+				gameDao.update(game);
+				return true;
+			}
 		}
 		return false;
+	}
+
+	private boolean dealCards(Game game, List<PlayerGame> gp) {
+		for (PlayerGame player : gp) {
+			List<Card> cards = drawCard(INITIAL_CARDS_PER_PLAYER);
+			if (cards == null) {
+				return false;
+			}
+			player.setCards(cards);
+			playerGameDao.update(player);
+		}
+		return true;
 	}
 
 	public String getCurrentPlayer() {
@@ -129,7 +145,12 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		game = gameDao.reload(game.getId());
-		return game.deleteDice(num, username);
+		PlayerGame pg=playerGameDao.findByUserAndGame(userDao.findByName(username),game);
+		if(game.deleteDice(num, pg)){
+			playerGameDao.update(pg);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -191,7 +212,7 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public List<Card> drawCard(int num) {
 		Util.checkPositiveOrZero(num);
-		return game.drawCard(num);
+		return giveCardsTo(game.getCurrentUser().getName(), cardsUcc.drawCard(num));
 	}
 
 	@Override
@@ -237,6 +258,21 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public int getNbCardsByPlayer() {
 		return nbCardsByPlayer;
+	}
+
+	@Override
+	public List<Card> getCardsOf(String username) {
+		return playerGameDao.findByUserAndGame(userDao.findByName(username), game).getCards();
+	}
+
+	@Override
+	public List<Card> giveCardsTo(String username, List<Card> cards) {
+		PlayerGame p = playerGameDao.findByUserAndGame(userDao.findByName(username), game);
+		for (Card c : cards) {
+			p.addCard(c);
+		}
+		playerGameDao.update(p);
+		return p.getCards();
 	}
 
 }
