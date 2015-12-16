@@ -43,7 +43,8 @@ public class InitialiseBoard extends HttpServlet {
 		String username = (String) getServletContext().getAttribute("nickname");
 
 		JsonObjectBuilder oBuilder = Json.createObjectBuilder();
-		JsonArrayBuilder aBuilder = Json.createArrayBuilder();
+		JsonArrayBuilder aCardsBuilder = Json.createArrayBuilder();
+		JsonArrayBuilder aPlayersBuilder = Json.createArrayBuilder();
 
 		oBuilder.add("currentPlayer", gameUcc.getCurrentPlayer());
 		oBuilder.add("nbCards", gameUcc.getNbCardsByPlayer());
@@ -54,16 +55,18 @@ public class InitialiseBoard extends HttpServlet {
 			// On ne s'intéresse qu'au carte du joueur connecté
 			if (player.equals(username)) {
 				for (Card card : gameUcc.getCardsOf(username)) {
-					aBuilder.add(card.getId());
+					aCardsBuilder.add(card.getId());
 				}
-				break;
+			} else {
+				aPlayersBuilder.add(player);
 			}
 		}
 
-		oBuilder.add("myCards", aBuilder.build());
+		oBuilder.add("players", aPlayersBuilder);
+		oBuilder.add("myCards", aCardsBuilder);
 		response.setContentType("application/json");
-		
-		System.out.println(oBuilder.build().toString());
+
+		//System.out.println(oBuilder.build().toString());
 		response.getWriter().print(oBuilder.build().toString());
 	}
 
