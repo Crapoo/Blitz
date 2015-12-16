@@ -41,7 +41,6 @@ public class CreateGameServlet extends HttpServlet {
 		final ServletContext context = getServletContext();
 
 		synchronized (context) {
-			State gameState = null;
 			if (gameUcc.createGame(gameName)) {
 				context.setAttribute("game-name", gameName);
 				context.setAttribute("max-players", gameUcc.getMaxPlayers());

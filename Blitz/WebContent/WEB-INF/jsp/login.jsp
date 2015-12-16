@@ -15,10 +15,10 @@
 					<div class="panel-heading">Inscription</div>
 					<div class="panel-body">
 						<form class="form" id="signup-form" role="form" method="post" action="signup.html">
-							<!-- NICKNAME -->
+							<!-- USERNAME -->
 							<div class="form-group">
-								<label class="control-label" for="signup-nickname">Pseudo :</label> <input
-								type="text" class="form-control" name="signup-nickname">
+								<label class="control-label" for="signup-username">Pseudo :</label> <input
+								type="text" class="form-control" name="signup-username">
 							</div>
 							<!-- PASSWORD -->
 							<div class="form-group">
@@ -52,10 +52,10 @@
 							<div class="panel-heading">Connexion</div>
 							<div class="panel-body">
 								<form class="form" id="signin-form" role="form" method="post" action="signin.html">
-									<!-- NICKNAME -->
+									<!-- USERNAME -->
 									<div class="form-group">
-										<label class="control-label" for="signin-nickname">Pseudo :</label> <input
-										type="text" class="form-control" name="signin-nickname">
+										<label class="control-label" for="signin-username">Pseudo :</label> <input
+										type="text" class="form-control" name="signin-username">
 									</div>
 									<!-- PASSWORD -->
 									<div class="form-group">

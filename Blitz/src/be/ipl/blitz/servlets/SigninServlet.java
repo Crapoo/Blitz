@@ -26,15 +26,15 @@ public class SigninServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO: protect against evil sql/xss injections
 
-		String nickname = request.getParameter("signin-nickname");
+		String username = request.getParameter("signin-username");
 		String password = request.getParameter("signin-password");
 
 		try {
-			Util.checkString(nickname);
+			Util.checkString(username);
 			Util.checkString(password);
 			try {
-				if (userUcc.login(nickname, password) != null) {
-					login(nickname, request, response);
+				if (userUcc.login(username, password) != null) {
+					login(username, request, response);
 					return;
 				} else {
 					errorMessage = "Mauvais Pseudo ou Mot-de-passe";
@@ -61,7 +61,7 @@ public class SigninServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		synchronized (session) {
-			session.setAttribute("nickname", nickname);
+			session.setAttribute("username", nickname);
 			session.setAttribute("connected", true);
 		}
 		response.sendRedirect(request.getContextPath() + "/index.html");

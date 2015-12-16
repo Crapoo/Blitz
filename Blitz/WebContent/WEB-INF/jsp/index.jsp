@@ -5,7 +5,7 @@
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-nav">
-        <p class="navbar-text">Bonjour ${sessionScope['nickname']}</p>
+        <p class="navbar-text">Bonjour ${sessionScope['username']}</p>
       </div>
       <span class="navbar-nav navbar-right"><a href="disconnect.html"><button type="button" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Se D&eacute;connecter</button></a></span>
     </div>

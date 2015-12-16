@@ -26,20 +26,20 @@ public class SignupServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO: protect against evil sql/xss injections
 
-		String nickname = request.getParameter("signup-nickname");
+		String username = request.getParameter("signup-username");
 		String password = request.getParameter("signup-password");
 		String passwordRepeat = request.getParameter("signup-repeat-password");
 
 		try {
-			Util.checkString(nickname);
+			Util.checkString(username);
 			Util.checkString(password);
 			Util.checkString(passwordRepeat);
 			if (password.equals(passwordRepeat)) {
 				try {
-					if (!userUcc.saveUser(nickname, password)) {
+					if (!userUcc.saveUser(username, password)) {
 						throw new Exception();
 					}
-					login(nickname, request, response);
+					login(username, request, response);
 					return;
 				} catch (Exception e) {
 					errorMessage = "Erreur lors de la cr&eacute;ation d'un compte";
@@ -63,7 +63,7 @@ public class SignupServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		synchronized (session) {
-			session.setAttribute("nickname", nickname);
+			session.setAttribute("username", nickname);
 			session.setAttribute("connected", true);
 		}
 		resp.sendRedirect(req.getContextPath() + "/index.html");
