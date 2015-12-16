@@ -33,7 +33,7 @@
           <form class="form" id="create-game-form" role="form" method="post" action="create-game.html">
             <div class="form-group">
               <label for="create-game-name">Nom de la partie :</label>
-              <input type="text" class="form-control" id="create-game-name" name="create-game-name">
+              <input type="text" class="form-control" id="create-game-name" name="create-game-name" autofocus>
               </div>
             </form>
           </div>
@@ -47,3 +47,9 @@
 
     <link href="css/index.css" type="text/css" rel="stylesheet">
       <script type="text/javascript" src="js/refresh-index.js"></script>
+
+      <script>
+      $('#create-game-modal').on('shown.bs.modal', function() {
+        $(this).find('[autofocus]').focus();
+      });
+      </script>
