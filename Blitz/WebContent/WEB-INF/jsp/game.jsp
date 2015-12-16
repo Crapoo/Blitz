@@ -11,11 +11,8 @@
     </div>
   </nav>
 
-  <div class="container-fluid text-center">
-    <div class="row" id="enemy-row1">
-    </div>
-
-    <div class="row" id="enemy-row2">
+  <div class="container-fluid">
+    <div class="row text-center" id="enemy-row">
     </div>
   </div>
 
