@@ -1,10 +1,9 @@
 package be.ipl.blitz.usecasesImpl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.ejb.Lock;
@@ -50,7 +49,9 @@ public class GameUccImpl implements GameUcc {
 	static int dicePerPlayer;
 	static int nbCardsByPlayer;
 	static List<Face> faces;
-
+	
+	private List<String> tmpFaces=Arrays.asList("c","c","d","w","w","w");
+ 
 	public GameUccImpl() {
 	}
 
@@ -102,10 +103,6 @@ public class GameUccImpl implements GameUcc {
 			cardsUcc.shuffleDeck();
 			giveInitalDice(game.getUsers());
 
-			for (PlayerGame p : game.getUsers()) {
-				System.err.println(p.toString());
-			}
-
 			if (dealCards(game.getUsers())) {
 				gameDao.update(game);
 				return true;
@@ -149,13 +146,13 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public Set<Face> throwDice() {
-		Set<Face> nFaces = new HashSet<>();
+	public List<String> throwDice() {
+		List<String> nFaces = new ArrayList<>();
 		if (game == null)
 			return null;
 		Random r = new Random();
 		for (int i = 0; i < getPlayerGame(getCurrentPlayer()).getNbDice(); i++) {
-			nFaces.add(faces.get(r.nextInt(6)));
+			nFaces.add(faces.get(r.nextInt(6)).getIdentif());
 		}
 		return nFaces;
 	}
@@ -174,9 +171,22 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public void giveDice(String username, int num) {
+	public boolean giveDice(String username, int num) {
+		Util.checkPositiveOrZero(num);
+		Util.checkString(username);
+		if(username.equals(getCurrentPlayer())){
+			return false;
+		}
+		PlayerGame curr=getPlayerGame(getCurrentPlayer());
+		//TODO: Que faire si nombre de dé donné>nombre de dé dispo? retourner faux?
+		if(curr.getNbDice()<num){
+			return false;
+		}
 		getPlayerGame(username).addDie(num);
 		playerGameDao.update(getPlayerGame(username));
+		curr.removeDie(num);
+		playerGameDao.update(curr);
+		return true;
 	}
 
 	@Override

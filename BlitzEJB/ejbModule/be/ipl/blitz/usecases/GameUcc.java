@@ -1,12 +1,10 @@
 package be.ipl.blitz.usecases;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.ejb.Remote;
 
 import be.ipl.blitz.domaine.Card;
-import be.ipl.blitz.domaine.Face;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.domaine.User;
@@ -59,7 +57,7 @@ public interface GameUcc {
 	 * 
 	 * @return Set de Face correspondant au résultat du lancer.
 	 */
-	Set<Face> throwDice();
+	List<String> throwDice();
 
 	/**
 	 * Récupère le dernière partie lancée.
@@ -151,11 +149,12 @@ public interface GameUcc {
 	boolean discard(String username, int effectCode);
 	
 	/**
-	 * Donne un dé a un joueur
+	 * Donne un dé du joueur courant au joueur passé em parametre.
 	 * @param username
 	 * @param num nombre de dé a donner
+	 * @return true si reussi, false sinon
 	 */
-	void giveDice(String username, int num);
+	boolean giveDice(String username, int num);
 
 	/**
 	 * Récupere le nombre dés d'un utilisateur
