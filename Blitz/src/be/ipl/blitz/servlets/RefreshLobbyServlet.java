@@ -40,12 +40,7 @@ public class RefreshLobbyServlet extends HttpServlet {
 
 		oBuilder.add("players-list", aBuilder);
 		oBuilder.add("players-count", gameUcc.listPlayers().size());
-		if (players.size() == gameUcc.getMinPlayers()) {
-			response.sendRedirect(request.getContextPath() + "/board.html");
-			return;
-		} else {
-			response.getWriter().print(oBuilder.build().toString());
-		}
+		response.getWriter().print(oBuilder.build().toString());
 	}
 
 }

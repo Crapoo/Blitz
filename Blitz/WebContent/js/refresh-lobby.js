@@ -5,6 +5,10 @@ function refresh() {
     dataType: "json",
   });
   $request.done(function (response, textStatus, xhr) {
+    // Min players -> launch game
+    if (response['players-count'] == 2) {
+      window.location.href = "game.html";
+    }
     var playersList = "";
 
     $.each(response['players-list'], function(i, player) {
