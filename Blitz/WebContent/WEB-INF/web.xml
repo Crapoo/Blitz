@@ -18,10 +18,6 @@
       <taglib-location>/WEB-INF/tld/fmt.tld</taglib-location>
     </taglib>
     <taglib>
-      <taglib-uri>http://java.sun.com/jsp/jstl/xml</taglib-uri>
-      <taglib-location>/WEB-INF/tld/x.tl d</taglib-location>
-    </taglib>
-    <taglib>
       <taglib-uri>http://java.sun.com/jsp/jstl/sql</taglib-uri>
       <taglib-location>/WEB-INF/tld/sql.tld</taglib-location>
     </taglib>
