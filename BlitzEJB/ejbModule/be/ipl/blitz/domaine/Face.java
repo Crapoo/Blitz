@@ -7,22 +7,10 @@
 
 package be.ipl.blitz.domaine;
 
-import java.io.Serializable;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -51,35 +39,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "face")
-@Entity
-@Table(name = "FACE", schema = "BLITZ")
-public class Face implements Serializable {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@XmlTransient
-	private int Id;
+public class Face {
 
 	@XmlAttribute(name = "figure", required = true)
-	@Column
-	@NotNull
 	protected String figure;
 	@XmlAttribute(name = "identif", required = true)
-	@Column
-	@NotNull
 	protected String identif;
 	@XmlAttribute(name = "src")
-	@Column
-	@NotNull
 	protected String src;
 	@XmlAttribute(name = "nbFaces", required = true)
-	@Column
-	@NotNull
 	protected int nbFaces;
-
-	@ManyToOne(cascade = CascadeType.REFRESH)
-	@XmlTransient
-	public Die die;
 
 	/**
 	 * Obtient la valeur de la propriété figure.
@@ -158,27 +127,5 @@ public class Face implements Serializable {
 	 */
 	public void setNbFaces(int value) {
 		this.nbFaces = value;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Id;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Face other = (Face) obj;
-		if (Id != other.Id)
-			return false;
-		return true;
 	}
 }

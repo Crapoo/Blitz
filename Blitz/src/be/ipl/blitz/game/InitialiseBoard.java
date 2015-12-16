@@ -6,7 +6,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +42,7 @@ public class InitialiseBoard extends HttpServlet {
 		 * }
 		 */
 
-		String username = (String) getServletContext().getAttribute("nickname");
+		String username = (String) request.getSession().getAttribute("username");
 
 		JsonObjectBuilder oBuilder = Json.createObjectBuilder();
 		JsonArrayBuilder aCardsBuilder = Json.createArrayBuilder();
@@ -55,7 +57,7 @@ public class InitialiseBoard extends HttpServlet {
 			// On ne s'intéresse qu'au carte du joueur connecté
 			if (player.equals(username)) {
 				for (Card card : gameUcc.getCardsOf(username)) {
-					aCardsBuilder.add(card.getId());
+					aCardsBuilder.add((JsonValue) card);
 				}
 			} else {
 				aPlayersBuilder.add(player);
@@ -66,8 +68,10 @@ public class InitialiseBoard extends HttpServlet {
 		oBuilder.add("myCards", aCardsBuilder);
 		response.setContentType("application/json");
 
-		//System.out.println(oBuilder.build().toString());
-		response.getWriter().print(oBuilder.build().toString());
+		String json = oBuilder.build().toString();
+
+		// System.out.println(json);
+		response.getWriter().print(json);
 	}
 
 }
