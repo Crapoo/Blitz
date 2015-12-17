@@ -27,4 +27,5 @@
 
 	<script src="js/game/initialise-board.js"></script>
 	<script src="js/game/compute-action.js"></script>
+	<script src="js/game/refresh-board.js"></script>
 	<link href="css/board.css" rel="stylesheet" type="text/css">

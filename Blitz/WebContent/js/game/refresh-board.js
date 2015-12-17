@@ -6,10 +6,14 @@ function refresh() {
   });
 
   $request.done(function (response, textStatus, xhr) {
-    $.each(reponse.players, function (i, player) {
-      updateInfoOf(player);
-    });
-    updateMyInfo(response.nbDice, response.myCards, response.myTurn);
+    if (typeof response.hasWon !== 'undefined') {
+      endGame(response.hasWon);
+    } else {
+      $.each(reponse.players, function (i, player) {
+        updateInfoOf(player);
+      });
+      updateMyInfo(response.nbDice, response.myCards, response.myTurn);
+    }
   });
 
   $request.fail(function (xhr, textStatus, errorThrown) {
@@ -49,5 +53,5 @@ function updateMyCards(cards) {
 
 $(function () {
   refresh();
-  t = setInterval(refresh, 500);
+  refreshBoardInterval = setInterval(refresh, 500);
 });
