@@ -55,8 +55,17 @@ public class Game implements Serializable {
 		},
 		IN_PROGRESS {
 			@Override
+			void changeDirection(Game game){
+				if(game.direction==1){
+					game.direction=-1;
+				}else{
+					game.direction=1;
+				}
+			}
+			
+			@Override
 			PlayerGame nextPlayer(Game game) {
-				game.setCurrentUser((++game.currentUser) % game.users.size());
+				game.setCurrentUser((game.currentUser+game.direction) % game.users.size());
 				return game.users.get(game.getCurrentUser());
 			}
 
@@ -102,6 +111,10 @@ public class Game implements Serializable {
 		PlayerGame nextPlayer(Game game) {
 			return null;
 		}
+		
+		void changeDirection(Game game){
+			
+		}
 	}
 
 	@Column
@@ -115,11 +128,15 @@ public class Game implements Serializable {
 	@Column
 	@NotNull
 	private Date startDate;
+	
 	@Column
 	private User winner;
 
 	@Transient
 	private int currentUser;
+	
+	@Transient
+	private int direction=1;
 
 	// @Transient
 	// private UserDaoImpl userDao;
@@ -140,8 +157,6 @@ public class Game implements Serializable {
 	@OneToMany(mappedBy = "game")
 	private List<PlayerGame> users;
 
-	// TODO : ajouter le sens du jeu
-
 	public Game() {
 		this("No name given");
 	}
@@ -152,7 +167,6 @@ public class Game implements Serializable {
 		this.startDate = new Date();
 		this.state = State.INITIAL;
 		users = new ArrayList<>();
-		// userDao = new UserDaoImpl();
 	}
 
 	public int getId() {
@@ -227,6 +241,10 @@ public class Game implements Serializable {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+	
+	public void changeDirection(){
+		state.changeDirection(this);
 	}
 
 	public PlayerGame nextPlayer() {
