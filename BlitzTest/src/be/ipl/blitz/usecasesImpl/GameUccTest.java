@@ -120,27 +120,28 @@ public class GameUccTest {
 		gameUcc.startGame();
 		assertEquals("Etat incorrect", State.IN_PROGRESS, gameUcc.getState());
 		gameUcc.removePlayer("ol");
-		assertEquals("Mauvais gagnant", "em", gameUcc.endGame());
+		gameUcc.endGame();
+		assertEquals("Mauvais gagnant", "em", gameUcc.getWinner());
 	}
 
 	@Test
 	public void testCancelGame() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		gameUcc.cancelGame();
+		assertEquals("Jeu pas annulé", null, gameUcc.getState());
 	}
 
 	@Test
 	public void testCreateGame() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		assertEquals("Partie pas créée", null, gameUcc.getState());
 	}
 
 	@Test
 	public void testGetState() {
+		gameUcc.createGame(gameName);
 		gameUcc.startGame();
-	}
-
-	@Test
-	public void testGetCurrentGame() {
-		fail("Not yet implemented");
+		assertEquals("etat pas correct", State.INITIAL, gameUcc.getState());
 	}
 
 	@Test
@@ -150,56 +151,6 @@ public class GameUccTest {
 
 	@Test
 	public void testDiscard() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetMaxPlayers() {
-		assertEquals("Nombre de joueurs max incorrect", 6, gameUcc.getMaxPlayers());
-	}
-
-	@Test
-	public void testSetMaxPlayers() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetMinPlayers() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetMinPlayers() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetGoal() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetGoal() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetDicePerPlayer() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetDicePerPlayer() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetNbCardsByPlayer() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNbCardsByPlayer() {
 		fail("Not yet implemented");
 	}
 
@@ -214,34 +165,43 @@ public class GameUccTest {
 	}
 
 	@Test
-	public void testSetFaces() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGiveMeCards() {
 		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testChangeDirection() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testRemovePlayer() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testEndGame() {
 		gameUcc.createGame(gameName);
 		gameUcc.joinGame(gameName, "em");
 		gameUcc.joinGame(gameName, "ol");
 		gameUcc.joinGame(gameName, "mi");
 		gameUcc.startGame();
+
+		String firstPlayer = gameUcc.getCurrentPlayer();
+		gameUcc.nextPlayer();
+		gameUcc.changeDirection();
+		gameUcc.nextPlayer();
+
+		assertEquals("Changement de sens echoue", firstPlayer, gameUcc.getCurrentPlayer());
+	}
+
+	@Test
+	public void testRemovePlayer() {
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.removePlayer("ol");
+		assertEquals("Nombre de joueurs incorrects", 2, gameUcc.listPlayers().size());
+		gameUcc.removePlayer("pasDedans");
+		assertEquals("Suppression joueur inexistant - nombre de joueurs incorrects", 2, gameUcc.listPlayers().size());
+	}
+
+	@Test
+	public void testEndGame() {
+		gameUcc.startGame();
 		gameUcc.endGame();
-		assertEquals("Impossible de finir une partie", State.OVER, gameUcc.getState());
+		assertEquals("Impossible de finir une partie", null, gameUcc.getState());
 	}
 
 }

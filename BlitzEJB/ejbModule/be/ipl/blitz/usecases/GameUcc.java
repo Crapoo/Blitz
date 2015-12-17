@@ -176,7 +176,7 @@ public interface GameUcc {
 	 * 
 	 * @return le pseudo du vainqueur
 	 */
-	String endGame();
+	void endGame();
 
 	/**
 	 * the username only keeps num cards
@@ -185,6 +185,8 @@ public interface GameUcc {
 	 * @param num
 	 */
 	void keepRandomCards(String username, int num);
-	
+
 	void skipTurn(String username);
+
+	String getWinner();
 }

@@ -50,6 +50,8 @@ public class GameUccImpl implements GameUcc {
 	static int nbCardsByPlayer;
 	static List<Face> faces;
 
+	String winner;
+
 	private List<String> tmpFaces = Arrays.asList("c", "c", "d", "w", "w", "w");
 
 	public GameUccImpl() {
@@ -211,6 +213,7 @@ public class GameUccImpl implements GameUcc {
 	public void cancelGame() {
 		if (game != null) {
 			game.cancel();
+			game = null;
 		}
 	}
 
@@ -362,15 +365,19 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public String endGame() {
+	public void endGame() {
 		if (game == null) {
-			return null;
+			System.out.println("Aucun jeu lancé");
+			return;
 		}
 		game.endGame();
-		gameDao.update(game);
-		String winner = game.getWinner();
+		// gameDao.update(game);
+		this.winner = game.getWinner();
 		game = null;
-		return winner;
+	}
+
+	public String getWinner() {
+		return this.winner;
 	}
 
 	@Override
