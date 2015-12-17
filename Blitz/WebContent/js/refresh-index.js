@@ -17,7 +17,7 @@ function refresh() {
       disableJoin = true;
       break;
       case "INITIAL":
-      htmlResponse = '<p class="bg-success"><strong><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>Partie en attente</p> Joueurs : ' + response.playersCount +'</strong>';
+      htmlResponse = '<p class="bg-success"><strong><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>Partie en attente</p> Joueurs : ' + response.playersCount+'</strong>';
       disableCreate = true;
       disableJoin = false;
       break;
