@@ -254,7 +254,7 @@ public class GameUccImpl implements GameUcc {
 		return giveCardsTo(username, cardsUcc.drawCard(num));
 	}
 
-	private void keepRandomCards(String username, int num){
+	public void keepRandomCards(String username, int num){
 		Util.checkString(username);
 		Util.checkPositiveOrZero(num);
 		game.keepRandomCard(getPlayerGame(username), num);

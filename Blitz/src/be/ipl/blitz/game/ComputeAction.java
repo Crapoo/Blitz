@@ -22,16 +22,18 @@ public class ComputeAction extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int effectCode = (int) request.getAttribute("effect-code");
+		int actionCode = (int) request.getAttribute("action-code");
 		String username = (String) request.getSession().getAttribute("username");
 		
-		switch (effectCode) {
+		switch (actionCode) {
 		case 1:
 			gameUcc.deleteDice(1, username);
 			break;
 		case 2:
+			gameUcc.changeDirection();
 			break;
 		case 3:
+			gameUcc.deleteDice(2, username);
 			break;
 		case 4:
 			break;
@@ -40,8 +42,10 @@ public class ComputeAction extends HttpServlet {
 		case 6:
 			break;
 		case 7:
+			gameUcc.drawCard(username, 3);
 			break;
 		case 8:
+			
 			break;
 		case 9:
 			break;

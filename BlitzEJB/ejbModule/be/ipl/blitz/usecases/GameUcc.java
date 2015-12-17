@@ -178,4 +178,11 @@ public interface GameUcc {
 	 * @return le pseudo du vainqueur
 	 */
 	void endGame();	
+	
+	/**
+	 * the username only keeps num cards
+	 * @param username
+	 * @param num
+	 */
+	void keepRandomCards(String username, int num);
 }
