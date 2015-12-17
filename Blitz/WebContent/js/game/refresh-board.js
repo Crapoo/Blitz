@@ -1,3 +1,5 @@
+var isMyTurn = false;
+
 function refresh() {
   var $request = $.ajax({
     url: "update-game.html",
@@ -7,33 +9,39 @@ function refresh() {
 
   $request.done(function (response, textStatus, xhr) {
     if (typeof response.hasWon !== 'undefined') {
+      clearInterval(refreshBoardInterval);
       endGame(response.hasWon);
     } else {
-      $.each(reponse.players, function (i, player) {
+      $.each(response.players, function (i, player) {
         updateInfoOf(player);
       });
       updateMyInfo(response.nbDice, response.myCards, response.myTurn);
+
+      $('#current-player').text(response.currentPlayer);
     }
   });
 
   $request.fail(function (xhr, textStatus, errorThrown) {
     alert(errorThrown);
+    clearInterval(refreshBoardInterval);
   });
 }
 
 function updateInfoOf(player) {
-  var nbCards = $('#' + player.username + '#nbCards').text(player.nbCards);
-  var nbDice = $('#' + player.username + '#nbCards').text(player.nbDice);
+  var nbCards = $('#' + player.username + '.nb-cards').text(player.nbCards);
+  var nbDice = $('#' + player.username + '.nb-cards').text(player.nbDice);
 }
 
 function updateMyInfo(nbDice, cards, myTurn) {
   $('#my-dice').text(nbDice);
   updateMyCards(cards);
   updateMyButton(myTurn);
+
+  isMyTurn = myTurn;
 }
 
 function updateMyButton(myTurn) {
-  var myButton = $('#myButton');
+  var myButton = $('#my-button');
 
   if (myTurn) {
     myButton.prop('disabled', false);
@@ -47,11 +55,11 @@ function updateMyCards(cards) {
   myCards.empty();
 
   $.each(cards, function(i, card) {
-    myCards.append(buildCardDiv(card));
+    myCards.append(createCard(card));
   });
 }
 
 $(function () {
   refresh();
-  refreshBoardInterval = setInterval(refresh, 500);
+  refreshBoardInterval = setInterval(refresh, 1000);
 });

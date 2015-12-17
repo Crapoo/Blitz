@@ -14,7 +14,7 @@ import be.ipl.blitz.usecases.GameUcc;
 @WebServlet("/forfeit.html")
 public class Forfeit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
 	private GameUcc gameUcc;
 
@@ -26,9 +26,11 @@ public class Forfeit extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String username = (String) request.getSession().getAttribute("username");
-		
-		gameUcc.removePlayer(username);
-		
+
+		if (gameUcc.getWinner() == null) {
+			gameUcc.removePlayer(username);
+		}
+
 		response.sendRedirect("index.html");
 	}
 

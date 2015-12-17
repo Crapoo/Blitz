@@ -4,6 +4,7 @@
 	<div id="wrap">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
+				<p class="navbar-text">Tour de : <span id="current-player"></span></p>
 				<a href="forfeit.html"><button type="button"
 						class="btn btn-default navbar-btn navbar-right">
 						<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Abandonner
@@ -23,6 +24,8 @@
 
 		</div>
 		<div id="my-dice" class="col-md-3"></div>
+
+		<button type="button" class="btn btn-default" id="my-button" disabled="true" data-action-code="20" onclick="dispatchAction(this)">ROOOOOLL</button>
 	</div>
 
 	<script src="js/game/initialise-board.js"></script>

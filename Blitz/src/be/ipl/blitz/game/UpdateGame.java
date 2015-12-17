@@ -31,63 +31,84 @@ public class UpdateGame extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String currentPlayer = gameUcc.getCurrentPlayer();
-		List<String> players = gameUcc.listPlayers();
-		
-		if (players.size() <= 1) {
-			gameUcc.endGame();
-		}
-
-		// TODO Store the current player in the context to minimise DB access
-		// and only update it on each end of turn - François
-
 		String myUsername = (String) request.getSession().getAttribute("username");
-		List<Card> myCards = gameUcc.getCardsOf(myUsername);
+		List<String> players = gameUcc.listPlayers();
+		String winner = gameUcc.getWinner();
 
 		JsonObjectBuilder oBuilder = Json.createObjectBuilder();
-		JsonArrayBuilder listBuilder = Json.createArrayBuilder();
-		JsonObjectBuilder mBuilder = Json.createObjectBuilder();
-		JsonArrayBuilder cBuilder = Json.createArrayBuilder();
-
-		for (String player : players) {
-			if (!player.equals(myUsername)) {
-				JsonObjectBuilder playerBuilder = Json.createObjectBuilder();
-				playerBuilder.add("username", player);
-
-				int nbDice = gameUcc.getNbDice(player);
-				
-				if (nbDice == 0) {
-					gameUcc.endGame();
-				}
-
-				playerBuilder.add("nbDice", nbDice);
-				playerBuilder.add("nbCards", gameUcc.getCardsOf(player).size());
-				listBuilder.add(playerBuilder.build());
-			}
-		}
-
-		oBuilder.add("players", listBuilder.build());
-
-		if (currentPlayer.equals(myUsername)) {
-			mBuilder.add("myTurn", true);
-		} else {
-			mBuilder.add("myTurn", false);
-		}
-
-		for (Card card : myCards) {
-			cBuilder.add(card.toJson());
-		}
-
-		oBuilder.add("myCards", cBuilder.build());
-		oBuilder.add("myDice", gameUcc.getNbDice(myUsername));
-
-		if (gameUcc.getState() == State.OVER) {
-			oBuilder.add("hasWon", gameUcc.getWinner().equals(myUsername) ? true : false);
-		}
-
 		response.setContentType("application/json");
+
+		if (players == null) {
+			if (winner == null) {
+				oBuilder.add("skip", true);
+				String json = oBuilder.build().toString();
+				System.out.println("P&W NULL");
+				System.out.println(json);
+				response.getWriter().println(json);
+				return;
+			} else {
+				oBuilder.add("hasWon", gameUcc.getWinner().equals(myUsername) ? true : false);
+				String json = oBuilder.build().toString();
+				System.out.println("P&!W NULL");
+				System.out.println(json);
+				response.getWriter().println(json);
+				return;
+			}
+		} else if (players.size() <= 1) {
+			gameUcc.endGame();
+			oBuilder.add("", "");
+			String json = oBuilder.build().toString();
+			System.out.println("END GAME NULL");
+			System.out.println(json);
+			response.getWriter().println(json);
+			return;
+		} else {
+			// TODO Store the current player in the context to minimise DB
+			// access
+			// and only update it on each end of turn - François
+
+			List<Card> myCards = gameUcc.getCardsOf(myUsername);
+
+			JsonArrayBuilder listBuilder = Json.createArrayBuilder();
+			JsonObjectBuilder mBuilder = Json.createObjectBuilder();
+			JsonArrayBuilder cBuilder = Json.createArrayBuilder();
+
+			for (String player : players) {
+				if (!player.equals(myUsername)) {
+					JsonObjectBuilder playerBuilder = Json.createObjectBuilder();
+					playerBuilder.add("username", player);
+
+					int nbDice = gameUcc.getNbDice(player);
+
+					if (nbDice == 0) {
+						gameUcc.endGame();
+					}
+
+					playerBuilder.add("nbDice", nbDice);
+					playerBuilder.add("nbCards", gameUcc.getCardsOf(player).size());
+					listBuilder.add(playerBuilder.build());
+				}
+			}
+
+			oBuilder.add("players", listBuilder.build());
+
+			if (currentPlayer.equals(myUsername)) {
+				mBuilder.add("myTurn", true);
+			} else {
+				mBuilder.add("myTurn", false);
+			}
+
+			for (Card card : myCards) {
+				cBuilder.add(card.toJson());
+			}
+
+			oBuilder.add("currentPlayer", gameUcc.getCurrentPlayer());
+			oBuilder.add("myCards", cBuilder.build());
+			oBuilder.add("myDice", gameUcc.getNbDice(myUsername));
+
+		}
 
 		String json = oBuilder.build().toString();
 		response.getWriter().println(json);
 	}
-
 }

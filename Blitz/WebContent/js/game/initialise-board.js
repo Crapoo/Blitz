@@ -13,7 +13,7 @@ function initialise() {
 		});
 		createMyCards(response.myCards);
 		var overlay = jQuery('<div id="overlay"><h1><a href="forfeit.html"><button type="button" class="btn btn-default navbar-btn navbar-right"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Quitter</button></a></h1></div>');
-		overlay.appendTo(document.body);
+		overlay.append("body");
 		overlay.hide();
 	});
 
@@ -69,7 +69,7 @@ function createCard(card) {
 
 	// TODO : Matt - rendre cliquable uniquement si tour du joueur ET peut payer
 	// le prix
-	cardElt.append($('<button class="btn btn-default"  data-id="' + card.id + '" data-effect-code="' + card.effectCode + '">Utiliser</button>'));
+	cardElt.append($('<button class="btn btn-default"  data-id="' + card.id + '" data-action-code="' + card.effectCode + '" onclick="dispatchAction(this)">Utiliser</button>'));
 	return cardElt;
 }
 
