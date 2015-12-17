@@ -372,4 +372,9 @@ public class GameUccImpl implements GameUcc {
 		game = null;
 		return winner;
 	}
+
+	@Override
+	public void skipTurn(String username) {
+		game.skipTurn(getPlayerGame(username));
+	}
 }
