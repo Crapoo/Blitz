@@ -88,9 +88,23 @@
     %	#	#	#	#	#	#	#	#	#	#	#	#	#	#	#	#	# Document
 
     \chapter{Introduction}
+    Wasabi est un jeu de dés et de cartes dont le but est de se débarrasser de tous ses dés. Nous avons dû, dans le cadre du cours de mise en situation professionnelle, implémenter ce jeu durant la semaine 13.
+
+    Un des buts de ce projet étant de se rapprocher le plus possible de l'expérience professionnelle, certaines contraintes nous ont été imposées. Entre autres, le projet devait être développé en utilisant les technologies EJB et JSP, avec la possibilité d'utiliser d'autres technologies telles que Bootstrap, JavaScript et Ajax. Il nous a aussi été demandé de procéder de manière itérative, ce que nous avons fait en procédant par Usecase. Enfin, nous étions divisés en groupes de 4, qui ont été formés par les chefs d'équipe sur base de CV anonymes.
+
+    Nous avons divisé le travail de la manière suivante: deux personnes se sont concentrées sur le back-end (la partie EJB) et deux sur le front-end (JSP). Malheureusement, un membre du groupe a décidé d'arrêter le projet en cours de route. De ce fait, nous avons dû re-distribuer afin de pouvoir continuer à avancer.
 
     \chapter{Analyse}
-    \section{Scénario nominal}
+    \section{Diagramme de navigation}
+    Le parcours de l'utilisateur dans \textsc{Blitz} se fait selon le diagramme suivant :
+
+    \begin{table}[H]
+        \centering
+        \includegraphics[width=\textwidth]{images/diag-nav.pdf}
+        \caption{Diagramme de navigation}
+    \end{table}
+
+    \section{Scénario nominal \og Rejoindre une partie\fg}
 
     L'utilisateur étant déjà connecté, il rejoint une partie selon le scénario suivant :
 
@@ -117,12 +131,12 @@
         \begin{tabularx}{\textwidth}{X|X}
             1. Cliquer sur le bouton \og Connexion / Inscription\fg{} situé en haut à droite. & \\
             & 2. Un popup apparait proposant de s'inscrire ou de se connecter. \\
-            3. Dans la partie de droite, entrer \og test\fg{} comme nom d'utilisateur et \og test \fg{} comme mot de passe. & \\
+            3. Dans la partie de droite, entrer \og ol\fg{} comme nom d'utilisateur et \og ol \fg{} comme mot de passe. & \\
             & 4. Le système vérifie que l'utilisateur existe et que le mot de passe est correct et renvoie le joueur sur la page d'accueil. \\
             5. Cliquer sur le bouton \og Déconnexion\fg{}. & \\
-            6.Cliquer à nouveau sur le bouton \og Connexion / Inscription\fg{}. & \\
+            6. Cliquer à nouveau sur le bouton \og Connexion / Inscription\fg{}. & \\
             & 7. Le popup réapparait \\
-            8. Dans la partie de droite, entrer \og test\fg{} comme nom d'utilisateur et \og mauvaisMdp \fg{} comme mot de passe. & \\
+            8. Dans la partie de droite, entrer \og ol\fg{} comme nom d'utilisateur et \og mauvaisMdp \fg{} comme mot de passe. & \\
             & 9. Le système vérifie que l'utilisateur existe et que le mot de passe est correct et affiche l'erreur \og Nom d'utilisateur ou mot de passe incorrect\fg{} et reste sur le popup.\\
         \end{tabularx}
     \end{table}
@@ -147,7 +161,6 @@
 
     \chapter{Manuels}
     \section{Manuel d'installation}
-    Pour pouvir
 
     \section{Manuel d'utilisation}
     \subsection{Comment accéder au jeu?}
@@ -159,29 +172,22 @@
 
     \subsection{Comment créer une partie?}
     Pour lancer une partie, il vous suffit de cliquer sur créer une partie.
-    Si \textbf{aucune partie n'a été créée}, une pop-up apparaitra alors pour que vous donniez un nom a la partie. Après ca, vous voilà redirigé vers le lobby.
+    Si \textbf{aucune partie n'a été créée}, une pop-up apparaitra alors pour que vous donniez un nom à la partie. Après ça, vous voilà redirigé vers le lobby.
 
-    Si une \textbf{partie est déja créée} mais qu'elle n'a \textbf{pas encore commencé}, vous serez directement redirigé vers le lobby de cette partie.
-
-    Si une \textbf{partie est déja créée}, et que vous ne \textbf{pouvez pas la rejoindre} (ce qui arrive si la partie est déjà en cours ou si le nombre de joueurs maximum est déjà atteint), vous serez simplement redirigé vers la page d'acceuil (avec un message vous précisant la raison).
+    Si une \textbf{partie est déjà créée}, et que vous ne \textbf{pouvez pas la rejoindre} (ce qui arrive si la partie est déjà en cours ou si le nombre de joueurs maximum est déjà atteint), le bouton est désactivé et vous empêche donc de cliquer dessus.
 
     \subsection{Comment rejoindre une partie?}
-    Pour rejoindre une partie, cliquez sur le bouton corespondant sur la page d'acceuil.
+    Pour rejoindre une partie, cliquez sur le bouton correspondant sur la page d'accueil.
 
-    Si une partie est \textbf{en attente de joueurs suplémentaires}, vous serez redirigé vers le lobby de cette partie.
+    Si une partie est \textbf{en attente de joueurs supplémentaires}, vous serez redirigé vers le lobby de cette partie.
 
-    Si vous ne pouvez pas rejoindre la partie créée (elle est \textbf{en cours} ou le \textbf{nombre de joueurs maximum est atteint}), vous serez simplement redirigé vers la page d'acceuil.
-
-    Si \textbf{aucune partie n'est créée}, l'application vous proposera de créer une nouvelle partie.
+    Si vous ne pouvez pas rejoindre la partie créée (\textbf{aucune partie}, partie \textbf{en cours} ou le \textbf{nombre de joueurs maximum est atteint}), le bouton est désactivé.
 
     \subsection{Comment lancer une partie?}
     Une fois dans la lobby, la partie se lance automatiquement une fois le nombre minimum de joueur atteint. Une fois ce nombre atteint, tous les joueurs sont redirigés vers la page de jeu.
 
     \subsection{Comment se déroule le tour de jeu?}
-
-    \section{ARAJOUTER}
-    Utilisation de \textbf{Pattern State} pour l'état de la partie
-
+    
     \chapter{Conclusion}
 
 \end{document}
