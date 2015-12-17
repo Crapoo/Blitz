@@ -336,9 +336,13 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public void giveMeCards(String src, int num) {
-		// TODO Auto-generated method stub
-		
+	public boolean giveMeCards(String src) {
+		Util.checkString(src);
+		if(src.equals(getCurrentPlayer())){
+			return false;
+		}
+		cardsUcc.stealCardFrom(getPlayerGame(getCurrentPlayer()), getPlayerGame(src));		
+			return true;
 	}
 
 	@Override

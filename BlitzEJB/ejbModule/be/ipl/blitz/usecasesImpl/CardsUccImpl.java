@@ -11,9 +11,11 @@ import javax.ejb.Startup;
 
 import be.ipl.blitz.daoImpl.CardDaoImpl;
 import be.ipl.blitz.daoImpl.GameDaoImpl;
+import be.ipl.blitz.daoImpl.PlayerGameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.domaine.PlayerGame;
+import be.ipl.blitz.domaine.PlayerGamePK;
 import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.usecases.UserUcc;
@@ -28,6 +30,9 @@ public class CardsUccImpl implements CardsUcc {
 	UserDaoImpl userDao;
 	@EJB
 	GameDaoImpl gameDao;
+	
+	@EJB
+	PlayerGameDaoImpl playerGameDao;
 
 	@EJB
 	GameUcc gameUcc;
@@ -61,6 +66,11 @@ public class CardsUccImpl implements CardsUcc {
 
 	@Override
 	public Card stealCardFrom(PlayerGame thief, PlayerGame victim) {
+		thief=playerGameDao.reload(new PlayerGamePK(thief.getUserId(),thief.getGameId()));
+		victim=playerGameDao.reload(new PlayerGamePK(victim.getUserId(),victim.getGameId()));
+
+		playerGameDao.loadCards(victim);
+		playerGameDao.loadCards(thief);
 		List<Card> victimCards = victim.getCards();
 		Random r = new Random();
 		int toSteal = r.nextInt(victimCards.size());

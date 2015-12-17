@@ -135,7 +135,7 @@ public interface GameUcc {
 	/**
 	 * Le joueur src donne num cartes au hasard au joueur courrant
 	 */
-	void giveMeCards(String src, int num);
+	boolean giveMeCards(String src);
 	
 	void changeDirection();
 	
