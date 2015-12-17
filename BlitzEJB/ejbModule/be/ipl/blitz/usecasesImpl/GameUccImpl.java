@@ -196,6 +196,7 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public int getNbDice(String username) {
 		Util.checkString(username);
+		// FIXME Przemek : getPlayerGame est null
 		return getPlayerGame(username).getNbDice();
 	}
 
