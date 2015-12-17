@@ -189,4 +189,5 @@ public interface GameUcc {
 	void skipTurn(String username);
 
 	String getWinner();
+	List<Game> getAllGames();
 }

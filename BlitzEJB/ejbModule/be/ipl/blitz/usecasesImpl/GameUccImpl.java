@@ -63,10 +63,6 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return false;
 		}
-		State gameState = game.getState();
-		if (gameState == State.IN_PROGRESS || gameState == State.OVER) {
-			return false;
-		}
 		User player = userUcc.findByName(username);
 
 		PlayerGame playerGame = game.addPlayer(player);
@@ -387,5 +383,10 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public void skipTurn(String username) {
 		game.skipTurn(getPlayerGame(username));
+	}
+	
+	@Override
+	public List<Game> getAllGames(){
+		return gameDao.getAll();
 	}
 }
