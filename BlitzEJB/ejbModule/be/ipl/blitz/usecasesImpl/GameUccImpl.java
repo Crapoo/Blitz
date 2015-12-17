@@ -51,8 +51,6 @@ public class GameUccImpl implements GameUcc {
 
 	boolean replay = false;
 
-	String winner;
-
 	public GameUccImpl() {
 	}
 
@@ -63,13 +61,12 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		User player = userUcc.findByName(username);
-
 		PlayerGame playerGame = game.addPlayer(player);
+
 		if (playerGame == null) {
 			return false;
 		}
 		playerGameDao.save(playerGame);
-		playerGameDao.update(playerGame);
 		gameDao.update(game);
 		return true;
 	}
@@ -93,11 +90,10 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public boolean startGame() {
-		if (game == null || game.getUsers().isEmpty()) {
+		if (game == null || game.getUsers().size() < 2) {
 			return false;
 		}
 		if (game.startGame()) {
-			winner = null;
 			cardsUcc.shuffleDeck();
 			giveInitalDice(game.getUsers());
 
@@ -222,7 +218,7 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public boolean createGame(String gameName) {
 		Util.checkString(gameName);
-		if (game != null && game.getStartDate().equals(State.IN_PROGRESS)) {
+		if (game != null && !game.getState().equals(State.OVER)) {
 			return false;
 		}
 		game = new Game(gameName);

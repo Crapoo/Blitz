@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
@@ -13,6 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
@@ -42,7 +45,7 @@ public class GameUccTest {
 
 	@After
 	public void tearDown() throws Exception {
-		gameUcc.endGame();
+		gameUcc.cancelGame();
 	}
 
 	@Test
@@ -68,7 +71,9 @@ public class GameUccTest {
 		assertFalse("Démarrage de partie sans joueur", gameUcc.startGame());
 		assertEquals("Etat de la partie inexacte", State.INITIAL, gameUcc.getState());
 		gameUcc.joinGame(gameName, "em");
-		assertTrue("Démarrage de partie échoue", gameUcc.startGame());
+		assertFalse("Démarrage de partie avec moins de 2 joueurs", gameUcc.startGame());
+		gameUcc.joinGame(gameName, "ol");
+		assertTrue("Démarrage de partie échouée", gameUcc.startGame());
 		gameUcc.endGame();
 		assertFalse("Démarrage de partie inexistante", gameUcc.startGame());
 	}
@@ -88,17 +93,50 @@ public class GameUccTest {
 
 	@Test
 	public void testDeleteDice() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+		int before = gameUcc.getNbDice("em");
+		gameUcc.deleteDice(1, "em");
+		assertEquals("delete 1 dice not working", 3, gameUcc.getNbDice("em"));
+		gameUcc.deleteDice(3, "em");
+		assertEquals(0, gameUcc.getNbDice("em"));
+		gameUcc.deleteDice(before, "em");
+		assertEquals("problem deleting dice when 0 die", 0, gameUcc.getNbDice("em"));
 	}
 
 	@Test
 	public void testGiveDice() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+		String cur= gameUcc.getCurrentPlayer();
+		if(cur.equals("em")){
+			gameUcc.giveDice("mi", 1);
+			assertEquals(3, gameUcc.getNbDice(cur));
+			assertEquals(5,gameUcc.getNbDice("mi"));
+			gameUcc.giveDice(cur, 3);
+			
+		}else{
+			gameUcc.giveDice("em", 1);
+			assertEquals(3, gameUcc.getNbDice(cur));
+			assertEquals(5,gameUcc.getNbDice("em"));
+			gameUcc.giveDice(cur, 3);
+		}
 	}
 
 	@Test
 	public void testGetNbDice() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+		assertEquals(4, gameUcc.getNbDice("em"));
 	}
 
 	@Test
@@ -108,7 +146,7 @@ public class GameUccTest {
 		gameUcc.joinGame(gameName, "ol");
 		gameUcc.startGame();
 		String firstPlayer = gameUcc.getCurrentPlayer();
-		String nextPlayer = gameUcc.nextPlayer().getName();
+		String nextPlayer = gameUcc.nextPlayer();
 		assertFalse("Next player garde le meme joueur", firstPlayer.equals(nextPlayer));
 	}
 
@@ -128,7 +166,7 @@ public class GameUccTest {
 	public void testCancelGame() {
 		gameUcc.createGame(gameName);
 		gameUcc.cancelGame();
-		assertEquals("Jeu pas annulé", null, gameUcc.getState());
+		assertEquals("Jeu pas annulé", State.OVER, gameUcc.getState());
 	}
 
 	@Test
@@ -147,7 +185,16 @@ public class GameUccTest {
 
 	@Test
 	public void testDrawCard() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+		
+		gameUcc.drawCard("em", 1);
+		assertEquals(4, gameUcc.getCardsOf("em").size());
+		gameUcc.drawCard("ol", 3);
+		assertEquals(6, gameUcc.getCardsOf("ol").size());
 	}
 
 	@Test
@@ -157,17 +204,32 @@ public class GameUccTest {
 
 	@Test
 	public void testGetCardsOf() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGiveCardsTo() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+		List<Card> c=gameUcc.getCardsOf("em");
+		assertEquals(3,gameUcc.getCardsOf("em").size());
 	}
 
 	@Test
 	public void testGiveMeCards() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+		String cur= gameUcc.getCurrentPlayer();
+		if(cur.equals("em")){
+			gameUcc.giveMeCards("mi");
+			assertEquals(4, gameUcc.getCardsOf(cur).size());
+			assertEquals(2,gameUcc.getCardsOf("mi").size());
+		}else{
+			gameUcc.giveMeCards("em");
+			assertEquals(4, gameUcc.getCardsOf(cur).size());
+			assertEquals(2,gameUcc.getCardsOf("em").size());
+		}
 	}
 
 	@Test
@@ -202,7 +264,7 @@ public class GameUccTest {
 	public void testEndGame() {
 		gameUcc.startGame();
 		gameUcc.endGame();
-		assertEquals("Impossible de finir une partie", null, gameUcc.getState());
+		assertEquals("Impossible de finir une partie", State.OVER, gameUcc.getState());
 	}
 
 }

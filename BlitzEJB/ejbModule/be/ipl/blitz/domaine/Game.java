@@ -125,18 +125,6 @@ public class Game implements Serializable {
 			String getWinner(Game game) {
 				return game.winner;
 			}
-
-			@Override
-			boolean startGame(Game game) {
-				Random r = new Random();
-				int playerCount = game.users.size();
-				if (playerCount == 0) {
-					return false;
-				}
-				game.currentUser = r.nextInt(playerCount);
-				game.state = State.IN_PROGRESS;
-				return true;
-			}
 		};
 
 		void removePlayer(PlayerGame player, Game g) {
