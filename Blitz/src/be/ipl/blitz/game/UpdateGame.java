@@ -38,10 +38,10 @@ public class UpdateGame extends HttpServlet {
 		JsonObjectBuilder oBuilder = Json.createObjectBuilder();
 		response.setContentType("application/json");
 
-		if (!winner.isEmpty()) {
+		if (winner != null) {
 			oBuilder.add("hasWon", gameUcc.getWinner().equals(myUsername) ? true : false);
 			String json = oBuilder.build().toString();
-			System.out.println("P&!W NULL");
+			System.out.println(myUsername + "P&!W NULL");
 			System.out.println(json);
 			response.getWriter().println(json);
 			return;
@@ -51,11 +51,12 @@ public class UpdateGame extends HttpServlet {
 			gameUcc.endGame();
 			oBuilder.add("", "");
 			String json = oBuilder.build().toString();
-			System.out.println("END GAME NULL");
+			System.out.println(myUsername + "END GAME NULL");
 			System.out.println(json);
 			response.getWriter().println(json);
 			return;
 		} else {
+			System.out.println(myUsername);
 			// TODO Store the current player in the context to minimise DB
 			// access
 			// and only update it on each end of turn - François
@@ -93,7 +94,6 @@ public class UpdateGame extends HttpServlet {
 			oBuilder.add("currentPlayer", gameUcc.getCurrentPlayer());
 			oBuilder.add("myCards", cBuilder.build());
 			oBuilder.add("myDice", gameUcc.getNbDice(myUsername));
-
 		}
 
 		String json = oBuilder.build().toString();

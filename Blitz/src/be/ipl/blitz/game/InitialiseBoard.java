@@ -9,6 +9,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,16 +32,6 @@ public class InitialiseBoard extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*-
-		 * Template JSON
-		 * {
-		 * 		currentPlayer : String,
-		 * 		nbCards : int,
-		 * 		nbDice : int,
-		 * 		myCards : [CardId, CardId, CardId]
-		 * 		
-		 * }
-		 */
 		gameUcc.startGame();
 
 		String username = (String) request.getSession().getAttribute("username");
@@ -54,8 +45,16 @@ public class InitialiseBoard extends HttpServlet {
 		oBuilder.add("nbDice", gameUcc.getDicePerPlayer());
 
 		List<String> players = gameUcc.listPlayers();
+
+		final ServletContext ctx = getServletContext();
+
+		synchronized (ctx) {
+			if (ctx.getAttribute("players-count") == null) {
+				ctx.setAttribute("players-count", players.size());
+			}
+		}
+
 		for (String player : players) {
-			// On ne s'intéresse qu'au carte du joueur connecté
 			if (player.equals(username)) {
 				for (Card card : gameUcc.getCardsOf(username)) {
 					aCardsBuilder.add(card.toJson());

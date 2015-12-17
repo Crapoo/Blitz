@@ -224,12 +224,13 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public boolean createGame(String gameName) {
 		Util.checkString(gameName);
-		if (game != null) {
+		if (game != null && game.getStartDate().equals(State.IN_PROGRESS)) {
 			return false;
 		}
 		game = new Game(gameName);
 		game = gameDao.save(game);
 		cardsUcc.shuffleDeck();
+
 		return true;
 	}
 
@@ -377,15 +378,13 @@ public class GameUccImpl implements GameUcc {
 			return;
 		}
 		game.endGame();
-		this.winner = game.getWinner();
-		game = null;
 	}
 
 	public String getWinner() {
-		if (winner == null) {
+		if (game == null) {
 			return "";
 		} else {
-			return winner;
+			return game.getWinner();
 		}
 	}
 

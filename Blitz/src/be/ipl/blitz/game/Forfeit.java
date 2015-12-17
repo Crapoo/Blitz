@@ -3,6 +3,7 @@ package be.ipl.blitz.game;
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,9 +28,16 @@ public class Forfeit extends HttpServlet {
 			throws ServletException, IOException {
 		String username = (String) request.getSession().getAttribute("username");
 
-		if (gameUcc.getWinner().isEmpty()) {
-			gameUcc.removePlayer(username);
+		final ServletContext ctx = getServletContext();
+
+		synchronized (ctx) {
+			ctx.setAttribute("players-count", (int) ctx.getAttribute("players-count") - 1);
 		}
+		gameUcc.removePlayer(username);
+
+		/*
+		 * if (gameUcc.getWinner().isEmpty()) { }
+		 */
 
 		response.sendRedirect("index.html");
 	}
