@@ -78,6 +78,13 @@ public class Game implements Serializable {
 				pg.removeDie(num);
 			}
 
+			@Override
+			void keepRandomCard(PlayerGame p, int num) {
+				for (int i = 0; i <= p.getCards().size() - num; i++) {
+					p.removeCard(i);
+				}
+			}
+
 		},
 		OVER {
 			@Override
@@ -118,6 +125,10 @@ public class Game implements Serializable {
 		}
 
 		void changeDirection(Game game) {
+
+		}
+
+		void keepRandomCard(PlayerGame playerGame, int num) {
 
 		}
 	}
@@ -202,6 +213,7 @@ public class Game implements Serializable {
 	}
 
 	public void setState(State s) {
+		Util.checkObject(s);
 		this.state = s;
 	}
 
@@ -214,6 +226,7 @@ public class Game implements Serializable {
 	}
 
 	public void setCurrentUser(int currentUser) {
+		Util.checkPositiveOrZero(currentUser);
 		this.currentUser = currentUser;
 	}
 
@@ -257,14 +270,23 @@ public class Game implements Serializable {
 	}
 
 	public void deleteDice(int num, PlayerGame pg) {
+		Util.checkObject(pg);
+		Util.checkPositiveOrZero(num);
 		state.removeDie(num, pg, this);
 	}
 
 	public void removePlayer(PlayerGame player) {
+		Util.checkObject(player);
 		state.removePlayer(player, this);
 	}
 
 	public void cancel() {
 		state = State.OVER;
+	}
+
+	public void keepRandomCard(PlayerGame playerGame, int num) {
+		Util.checkObject(playerGame);
+		Util.checkPositiveOrZero(num);
+		state.keepRandomCard(playerGame, num);
 	}
 }
