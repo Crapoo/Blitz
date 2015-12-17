@@ -1,8 +1,8 @@
 function refresh() {
   var $request = $.ajax({
-    url: "refresh-index.html",
-    type: "post",
-    dataType: "json",
+    url : "refresh-index.html",
+    type : "post",
+    dataType : "json",
   });
 
   $request.done(function (response, textStatus, xhr) {
@@ -10,14 +10,14 @@ function refresh() {
 
     var disableCreate = true;
     var disableJoin = true;
-    switch(response['game-state']) {
+    switch(response.gameState) {
       case "OVER":
       htmlResponse = '<p class="bg-primary"><strong><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Aucune partie en cours</p></strong>';
       disableCreate = false;
       disableJoin = true;
       break;
       case "INITIAL":
-      htmlResponse = '<p class="bg-success"><strong><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>Partie en attente</p> Joueurs : ' + response['players-count'] +'</strong>';
+      htmlResponse = '<p class="bg-success"><strong><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>Partie en attente</p> Joueurs : ' + response.playersCount +'</strong>';
       disableCreate = true;
       disableJoin = false;
       break;
