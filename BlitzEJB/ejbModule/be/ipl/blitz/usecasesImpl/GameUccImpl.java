@@ -102,6 +102,7 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		if (game.startGame()) {
+			winner = null;
 			cardsUcc.shuffleDeck();
 			giveInitalDice(game.getUsers());
 
