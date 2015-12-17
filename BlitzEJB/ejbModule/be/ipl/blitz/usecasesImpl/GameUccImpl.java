@@ -220,6 +220,9 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public boolean createGame(String gameName) {
 		Util.checkString(gameName);
+		if (game != null) {
+			return false;
+		}
 		game = new Game(gameName);
 		game = gameDao.save(game);
 		cardsUcc.shuffleDeck();
@@ -386,9 +389,9 @@ public class GameUccImpl implements GameUcc {
 	public void skipTurn(String username) {
 		game.skipTurn(getPlayerGame(username));
 	}
-	
+
 	@Override
-	public List<Game> getAllGames(){
+	public List<Game> getAllGames() {
 		return gameDao.getAll();
 	}
 }
