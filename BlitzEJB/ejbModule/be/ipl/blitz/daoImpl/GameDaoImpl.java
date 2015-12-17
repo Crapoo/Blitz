@@ -15,7 +15,6 @@ public class GameDaoImpl extends DaoImpl<Integer, Game> {
 
 	public GameDaoImpl() {
 		super(Game.class);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

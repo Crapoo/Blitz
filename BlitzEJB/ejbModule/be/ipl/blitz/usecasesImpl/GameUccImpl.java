@@ -50,9 +50,11 @@ public class GameUccImpl implements GameUcc {
 	static int nbCardsByPlayer;
 	static List<Face> faces;
 
+	boolean replay = false;
+
 	String winner;
 
-	private List<String> tmpFaces = Arrays.asList("c", "c", "d", "w", "w", "w");
+	private List<String> tmpFaces = Arrays.asList("c", "c", "d", "b", "b", "b");
 
 	public GameUccImpl() {
 	}
@@ -181,8 +183,6 @@ public class GameUccImpl implements GameUcc {
 			return false;
 		}
 		PlayerGame curr = getPlayerGame(getCurrentPlayer());
-		// TODO: Que faire si nombre de dé donné>nombre de dé dispo? retourner
-		// faux?
 		if (curr.getNbDice() < num) {
 			return false;
 		}
@@ -200,13 +200,17 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public User nextPlayer() {
+	public String nextPlayer() {
 		if (game == null) {
-			return new User();
+			return "";
 		}
-
-		PlayerGame next = game.nextPlayer();
-		return next.getUser();
+		if (replay) {
+			replay=false;
+			return getCurrentPlayer();
+		} else {
+			PlayerGame next = game.nextPlayer();
+			return next.getUser().getName();
+		}
 	}
 
 	@Override
@@ -393,5 +397,10 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public List<Game> getAllGames() {
 		return gameDao.getAll();
+	}
+
+	@Override
+	public void replay() {
+		replay = true;
 	}
 }

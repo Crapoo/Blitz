@@ -6,7 +6,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -74,15 +73,19 @@ public class ComputeAction extends HttpServlet {
 			gameUcc.skipTurn(target);
 			break;
 		case 10:
-			// TODO:rejouer
+			gameUcc.replay();
 			gameUcc.changeDirection();
 			break;
 		case 20:
 			response.getWriter().print(throwDice());
 			break;
+		case 21:
+			gameUcc.nextPlayer();
+			break;
 		default:
 			break;
 		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

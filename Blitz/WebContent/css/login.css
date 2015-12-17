@@ -5,7 +5,6 @@ body {
 }
 
 .vertical-align {
-  /* TODO vertical align ? */
   margin-top: 10em;
   display: flex;
   align-items: center;

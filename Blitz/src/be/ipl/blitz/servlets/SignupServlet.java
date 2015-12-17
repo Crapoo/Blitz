@@ -24,7 +24,6 @@ public class SignupServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO: protect against evil sql/xss injections
 
 		String username = request.getParameter("signup-username");
 		String password = request.getParameter("signup-password");
