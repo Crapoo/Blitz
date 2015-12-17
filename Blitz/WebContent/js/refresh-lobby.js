@@ -6,17 +6,17 @@ function refresh() {
   });
   $request.done(function (response, textStatus, xhr) {
     // Min players -> launch game
-    if (response['players-count'] == 2) {
+    if (response.playersCount == 2) {
       window.location.href = "board.html";
     }
     var playersList = "";
 
-    $.each(response['players-list'], function(i, player) {
+    $.each(response.playersList, function(i, player) {
       playersList += '<li class="list-group-item">' + player + '</li>';
     });
 
     $('#lobby-players-list').html(playersList);
-    $('#players-count').text(response['players-count']);
+    $('#players-count').text(response.playersCount);
     console.log(response);
   });
   $request.fail(function (xhr, textStatus, errorThrown) {

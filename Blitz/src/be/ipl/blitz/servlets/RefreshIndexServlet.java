@@ -41,7 +41,7 @@ public class RefreshIndexServlet extends HttpServlet {
 		if (playersList == null) {
 			oBuilder.add("playersCount", 0);
 		} else {
-			oBuilder.add("players-count", gameUcc.listPlayers().size());
+			oBuilder.add("playersCount", gameUcc.listPlayers().size());
 		}
 		State state = gameUcc.getState();
 		if (state != null) {

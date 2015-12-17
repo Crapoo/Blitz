@@ -38,8 +38,8 @@ public class RefreshLobbyServlet extends HttpServlet {
 			aBuilder.add(player);
 		}
 
-		oBuilder.add("players-list", aBuilder);
-		oBuilder.add("players-count", gameUcc.listPlayers().size());
+		oBuilder.add("playersList", aBuilder);
+		oBuilder.add("playersCount", gameUcc.listPlayers().size());
 		response.getWriter().print(oBuilder.build().toString());
 	}
 
