@@ -15,9 +15,7 @@ function refresh() {
 			$.each(response.players, function(i, player) {
 				updateInfoOf(player);
 			});
-			
-			console.log("my turn refresh : " + response.myTurn)
-			
+
 			updateMyInfo(response.nbDice, response.myCards, response.myTurn);
 
 			$('#current-player').text(response.currentPlayer);
@@ -25,7 +23,8 @@ function refresh() {
 	});
 
 	$request.fail(function(xhr, textStatus, errorThrown) {
-		alert(errorThrown);
+		//alert(errorThrown);
+    console(errorThrown);
 		clearInterval(refreshBoardInterval);
 	});
 }

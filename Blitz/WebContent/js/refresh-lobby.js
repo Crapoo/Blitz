@@ -20,7 +20,8 @@ function refresh() {
     console.log(response);
   });
   $request.fail(function (xhr, textStatus, errorThrown) {
-    alert(errorThrown);
+    //alert(errorThrown);
+    console.log(errorThrown);
   });
 }
 

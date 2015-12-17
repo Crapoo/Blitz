@@ -1,7 +1,3 @@
-#info-nav {
-
-}
-
 html, body {
 	height: 100%;
 	margin: 0;
@@ -9,19 +5,32 @@ html, body {
 }
 
 #wrap {
-	min-height: 75%;
+	min-height: 60%;
 	height: auto !important;
-	height: 75%;
+	height: 60%;
 }
 
 #my-board {
-	border: 1px solid black;
 	overflow-x: scroll;
-	height: 25%;
+	height: 40%;
+}
+
+#my-info {
+	border-top: 1px solid black;
 }
 
 #my-cards {
 	height: 100%;
+}
+
+#my-dice {
+	padding: 10px;
+	display: inline-block;
+	min-width: 75%;
+}
+
+#my-button {
+	margin-right: 10px;
 }
 
 .card {
@@ -66,15 +75,15 @@ html, body {
 }
 
 #overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    filter:alpha(opacity=50);
-    -moz-opacity:0.5;
-    -khtml-opacity: 0.5;
-    opacity: 0.5;
-    z-index: 10000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+	z-index: 10000;
 }

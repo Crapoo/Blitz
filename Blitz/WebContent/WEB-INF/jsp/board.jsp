@@ -6,9 +6,9 @@
 			<div class="container-fluid">
 				<p class="navbar-text">Tour de : <span id="current-player"></span></p>
 				<a href="forfeit.html"><button type="button"
-						class="btn btn-default navbar-btn navbar-right">
-						<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Abandonner
-					</button></a>
+					class="btn btn-default navbar-btn navbar-right">
+					<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Abandonner
+				</button></a>
 			</div>
 		</nav>
 
@@ -16,13 +16,14 @@
 			<div class="row text-center" id="enemy-row"></div>
 		</div>
 	</div>
-	<div class="row" id="my-board">
-		<div id="my-cards" class="col-md-9">
-
+	<div id="my-board">
+		<div id="my-info" class="col-sm-12">
+			<div id="my-dice"></div>
+			<button type="button" class="btn btn-default pull-right" id="my-button" disabled="true" data-action-code="20" onclick="dispatchAction(this)">Lancer d&eacute;s</button>
 		</div>
-		<div id="my-dice" class="col-md-3"></div>
 
-		<button type="button" class="btn btn-default" id="my-button" disabled="true" data-action-code="20" onclick="dispatchAction(this)">ROOOOOLL</button>
+		<div id="my-cards" class="col-sm-12">
+		</div>
 	</div>
 
 	<script src="js/game/initialise-board.js"></script>
