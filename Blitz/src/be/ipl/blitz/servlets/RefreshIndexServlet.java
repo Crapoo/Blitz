@@ -37,7 +37,6 @@ public class RefreshIndexServlet extends HttpServlet {
 		JsonObjectBuilder oBuilder = Json.createObjectBuilder();
 
 		List<String> playersList = gameUcc.listPlayers();
-		System.out.println("number of players in game created: "+playersList.size());
 		if (playersList == null) {
 			oBuilder.add("playersCount", 0);
 		} else {
