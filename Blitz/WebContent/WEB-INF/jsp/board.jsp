@@ -19,10 +19,29 @@
 	<div id="my-board">
 		<div id="my-info" class="col-sm-12">
 			<div id="my-dice"></div>
-			<button type="button" class="btn btn-default pull-right" id="my-button" disabled="true" data-action-code="20" onclick="dispatchAction(this)">Lancer d&eacute;s</button>
+			<button type="button" class="btn btn-default pull-right" id="my-button" disabled="true" onclick="rollDice()">Lancer d&eacute;s</button>
 		</div>
 
 		<div id="my-cards" class="col-sm-12">
+		</div>
+	</div>
+
+	<!-- TARGET ENEMY MODAL -->
+	<div class="modal fade" id="target-enemy-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Choisissez votre cible</h4>
+				</div>
+				<div class="modal-body">
+					<div class="list-group" id="target-list">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+				</div>
+			</div>
 		</div>
 	</div>
 

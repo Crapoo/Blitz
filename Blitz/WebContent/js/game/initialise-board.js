@@ -1,3 +1,5 @@
+var playerList = [];
+
 function initialise() {
 	var $request = $.ajax({
 		url : "initialise-board.html",
@@ -9,6 +11,7 @@ function initialise() {
 		var nbCards = response.nbCards;
 		var nbDice = response.nbDice;
 		$.each(response.players, function(i, player) {
+			playerList[i] = player;
 			$('#enemy-row').append(createEnemy(player, nbCards, nbDice, ""));
 		});
 		createMyCards(response.myCards);
@@ -25,8 +28,7 @@ function initialise() {
 
 function createEnemy(username, nbCards, nbDice, avatarPath) {
 	var enemy = $('<div class="enemy col-md-3" id="' + username + '">');
-	enemy
-	.append('<div class="col-md-4 avatar"><img src="" alt="" class="img-responsive"><h3>' +
+	enemy.append('<div class="col-md-4 avatar"><img src="" alt="" class="img-responsive"><h3>' +
 	username + '</h3></div>');
 	var infoPanel = $('<div class="col-md-8 info-panel">');
 	var infoRow = $('<div class="row info">');
