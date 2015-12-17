@@ -11,9 +11,6 @@
 					</button></a>
 			</div>
 		</nav>
-		<!-- TODO Use datas to pass elements to functions -->
-		<button type="button" class="btn btn-success" data-id="test"
-			onclick="rollDice(this)"></button>
 
 		<div class="container-fluid">
 			<div class="row text-center" id="enemy-row"></div>
