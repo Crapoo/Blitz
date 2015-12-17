@@ -36,7 +36,7 @@
 								<c:if test='${status == "signup-error"}'>
 									<div class="alert alert-danger">
 										<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-										&nbsp;&nbsp;${applicationScope['error-message']}
+										&nbsp;&nbsp;${requestScope['error-message']}
 									</div>
 								</c:if>
 							</div>
@@ -68,7 +68,7 @@
 									<c:if test='${status == "signin-error"}'>
 										<div class="alert alert-danger">
 											<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-											&nbsp;&nbsp;${applicationScope['error-message']}
+											&nbsp;&nbsp;${requestScope['error-message']}
 										</div>
 									</c:if>
 								</div>

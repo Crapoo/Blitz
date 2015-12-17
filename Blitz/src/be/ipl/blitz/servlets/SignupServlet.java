@@ -48,8 +48,8 @@ public class SignupServlet extends HttpServlet {
 			errorMessage = "Erreur lors de la cr&eacute;ation d'un compte";
 		}
 
-		getServletContext().setAttribute("status", "signup-error");
-		getServletContext().setAttribute("error-message", errorMessage);
+		request.setAttribute("status", "signup-error");
+		request.setAttribute("error-message", errorMessage);
 		getServletContext().getNamedDispatcher("login.html").forward(request, response);
 	}
 

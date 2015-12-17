@@ -45,8 +45,8 @@ public class SigninServlet extends HttpServlet {
 			errorMessage = "Erreur de connection";
 		}
 
-		getServletContext().setAttribute("status", "signin-error");
-		getServletContext().setAttribute("error-message", errorMessage);
+		request.setAttribute("status", "signin-error");
+		request.setAttribute("error-message", errorMessage);
 		request.getRequestDispatcher("login.html").forward(request, response);
 	}
 

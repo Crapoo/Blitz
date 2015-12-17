@@ -17,7 +17,7 @@ function refresh() {
       disableJoin = true;
       break;
       case "INITIAL":
-      htmlResponse = '<p class="bg-success"><strong><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>Partie en attente</p> Joueurs : ' + response.playersCount+'</strong>';
+      htmlResponse = '<p class="bg-success"><strong><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>Partie en attente Joueurs : ' + response.playersCount+'</strong></p>';
       disableCreate = true;
       disableJoin = false;
       break;
@@ -34,7 +34,8 @@ function refresh() {
   });
 
   $request.fail(function (xhr, textStatus, errorThrown) {
-    alert(errorThrown);
+    //alert(errorThrown);
+    console.log(errorThrown);
   });
 }
 
