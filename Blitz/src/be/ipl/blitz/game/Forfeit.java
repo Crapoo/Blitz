@@ -27,7 +27,7 @@ public class Forfeit extends HttpServlet {
 			throws ServletException, IOException {
 		String username = (String) request.getSession().getAttribute("username");
 
-		if (gameUcc.getWinner() == null) {
+		if (gameUcc.getWinner().isEmpty()) {
 			gameUcc.removePlayer(username);
 		}
 

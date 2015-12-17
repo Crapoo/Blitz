@@ -38,23 +38,16 @@ public class UpdateGame extends HttpServlet {
 		JsonObjectBuilder oBuilder = Json.createObjectBuilder();
 		response.setContentType("application/json");
 
-		if (players == null) {
-			if (winner == null) {
-				oBuilder.add("skip", true);
-				String json = oBuilder.build().toString();
-				System.out.println("P&W NULL");
-				System.out.println(json);
-				response.getWriter().println(json);
-				return;
-			} else {
-				oBuilder.add("hasWon", gameUcc.getWinner().equals(myUsername) ? true : false);
-				String json = oBuilder.build().toString();
-				System.out.println("P&!W NULL");
-				System.out.println(json);
-				response.getWriter().println(json);
-				return;
-			}
-		} else if (players.size() <= 1) {
+		if (!winner.isEmpty()) {
+			oBuilder.add("hasWon", gameUcc.getWinner().equals(myUsername) ? true : false);
+			String json = oBuilder.build().toString();
+			System.out.println("P&!W NULL");
+			System.out.println(json);
+			response.getWriter().println(json);
+			return;
+		}
+
+		if (players.size() <= 1) {
 			gameUcc.endGame();
 			oBuilder.add("", "");
 			String json = oBuilder.build().toString();
@@ -85,6 +78,7 @@ public class UpdateGame extends HttpServlet {
 					}
 
 					playerBuilder.add("nbDice", nbDice);
+					System.out.println(gameUcc.getCardsOf(player) + " - QSDFFFFFFFFFFFFFFFFFFFFFFF");
 					playerBuilder.add("nbCards", gameUcc.getCardsOf(player).size());
 					listBuilder.add(playerBuilder.build());
 				}
