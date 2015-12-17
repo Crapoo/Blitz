@@ -185,4 +185,6 @@ public interface GameUcc {
 	 * @param num
 	 */
 	void keepRandomCards(String username, int num);
+	
+	void skipTurn(String username);
 }
