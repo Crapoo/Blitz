@@ -2,9 +2,9 @@
 var currentPlayer;
 
 // TODO Implement this shit - Alfred
-var code = "";
+/*var action = "";
 var data = "target";
-var value = "";
+var value = "";*/
 
 var isBusy = false;
 var diceRolled = false;
@@ -29,64 +29,20 @@ function dispatchAction(caller) {
 
 	isBusy = true;
 
-	code = $(caller).data('action-code');
+	action = $(caller).data('action-code');
 	value = "";
 
-	switch (code) {
-	case 1:
-		discardDice(1);
-		break;
-	case 2:
-		changeDirection();
-		break;
-	case 3:
-		discardDie(2);
-		break;
-	case 4:
-		giveDie(target);
-		break;
-	case 5:
-		stealCard(target);
-		break;
-	case 6:
-		keepOneCard(target);
-		break;
-	case 7:
-		drawCard(number);
-		break;
-	case 8:
-		limitToOneCard();
-		break;
-	case 9:
-		skipTurn(target);
-		break;
-	case 10:
-		replay();
-		changeDirection();
-		break;
-	case 20:
-		if (diceRolled) {
-			break;
-		}
-		diceRolled = true;
-		rollDice();
-		break;
-	case 21:
-		endTurn();
-		break;
-	}
 }
 
 function rollDice() {
-	var $request = sendAction();
+	var $request = sendAction("roll-dice", "");
 
 	$request.done(function(response, textStatus, xhr) {
-		console.log(response);
 		var dice = $('#my-dice');
 		dice.empty();
 
 		$.each(response, function(i, die) {
-			dice.append('<span>' + die + '&nbsp;</span>');
+			dice.append(createDie(die));
 		});
 	});
 
@@ -102,11 +58,11 @@ function discardDice(number) {
 }
 
 function discardCard(target) {
-
 }
 
 function giveDie(target) {
-
+	sendAction("give-die", target);
+	$('#target-enemy-modal').modal('hide');
 }
 
 function stealCard(target) {
@@ -142,25 +98,38 @@ function endGame(hasWon) {
 	$("#overlay").show();
 }
 
+function prepareGiveDieModal() {
+	var list = $('#target-list');
+	list.empty();
+
+	$.each(playerList, function(i, player) {
+		list.append('<button type="button" class="list-group-item" onclick="giveDie(\'' + player + '\')">' + player + '</button>');
+	});
+}
+
+function prepareTargetModal(title, message) {
+
+}
+
 // Data is a map of attribute names and their values
-function sendAction() {
+function sendAction(action, target) {
 	return $.ajax({
 		url : "compute-action.html",
 		data : {
-			"action-code" : code,
-			"target" : value
+			"action" : action,
+			"target" : target
 		},
 		type : "get",
 		dataType : "json",
 	});
 
 	/*
-	 * var $request = $.ajax({ url: "compute-action.html" + action, type: "get",
-	 * dataType: "json", });
-	 * 
-	 * $request.done(function (response, textStatus, xhr) { });
-	 * 
-	 * $request.fail(function (xhr, textStatus, errorThrown) {
-	 * alert(errorThrown); });
-	 */
+	* var $request = $.ajax({ url: "compute-action.html" + action, type: "get",
+	* dataType: "json", });
+	*
+	* $request.done(function (response, textStatus, xhr) { });
+	*
+	* $request.fail(function (xhr, textStatus, errorThrown) {
+	* alert(errorThrown); });
+	*/
 }
