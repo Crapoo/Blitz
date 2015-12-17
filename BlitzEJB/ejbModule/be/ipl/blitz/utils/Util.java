@@ -31,4 +31,8 @@ public final class Util {
 		if (i <= 0)
 			throw new IllegalArgumentException();
 	}
+	
+	public static int modulo(int x, int y) {
+		return ((x % y) + y) % y;
+	}
 }

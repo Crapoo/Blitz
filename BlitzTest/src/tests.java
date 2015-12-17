@@ -16,6 +16,9 @@ public class tests {
 
 	public static void main(String[] args) {
 		try {
+			
+			System.out.println(((-1 % 4) + 4) % 4);
+			
 			String gameName = "New Game";
 			Set<String> playsersUsername = new HashSet<String>();
 			playsersUsername.add("1");

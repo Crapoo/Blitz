@@ -71,10 +71,10 @@ public class Game implements Serializable {
 
 			@Override
 			PlayerGame nextPlayer(Game game) {
-				int nextPlayer = (game.currentUser + game.direction) % game.users.size();
-				if(game.skippedPlayers.contains(nextPlayer)){
+				int nextPlayer = Util.modulo(game.currentUser + game.direction, game.users.size());
+				if (game.skippedPlayers.contains(nextPlayer)) {
 					game.skippedPlayers.remove(nextPlayer);
-					nextPlayer = (nextPlayer + game.direction) % game.users.size();
+					nextPlayer = Util.modulo(nextPlayer + game.direction, game.users.size());
 				}
 				game.setCurrentUser(nextPlayer);
 				return game.users.get(game.getCurrentUser());
@@ -106,12 +106,12 @@ public class Game implements Serializable {
 					}
 				}
 			}
-			
+
 			@Override
-	
-			void skipTurn(PlayerGame p,Game g){
-				for(int i=0;i<g.getUsers().size();i++){
-					if(p.equals(g.getUsers().get(i))){
+
+			void skipTurn(PlayerGame p, Game g) {
+				for (int i = 0; i < g.getUsers().size(); i++) {
+					if (p.equals(g.getUsers().get(i))) {
 						g.skippedPlayers.add(i);
 					}
 				}
@@ -121,7 +121,6 @@ public class Game implements Serializable {
 		OVER {
 			@Override
 			void removePlayer(PlayerGame pg, Game g) {
-				System.err.println("ici");
 			}
 
 			@Override
@@ -143,11 +142,11 @@ public class Game implements Serializable {
 		};
 
 		void removePlayer(PlayerGame player, Game g) {
+			if (player == null) {
+				return;
+			}
 			if (g.users.contains(player)) {
-				System.err.println("joueur retiré");
 				g.users.remove(player);
-			} else {
-				System.err.println("Le joueur n'est pas dans le jeu");
 			}
 		}
 
@@ -211,9 +210,8 @@ public class Game implements Serializable {
 	@Transient
 	private int direction = 1;
 
-
 	@Transient
-	private Set<Integer> skippedPlayers=new HashSet<>();
+	private Set<Integer> skippedPlayers = new HashSet<>();
 
 	public List<PlayerGame> getUsers() {
 		return users;
@@ -334,7 +332,6 @@ public class Game implements Serializable {
 	}
 
 	public void removePlayer(PlayerGame player) {
-		Util.checkObject(player);
 		state.removePlayer(player, this);
 	}
 

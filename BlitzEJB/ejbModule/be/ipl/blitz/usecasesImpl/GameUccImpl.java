@@ -146,6 +146,9 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	private PlayerGame getPlayerGame(String username) {
+		if (!listPlayers().contains(username)) {
+			return null;
+		}
 		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
 	}
 
@@ -362,7 +365,7 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public void removePlayer(String username) {
 		Util.checkString(username);
-		this.game.removePlayer(getPlayerGame(username));
+		game.removePlayer(getPlayerGame(username));
 	}
 
 	@Override

@@ -133,8 +133,9 @@ public class GameUccTest {
 
 	@Test
 	public void testCreateGame() {
-		gameUcc.createGame(gameName);
-		assertEquals("Partie pas créée", null, gameUcc.getState());
+		assertTrue("partie pas créée", gameUcc.createGame(gameName));
+		assertEquals("Partie state pas correct", State.INITIAL, gameUcc.getState());
+		assertFalse("deuxieme partie cree", gameUcc.createGame(gameName));
 	}
 
 	@Test
