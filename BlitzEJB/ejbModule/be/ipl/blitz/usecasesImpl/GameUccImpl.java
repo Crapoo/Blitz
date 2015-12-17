@@ -1,7 +1,6 @@
 package be.ipl.blitz.usecasesImpl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -53,8 +52,6 @@ public class GameUccImpl implements GameUcc {
 	boolean replay = false;
 
 	String winner;
-
-	private List<String> tmpFaces = Arrays.asList("c", "c", "d", "b", "b", "b");
 
 	public GameUccImpl() {
 	}

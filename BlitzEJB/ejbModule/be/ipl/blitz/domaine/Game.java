@@ -3,10 +3,8 @@ package be.ipl.blitz.domaine;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -211,7 +209,7 @@ public class Game implements Serializable {
 	private int direction = 1;
 
 	@Transient
-	private Set<Integer> skippedPlayers = new HashSet<>();
+	private List<Integer> skippedPlayers = new ArrayList<>();
 
 	public List<PlayerGame> getUsers() {
 		return users;
@@ -326,7 +324,7 @@ public class Game implements Serializable {
 	}
 
 	public void deleteDice(int num, PlayerGame pg) {
-		Util.checkObject(pg);
+		Util.checkObject(pg);	
 		Util.checkPositiveOrZero(num);
 		state.removeDie(num, pg, this);
 	}

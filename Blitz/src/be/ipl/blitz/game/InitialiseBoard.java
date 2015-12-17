@@ -6,9 +6,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.json.JsonValue;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,6 +53,7 @@ public class InitialiseBoard extends HttpServlet {
 		}
 
 		for (String player : players) {
+			// On ne s'intéresse qu'aux carte du joueur connecté
 			if (player.equals(username)) {
 				for (Card card : gameUcc.getCardsOf(username)) {
 					aCardsBuilder.add(card.toJson());
