@@ -192,6 +192,7 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public int getNbDice(String username) {
+		Util.checkString(username);
 		return getPlayerGame(username).getNbDice();
 	}
 
@@ -255,6 +256,12 @@ public class GameUccImpl implements GameUcc {
 		return giveCardsTo(username, cardsUcc.drawCard(num));
 	}
 
+	private void keepRandomCards(String username, int num){
+		Util.checkString(username);
+		Util.checkPositiveOrZero(num);
+		game.keepRandomCard(getPlayerGame(username), num);
+	}
+	
 	@Override
 	public boolean discard(String username, int effectCode) {
 		Util.checkString(username);
@@ -276,6 +283,7 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	public static void setMaxPlayers(int maxPlayers) {
+		Util.checkPositive(maxPlayers);
 		GameUccImpl.maxPlayers = maxPlayers;
 	}
 
@@ -285,6 +293,7 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	public static void setMinPlayers(int minPlayers) {
+		Util.checkPositive(minPlayers);
 		GameUccImpl.minPlayers = minPlayers;
 	}
 
@@ -294,6 +303,7 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	public static void setGoal(String goal) {
+		Util.checkString(goal);
 		GameUccImpl.goal = goal;
 	}
 
@@ -303,10 +313,12 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	public static void setDicePerPlayer(int dicePerPlayer) {
+		Util.checkPositive(dicePerPlayer);
 		GameUccImpl.dicePerPlayer = dicePerPlayer;
 	}
 
 	public static void setNbCardsByPlayer(int nbCardsByPlayer) {
+		Util.checkPositive(nbCardsByPlayer);
 		GameUccImpl.nbCardsByPlayer = nbCardsByPlayer;
 	}
 
@@ -317,12 +329,15 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public List<Card> getCardsOf(String username) {
+		Util.checkString(username);
 		PlayerGame p = getPlayerGame(username);
 		p = playerGameDao.reload(p.getPk());
 		return p.getCards();
 	}
 
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
+		Util.checkString(username);
+		Util.checkObject(cards);
 		PlayerGame p = getPlayerGame(username);
 		p = playerGameDao.reload(p.getPk());
 		for (Card c : cards) {
@@ -333,6 +348,7 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	public static void setFaces(List<Face> value) {
+		Util.checkObject(value);
 		faces = value;
 	}
 
@@ -353,6 +369,7 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public void removePlayer(String username) {
+		Util.checkString(username);
 		this.game.removePlayer(getPlayerGame(username));
 	}
 
