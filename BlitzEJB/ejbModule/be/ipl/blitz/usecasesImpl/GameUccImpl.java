@@ -29,29 +29,104 @@ import be.ipl.blitz.utils.Util;
 @Startup
 public class GameUccImpl implements GameUcc {
 
+	static int maxPlayers;
+	static int minPlayers;
+	static String goal;
+	static int dicePerPlayer;
+
+	static int nbCardsByPlayer;
+	static List<Face> faces;
+
+	public static void setDicePerPlayer(int dicePerPlayer) {
+		Util.checkPositive(dicePerPlayer);
+		GameUccImpl.dicePerPlayer = dicePerPlayer;
+	}
+
+	public static void setFaces(List<Face> value) {
+		Util.checkObject(value);
+		faces = value;
+	}
+
+	public static void setGoal(String goal) {
+		Util.checkString(goal);
+		GameUccImpl.goal = goal;
+	}
+
+	public static void setMaxPlayers(int maxPlayers) {
+		Util.checkPositive(maxPlayers);
+		GameUccImpl.maxPlayers = maxPlayers;
+	}
+
+	public static void setMinPlayers(int minPlayers) {
+		Util.checkPositive(minPlayers);
+		GameUccImpl.minPlayers = minPlayers;
+	}
+
+	public static void setNbCardsByPlayer(int nbCardsByPlayer) {
+		Util.checkPositive(nbCardsByPlayer);
+		GameUccImpl.nbCardsByPlayer = nbCardsByPlayer;
+	}
+
 	private Game game;
+
 	@EJB
 	private GameDaoImpl gameDao;
+
 	@EJB
 	private UserDaoImpl userDao;
+
 	@EJB
 	private PlayerGameDaoImpl playerGameDao;
 
 	@EJB
 	private UserUcc userUcc;
+
 	@EJB
 	private CardsUcc cardsUcc;
-
-	static int maxPlayers;
-	static int minPlayers;
-	static String goal;
-	static int dicePerPlayer;
-	static int nbCardsByPlayer;
-	static List<Face> faces;
 
 	boolean replay = false;
 
 	public GameUccImpl() {
+	}
+
+	/* Constantes de jeu */
+	@Override
+	public int getMaxPlayers() {
+		return maxPlayers;
+	}
+
+	@Override
+	public int getMinPlayers() {
+		return minPlayers;
+	}
+
+	@Override
+	public String getGoal() {
+		return goal;
+	}
+
+	@Override
+	public int getNbCardsByPlayer() {
+		return nbCardsByPlayer;
+	}
+
+	@Override
+	public int getDicePerPlayer() {
+		return dicePerPlayer;
+	}
+
+	/* Gestion de la partie */
+	@Override
+	public boolean createGame(String gameName) {
+		Util.checkString(gameName);
+		if (game != null && !game.getState().equals(State.OVER)) {
+			return false;
+		}
+		game = new Game(gameName);
+		game = gameDao.save(game);
+		cardsUcc.shuffleDeck();
+
+		return true;
 	}
 
 	public boolean joinGame(String gameName, String username) {
@@ -72,6 +147,55 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
+	public boolean startGame() {
+		if (game == null || game.getUsers().size() < 2) {
+			return false;
+		}
+		if (game.startGame()) {
+			cardsUcc.shuffleDeck();
+			giveInitalDice(game.getUsers());
+
+			if (dealCards(game.getUsers())) {
+				gameDao.update(game);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void cancelGame() {
+		if (game != null) {
+			game.cancel();
+			game = null;
+		}
+	}
+
+	@Override
+	public void endGame() {
+		if (game == null) {
+			return;
+		}
+		game.endGame();
+	}
+
+	@Override
+	public Game getCurrentGame() {
+		return this.game;
+	}
+
+	@Override
+	@Lock(LockType.READ)
+	public State getState() {
+		if (game == null) {
+			return State.OVER;
+		}
+		return game.getState();
+	}
+
+	/* Gestion des joueurs */
+
+	@Override
 	@Lock(LockType.READ)
 	public List<String> listPlayers() {
 		if (game == null) {
@@ -89,44 +213,6 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public boolean startGame() {
-		if (game == null || game.getUsers().size() < 2) {
-			return false;
-		}
-		if (game.startGame()) {
-			cardsUcc.shuffleDeck();
-			giveInitalDice(game.getUsers());
-
-			if (dealCards(game.getUsers())) {
-				gameDao.update(game);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private void giveInitalDice(List<PlayerGame> pg) {
-		Util.checkObject(pg);
-		for (PlayerGame player : pg) {
-			player.addDie(dicePerPlayer);
-			playerGameDao.update(player);
-		}
-	}
-
-	private boolean dealCards(List<PlayerGame> gp) {
-		Util.checkObject(gp);
-		for (PlayerGame player : gp) {
-			List<Card> cards = drawCard(player.getUser().getName(), nbCardsByPlayer);
-			if (cards == null) {
-				return false;
-			}
-			player.setCards(cards);
-			playerGameDao.update(player);
-		}
-		return true;
-	}
-
-	@Override
 	public String getCurrentPlayer() {
 		if (game == null) {
 			return "";
@@ -136,23 +222,30 @@ public class GameUccImpl implements GameUcc {
 		return u.getName();
 	}
 
-	private PlayerGame getPlayerGame(String username) {
-		if (!listPlayers().contains(username)) {
-			return null;
+	@Override
+	public String nextPlayer() {
+		if (game == null) {
+			return "";
 		}
-		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
+		if (replay) {
+			replay = false;
+			return getCurrentPlayer();
+		} else {
+			PlayerGame next = game.nextPlayer();
+			return next.getUser().getName();
+		}
 	}
 
 	@Override
-	public List<String> throwDice() {
-		List<String> nFaces = new ArrayList<>();
-		if (game == null)
-			return new ArrayList<>();
-		Random r = new Random();
-		for (int i = 0; i < getPlayerGame(getCurrentPlayer()).getNbDice(); i++) {
-			nFaces.add(faces.get(r.nextInt(6)).getIdentif());
-		}
-		return nFaces;
+	public void removePlayer(String username) {
+		Util.checkString(username);
+		game.removePlayer(getPlayerGame(username));
+	}
+
+	/* Actions du jeu */
+	@Override
+	public void changeDirection() {
+		game.changeDirection();
 	}
 
 	@Override
@@ -166,6 +259,68 @@ public class GameUccImpl implements GameUcc {
 		game.deleteDice(num, pg);
 		playerGameDao.update(pg);
 		return true;
+	}
+
+	@Override
+	public boolean discard(String username, int effectCode) {
+		Util.checkString(username);
+		Util.checkPositiveOrZero(effectCode);
+		PlayerGame pg = getPlayerGame(username);
+		for (Card c : pg.getCards()) {
+			if (c.getEffectCode() == effectCode) {
+				pg.removeCard(c.getId());
+				cardsUcc.discard(c);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public List<Card> drawCard(String username, int num) {
+		Util.checkString(username);
+		Util.checkPositiveOrZero(num);
+		return giveCardsTo(username, cardsUcc.drawCard(num));
+	}
+
+	@Override
+	public List<Game> getAllGames() {
+		return gameDao.getAll();
+	}
+
+	@Override
+	public List<Card> getCardsOf(String username) {
+		Util.checkString(username);
+		PlayerGame p = getPlayerGame(username);
+		p = playerGameDao.reload(p.getPk());
+		return (p.getCards() == null) ? new ArrayList<Card>() : p.getCards();
+	}
+
+	@Override
+	public int getNbDice(String username) {
+		Util.checkString(username);
+		// FIXME Przemek : getPlayerGame est null
+		return getPlayerGame(username).getNbDice();
+	}
+
+	public String getWinner() {
+		if (game == null) {
+			return "";
+		} else {
+			return game.getWinner();
+		}
+	}
+
+	public List<Card> giveCardsTo(String username, List<Card> cards) {
+		Util.checkString(username);
+		Util.checkObject(cards);
+		PlayerGame p = getPlayerGame(username);
+		p = playerGameDao.reload(p.getPk());
+		for (Card c : cards) {
+			p.addCard(c);
+		}
+		p = playerGameDao.update(p);
+		return p.getCards();
 	}
 
 	@Override
@@ -187,165 +342,6 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public int getNbDice(String username) {
-		Util.checkString(username);
-		// FIXME Przemek : getPlayerGame est null
-		return getPlayerGame(username).getNbDice();
-	}
-
-	@Override
-	public String nextPlayer() {
-		if (game == null) {
-			return "";
-		}
-		if (replay) {
-			replay = false;
-			return getCurrentPlayer();
-		} else {
-			PlayerGame next = game.nextPlayer();
-			return next.getUser().getName();
-		}
-	}
-
-	@Override
-	public void cancelGame() {
-		if (game != null) {
-			game.cancel();
-			game = null;
-		}
-	}
-
-	@Override
-	public boolean createGame(String gameName) {
-		Util.checkString(gameName);
-		if (game != null && !game.getState().equals(State.OVER)) {
-			return false;
-		}
-		game = new Game(gameName);
-		game = gameDao.save(game);
-		cardsUcc.shuffleDeck();
-
-		return true;
-	}
-
-	@Override
-	@Lock(LockType.READ)
-	public State getState() {
-		if (game == null) {
-			return State.OVER;
-		}
-		return game.getState();
-	}
-
-	@Override
-	public Game getCurrentGame() {
-		return this.game;
-	}
-
-	@Override
-	public List<Card> drawCard(String username, int num) {
-		Util.checkString(username);
-		Util.checkPositiveOrZero(num);
-		return giveCardsTo(username, cardsUcc.drawCard(num));
-	}
-
-	public void keepRandomCards(String username, int num) {
-		Util.checkString(username);
-		Util.checkPositiveOrZero(num);
-		game.keepRandomCard(getPlayerGame(username), num);
-	}
-
-	@Override
-	public boolean discard(String username, int effectCode) {
-		Util.checkString(username);
-		Util.checkPositiveOrZero(effectCode);
-		PlayerGame pg = getPlayerGame(username);
-		for (Card c : pg.getCards()) {
-			if (c.getEffectCode() == effectCode) {
-				pg.removeCard(c.getId());
-				cardsUcc.discard(c);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public int getMaxPlayers() {
-		return maxPlayers;
-	}
-
-	public static void setMaxPlayers(int maxPlayers) {
-		Util.checkPositive(maxPlayers);
-		GameUccImpl.maxPlayers = maxPlayers;
-	}
-
-	@Override
-	public int getMinPlayers() {
-		return minPlayers;
-	}
-
-	public static void setMinPlayers(int minPlayers) {
-		Util.checkPositive(minPlayers);
-		GameUccImpl.minPlayers = minPlayers;
-	}
-
-	@Override
-	public String getGoal() {
-		return goal;
-	}
-
-	public static void setGoal(String goal) {
-		Util.checkString(goal);
-		GameUccImpl.goal = goal;
-	}
-
-	@Override
-	public int getDicePerPlayer() {
-		return dicePerPlayer;
-	}
-
-	public static void setDicePerPlayer(int dicePerPlayer) {
-		Util.checkPositive(dicePerPlayer);
-		GameUccImpl.dicePerPlayer = dicePerPlayer;
-	}
-
-	public static void setNbCardsByPlayer(int nbCardsByPlayer) {
-		Util.checkPositive(nbCardsByPlayer);
-		GameUccImpl.nbCardsByPlayer = nbCardsByPlayer;
-	}
-
-	@Override
-	public int getNbCardsByPlayer() {
-		return nbCardsByPlayer;
-	}
-
-	@Override
-	public List<Card> getCardsOf(String username) {
-		Util.checkString(username);
-		PlayerGame p = getPlayerGame(username);
-		p = playerGameDao.reload(p.getPk());
-		return (p.getCards() == null) ? new ArrayList<Card>() : p.getCards();
-	}
-
-	public List<Card> giveCardsTo(String username, List<Card> cards) {
-		Util.checkString(username);
-		Util.checkObject(cards);
-		PlayerGame p = getPlayerGame(username);
-		p = playerGameDao.reload(p.getPk());
-		for (Card c : cards) {
-			p.addCard(c);
-		}
-		p = playerGameDao.update(p);
-		return p.getCards();
-	}
-
-	public static void setFaces(List<Face> value) {
-		Util.checkObject(value);
-		faces = value;
-	}
-
-	@Override
 	public boolean giveMeCards(String src) {
 		Util.checkString(src);
 		if (src.equals(getCurrentPlayer())) {
@@ -355,31 +351,15 @@ public class GameUccImpl implements GameUcc {
 		return true;
 	}
 
-	@Override
-	public void changeDirection() {
-		game.changeDirection();
-	}
-
-	@Override
-	public void removePlayer(String username) {
+	public void keepRandomCards(String username, int num) {
 		Util.checkString(username);
-		game.removePlayer(getPlayerGame(username));
+		Util.checkPositiveOrZero(num);
+		game.keepRandomCard(getPlayerGame(username), num);
 	}
 
 	@Override
-	public void endGame() {
-		if (game == null) {
-			return;
-		}
-		game.endGame();
-	}
-
-	public String getWinner() {
-		if (game == null) {
-			return "";
-		} else {
-			return game.getWinner();
-		}
+	public void replay() {
+		replay = true;
 	}
 
 	@Override
@@ -388,12 +368,43 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public List<Game> getAllGames() {
-		return gameDao.getAll();
+	public List<String> throwDice() {
+		List<String> nFaces = new ArrayList<>();
+		if (game == null)
+			return new ArrayList<>();
+		Random r = new Random();
+		for (int i = 0; i < getPlayerGame(getCurrentPlayer()).getNbDice(); i++) {
+			nFaces.add(faces.get(r.nextInt(6)).getIdentif());
+		}
+		return nFaces;
 	}
 
-	@Override
-	public void replay() {
-		replay = true;
+	/* Util */
+	private PlayerGame getPlayerGame(String username) {
+		if (!listPlayers().contains(username)) {
+			return null;
+		}
+		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
+	}
+
+	private boolean dealCards(List<PlayerGame> gp) {
+		Util.checkObject(gp);
+		for (PlayerGame player : gp) {
+			List<Card> cards = drawCard(player.getUser().getName(), nbCardsByPlayer);
+			if (cards == null) {
+				return false;
+			}
+			player.setCards(cards);
+			playerGameDao.update(player);
+		}
+		return true;
+	}
+
+	private void giveInitalDice(List<PlayerGame> pg) {
+		Util.checkObject(pg);
+		for (PlayerGame player : pg) {
+			player.addDie(dicePerPlayer);
+			playerGameDao.update(player);
+		}
 	}
 }

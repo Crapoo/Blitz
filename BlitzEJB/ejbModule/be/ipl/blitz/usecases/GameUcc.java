@@ -11,17 +11,23 @@ import be.ipl.blitz.domaine.Game.State;
 @Remote
 public interface GameUcc {
 
-	/**
-	 * Ajoute la joueur désigné par son nom dans la partie donnée.
-	 * 
-	 * @param gameName
-	 *            Nom de la partie à rejoindre.
-	 * @param username
-	 *            Nom du joueur.
-	 * @return True si le joueur a pu rejoindre la partie.
-	 */
-	boolean joinGame(String gameName, String username);
+	/* Constantes de jeu */
+	/** Retourne le nombre maximum de joueurs. */
+	int getMaxPlayers();
 
+	/** Retourne le nombre minimum de joueurs. */
+	int getMinPlayers();
+
+	/** Retourne le but du jeu. */
+	String getGoal();
+
+	/** Retourne le nombre initial de cartes par joueurs. */
+	int getNbCardsByPlayer();
+
+	/** Retourne le nombre initial de dé par joueur. */
+	int getDicePerPlayer();
+
+	/* Gestion de la partie */
 	/**
 	 * Crée un jeu avec le nom donnée et la date courante comme date de début.
 	 * 
@@ -32,12 +38,15 @@ public interface GameUcc {
 	boolean createGame(String gameName);
 
 	/**
-	 * Récupère l'état de la dernière partie lancée.
+	 * Ajoute la joueur désigné par son nom dans la partie donnée.
 	 * 
-	 * @return Etat de la partie ou null si aucune partie n'a été lancée jusqu'à
-	 *         maintenant.
+	 * @param gameName
+	 *            Nom de la partie à rejoindre.
+	 * @param username
+	 *            Nom du joueur.
+	 * @return True si le joueur a pu rejoindre la partie.
 	 */
-	State getState();
+	boolean joinGame(String gameName, String username);
 
 	/**
 	 * Démarre la partie avec les joueurs préalablement ajoutés.
@@ -52,11 +61,11 @@ public interface GameUcc {
 	void cancelGame();
 
 	/**
-	 * Lance les dés du joueur courant.
+	 * Cloture la partie.
 	 * 
-	 * @return Set de Face correspondant au résultat du lancer.
+	 * @return le pseudo du vainqueur
 	 */
-	List<String> throwDice();
+	void endGame();
 
 	/**
 	 * Récupère le dernière partie lancée.
@@ -66,24 +75,17 @@ public interface GameUcc {
 	Game getCurrentGame();
 
 	/**
-	 * Supprime un certain nombre de dé du joueur donné. Si ce nombre est
-	 * supérieur au nombre de dés du joueur, supprime tous les dés.
+	 * Récupère l'état de la dernière partie lancée.
 	 * 
-	 * @param numero
-	 *            Nombre de dé à supprimer.
-	 * @param username
-	 *            Nom du joueur à qui supprimer les dés.
-	 * @return True si les dés ont pu être supprimés.
+	 * @return Etat de la partie ou null si aucune partie n'a été lancée jusqu'à
+	 *         maintenant.
 	 */
-	boolean deleteDice(int numero, String username);
+	State getState();
 
-	/**
-	 * Change le joueur courant par le joueur devant joueur après.
-	 * 
-	 * @return Le nouveau joueur courant.
-	 */
-	String nextPlayer();
+	/** Récupère la liste de toutes les parties jouées. */
+	List<Game> getAllGames();
 
+	/* Gestion des joueurs */
 	/**
 	 * Récupère les noms de tous les joueurs participant à la partie courante.
 	 * 
@@ -99,22 +101,49 @@ public interface GameUcc {
 	String getCurrentPlayer();
 
 	/**
+	 * Change le joueur courant par le joueur devant joueur après.
+	 * 
+	 * @return Le nouveau joueur courant.
+	 */
+	String nextPlayer();
+
+	/**
+	 * Retire un joueur de la partie
+	 * 
+	 * @param pseudo
+	 */
+	void removePlayer(String pseudo);
+
+	/** Retourne le nom du gagnant de la partie finie. */
+	String getWinner();
+
+	/* Actions du jeu */
+	/**
+	 * Lance les dés du joueur courant.
+	 * 
+	 * @return Set de Face correspondant au résultat du lancer.
+	 */
+	List<String> throwDice();
+
+	/**
+	 * Supprime un certain nombre de dé du joueur donné. Si ce nombre est
+	 * supérieur au nombre de dés du joueur, supprime tous les dés.
+	 * 
+	 * @param numero
+	 *            Nombre de dé à supprimer.
+	 * @param username
+	 *            Nom du joueur à qui supprimer les dés.
+	 * @return True si les dés ont pu être supprimés.
+	 */
+	boolean deleteDice(int numero, String username);
+
+	/**
 	 * Tire une carte dans la pioche
 	 * 
 	 * @return une liste des cartes a tirer, null si il n'y a pas de cartes dans
 	 *         la pioche
 	 */
 	List<Card> drawCard(String username, int num);
-
-	int getMaxPlayers();
-
-	int getMinPlayers();
-
-	String getGoal();
-
-	int getNbCardsByPlayer();
-
-	int getDicePerPlayer();
 
 	/**
 	 * Récupère les cartes pour le joueur passé en paramètre
@@ -134,13 +163,6 @@ public interface GameUcc {
 	 * change la direction du jeu
 	 */
 	void changeDirection();
-
-	/**
-	 * Retire un joueur de la partie
-	 * 
-	 * @param pseudo
-	 */
-	void removePlayer(String pseudo);
 
 	/**
 	 * Supprime une carte du deck du joueur
@@ -171,13 +193,6 @@ public interface GameUcc {
 	int getNbDice(String username);
 
 	/**
-	 * Ends the game
-	 * 
-	 * @return le pseudo du vainqueur
-	 */
-	void endGame();
-
-	/**
 	 * the username only keeps num cards
 	 * 
 	 * @param username
@@ -185,15 +200,16 @@ public interface GameUcc {
 	 */
 	void keepRandomCards(String username, int num);
 
+	/**
+	 * Enregistre le fait qu'un joueur devra passer son tour.
+	 * 
+	 * @param username
+	 *            Nom du joueur à qui passer le tour.
+	 */
 	void skipTurn(String username);
 
-	String getWinner();
-	
 	/**
-	 * 
-	 * @return
+	 * Permet au joueur courant de rejouer à la fin de son tour.
 	 */
 	void replay();
-	
-	List<Game> getAllGames();
 }
