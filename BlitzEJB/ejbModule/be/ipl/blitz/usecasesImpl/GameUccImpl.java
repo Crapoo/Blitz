@@ -79,7 +79,7 @@ public class GameUccImpl implements GameUcc {
 	@Lock(LockType.READ)
 	public List<String> listPlayers() {
 		if (game == null) {
-			return null;
+			return new ArrayList<>();
 		}
 		List<PlayerGame> playerGames = game.getUsers();
 
@@ -134,7 +134,7 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public String getCurrentPlayer() {
 		if (game == null) {
-			return null;
+			return "";
 		}
 		int index = game.getCurrentUser() % game.getUsers().size();
 		User u = game.getUsers().get(index).getUser();
@@ -152,7 +152,7 @@ public class GameUccImpl implements GameUcc {
 	public List<String> throwDice() {
 		List<String> nFaces = new ArrayList<>();
 		if (game == null)
-			return null;
+			return new ArrayList<>();
 		Random r = new Random();
 		for (int i = 0; i < getPlayerGame(getCurrentPlayer()).getNbDice(); i++) {
 			nFaces.add(faces.get(r.nextInt(6)).getIdentif());
@@ -202,7 +202,7 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public User nextPlayer() {
 		if (game == null) {
-			return null;
+			return new User();
 		}
 
 		PlayerGame next = game.nextPlayer();
@@ -230,7 +230,7 @@ public class GameUccImpl implements GameUcc {
 	@Lock(LockType.READ)
 	public State getState() {
 		if (game == null) {
-			return null;
+			return State.OVER;
 		}
 		return game.getState();
 	}
@@ -367,17 +367,19 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public void endGame() {
 		if (game == null) {
-			System.out.println("Aucun jeu lancé");
 			return;
 		}
 		game.endGame();
-		// gameDao.update(game);
 		this.winner = game.getWinner();
 		game = null;
 	}
 
 	public String getWinner() {
-		return this.winner;
+		if (winner == null) {
+			return "";
+		} else {
+			return winner;
+		}
 	}
 
 	@Override
