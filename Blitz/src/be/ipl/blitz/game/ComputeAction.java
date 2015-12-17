@@ -24,6 +24,8 @@ public class ComputeAction extends HttpServlet {
 			throws ServletException, IOException {
 		int actionCode = (int) request.getAttribute("action-code");
 		String username = (String) request.getSession().getAttribute("username");
+		String target;
+		int number;
 		
 		switch (actionCode) {
 		case 1:
@@ -36,20 +38,38 @@ public class ComputeAction extends HttpServlet {
 			gameUcc.deleteDice(2, username);
 			break;
 		case 4:
+			target= (String) request.getAttribute("target");
+			gameUcc.giveDice(target, 1);
 			break;
 		case 5:
+			target= (String) request.getAttribute("target");
+			gameUcc.giveMeCards(target);
 			break;
 		case 6:
+			target= (String) request.getAttribute("target");
+			gameUcc.keepRandomCards(target, 1);
 			break;
 		case 7:
 			gameUcc.drawCard(username, 3);
 			break;
 		case 8:
-			
+			number = (int) request.getAttribute("number");
+			for(String s:gameUcc.listPlayers()){
+				if(!s.equals(gameUcc.getCurrentPlayer())){
+					gameUcc.keepRandomCards(s, number);
+				}
+			}
 			break;
 		case 9:
+			target= (String) request.getAttribute("target");
+			gameUcc.skipTurn(target);
 			break;
 		case 10:
+			//TODO:rejouer
+			gameUcc.changeDirection();
+			break;
+		case 20:
+			gameUcc.throwDice();
 			break;
 		default:
 			break;
