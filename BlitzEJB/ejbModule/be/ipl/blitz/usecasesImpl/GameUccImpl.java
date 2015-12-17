@@ -180,11 +180,6 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public Game getCurrentGame() {
-		return this.game;
-	}
-
-	@Override
 	@Lock(LockType.READ)
 	public State getState() {
 		if (game == null) {

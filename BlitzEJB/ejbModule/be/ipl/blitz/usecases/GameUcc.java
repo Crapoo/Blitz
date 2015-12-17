@@ -68,13 +68,6 @@ public interface GameUcc {
 	void endGame();
 
 	/**
-	 * Récupère le dernière partie lancée.
-	 * 
-	 * @return La dernière partie lancée.
-	 */
-	Game getCurrentGame();
-
-	/**
 	 * Récupère l'état de la dernière partie lancée.
 	 * 
 	 * @return Etat de la partie ou null si aucune partie n'a été lancée jusqu'à
