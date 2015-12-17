@@ -40,7 +40,6 @@ public final class PasswordTools {
       random.nextBytes(salt);
       return salt;
     } catch (NoSuchAlgorithmException e) {
-    	//TODO: Exception catching
     	throw new Exception();
     }
   }

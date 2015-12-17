@@ -24,7 +24,6 @@ public class SigninServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO: protect against evil sql/xss injections
 
 		String username = request.getParameter("signin-username");
 		String password = request.getParameter("signin-password");

@@ -27,7 +27,6 @@ public abstract class DaoImpl<K, E> implements Dao<K, E> {
 	public E find(K id) {
 		return (E) entityManager.find(entityClass, id);
 	}
-	//TODO: check if it exists first
 	public E save(E entity) {
 		entityManager.persist(entity);
 		return entity;

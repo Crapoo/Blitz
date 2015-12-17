@@ -7,7 +7,6 @@ import javax.ejb.Remote;
 import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
-import be.ipl.blitz.domaine.User;
 
 @Remote
 public interface GameUcc {
@@ -83,7 +82,7 @@ public interface GameUcc {
 	 * 
 	 * @return Le nouveau joueur courant.
 	 */
-	User nextPlayer();
+	String nextPlayer();
 
 	/**
 	 * Récupère les noms de tous les joueurs participant à la partie courante.
@@ -189,5 +188,12 @@ public interface GameUcc {
 	void skipTurn(String username);
 
 	String getWinner();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	void replay();
+	
 	List<Game> getAllGames();
 }
