@@ -12,8 +12,8 @@ function initialise() {
 			$('#enemy-row').append(createEnemy(player, nbCards, nbDice, ""));
 		});
 		createMyCards(response.myCards);
-		var overlay = jQuery('<div id="overlay"><h1><a href="forfeit.html"><button type="button" class="btn btn-default navbar-btn navbar-right"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Quitter</button></a></h1></div>');
-		overlay.append("body");
+		var overlay = $('<div id="overlay"><h1><a href="forfeit.html"><button type="button" class="btn btn-default navbar-btn navbar-right"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Quitter</button></a></h1></div>');
+		$('body').append(overlay);
 		overlay.hide();
 	});
 
