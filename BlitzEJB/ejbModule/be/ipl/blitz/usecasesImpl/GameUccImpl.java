@@ -205,7 +205,7 @@ public class GameUccImpl implements GameUcc {
 			return "";
 		}
 		if (replay) {
-			replay=false;
+			replay = false;
 			return getCurrentPlayer();
 		} else {
 			PlayerGame next = game.nextPlayer();
@@ -330,7 +330,7 @@ public class GameUccImpl implements GameUcc {
 		Util.checkString(username);
 		PlayerGame p = getPlayerGame(username);
 		p = playerGameDao.reload(p.getPk());
-		return p.getCards();
+		return (p.getCards() == null) ? new ArrayList<Card>() : p.getCards();
 	}
 
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
