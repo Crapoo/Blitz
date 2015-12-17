@@ -1,7 +1,6 @@
 package be.ipl.blitz.domaine;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -130,11 +129,9 @@ public class PlayerGame implements Serializable {
 	}
 
 	public boolean removeDie(int num) {
-		for (int i = 0; i < num; i++) {
-			if (nbDice > 0) {
-				nbDice--;
-				return true;
-			}
+		while(nbDice!=0 && num != 0){
+			nbDice--;
+			num--;
 		}
 		return false;
 	}
