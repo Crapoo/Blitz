@@ -46,26 +46,30 @@ public class Game implements Serializable {
 
 			@Override
 			boolean startGame(Game game) {
-				game.state = State.IN_PROGRESS;
 				Random r = new Random();
-				game.currentUser = r.nextInt(game.users.size());
+				int playerCount = game.users.size();
+				if (playerCount == 0) {
+					return false;
+				}
+				game.currentUser = r.nextInt(playerCount);
+				game.state = State.IN_PROGRESS;
 				return true;
 			}
 
 		},
 		IN_PROGRESS {
 			@Override
-			void changeDirection(Game game){
-				if(game.direction==1){
-					game.direction=-1;
-				}else{
-					game.direction=1;
+			void changeDirection(Game game) {
+				if (game.direction == 1) {
+					game.direction = -1;
+				} else {
+					game.direction = 1;
 				}
 			}
-			
+
 			@Override
 			PlayerGame nextPlayer(Game game) {
-				game.setCurrentUser((game.currentUser+game.direction) % game.users.size());
+				game.setCurrentUser((game.currentUser + game.direction) % game.users.size());
 				return game.users.get(game.getCurrentUser());
 			}
 
@@ -77,18 +81,19 @@ public class Game implements Serializable {
 		},
 		OVER {
 			@Override
-			void removePlayer(PlayerGame pg,Game g){
-				
+			void removePlayer(PlayerGame pg, Game g) {
+
 			}
+
 			@Override
 			User getWinner(Game game) {
 				return null;
 			}
 		};
-		void removePlayer(PlayerGame player, Game g){
+		void removePlayer(PlayerGame player, Game g) {
 			g.users.remove(player);
 		}
-		
+
 		PlayerGame addPlayer(User u, Game g) {
 			return null;
 		}
@@ -111,9 +116,9 @@ public class Game implements Serializable {
 		PlayerGame nextPlayer(Game game) {
 			return null;
 		}
-		
-		void changeDirection(Game game){
-			
+
+		void changeDirection(Game game) {
+
 		}
 	}
 
@@ -128,15 +133,15 @@ public class Game implements Serializable {
 	@Column
 	@NotNull
 	private Date startDate;
-	
+
 	@Column
 	private User winner;
 
 	@Transient
 	private int currentUser;
-	
+
 	@Transient
-	private int direction=1;
+	private int direction = 1;
 
 	// @Transient
 	// private UserDaoImpl userDao;
@@ -242,8 +247,8 @@ public class Game implements Serializable {
 			return false;
 		return true;
 	}
-	
-	public void changeDirection(){
+
+	public void changeDirection() {
 		state.changeDirection(this);
 	}
 
@@ -254,8 +259,8 @@ public class Game implements Serializable {
 	public void deleteDice(int num, PlayerGame pg) {
 		state.removeDie(num, pg, this);
 	}
-	
-	public void removePlayer(PlayerGame player){
+
+	public void removePlayer(PlayerGame player) {
 		state.removePlayer(player, this);
 	}
 

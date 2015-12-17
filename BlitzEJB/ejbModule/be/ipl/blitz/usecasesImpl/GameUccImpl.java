@@ -137,7 +137,8 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return null;
 		}
-		User u = game.getUsers().get(game.getCurrentUser()).getUser();
+		int index = game.getCurrentUser() % game.getUsers().size();
+		User u = game.getUsers().get(index).getUser();
 		return u.getName();
 	}
 
