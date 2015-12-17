@@ -350,4 +350,15 @@ public class GameUccImpl implements GameUcc {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void removePlayer(String username) {
+		this.game.removePlayer(getPlayerGame(username));
+	}
+
+	@Override
+	public String endGame() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

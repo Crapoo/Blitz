@@ -68,10 +68,18 @@ public class Game implements Serializable {
 		},
 		OVER {
 			@Override
+			void removePlayer(PlayerGame pg,Game g){
+				
+			}
+			@Override
 			User getWinner(Game game) {
 				return null;
 			}
 		};
+		void removePlayer(PlayerGame player, Game g){
+			g.users.remove(player);
+		}
+		
 		PlayerGame addPlayer(User u, Game g) {
 			return null;
 		}
@@ -227,6 +235,10 @@ public class Game implements Serializable {
 
 	public void deleteDice(int num, PlayerGame pg) {
 		state.removeDie(num, pg, this);
+	}
+	
+	public void removePlayer(PlayerGame player){
+		state.removePlayer(player, this);
 	}
 
 	public void cancel() {

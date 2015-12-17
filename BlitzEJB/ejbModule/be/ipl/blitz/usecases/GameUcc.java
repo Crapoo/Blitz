@@ -139,6 +139,13 @@ public interface GameUcc {
 	
 	void changeDirection();
 	
+	
+	/**
+	 * Retire un joueur de la partie
+	 * @param pseudo
+	 */
+	void removePlayer(String pseudo);
+	
 	/**
 	 * Supprime une carte du deck du joueur
 	 * 
@@ -163,5 +170,9 @@ public interface GameUcc {
 	 */
 	int getNbDice(String username);
 	
-	
+	/**
+	 * Ends the game
+	 * @return le pseudo du vainqueur
+	 */
+	String endGame();	
 }
