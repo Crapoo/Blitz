@@ -26,7 +26,10 @@ public class ComputeAction extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int actionCode = (int) request.getAttribute("action-code");
+
+		System.out.println(request.getParameterMap());
+
+		int actionCode = Integer.parseInt(request.getParameter("action-code"));
 		String username = (String) request.getSession().getAttribute("username");
 		String target;
 		int number;
@@ -90,11 +93,11 @@ public class ComputeAction extends HttpServlet {
 		List<String> faces = gameUcc.throwDice();
 
 		JsonArrayBuilder aBuilder = Json.createArrayBuilder();
-		
+
 		for (String face : faces) {
 			aBuilder.add(face);
 		}
-		
+
 		return aBuilder.build().toString();
 
 	}

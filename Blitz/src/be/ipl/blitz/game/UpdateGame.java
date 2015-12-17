@@ -63,7 +63,6 @@ public class UpdateGame extends HttpServlet {
 			List<Card> myCards = gameUcc.getCardsOf(myUsername);
 
 			JsonArrayBuilder listBuilder = Json.createArrayBuilder();
-			JsonObjectBuilder mBuilder = Json.createObjectBuilder();
 			JsonArrayBuilder cBuilder = Json.createArrayBuilder();
 
 			for (String player : players) {
@@ -78,7 +77,6 @@ public class UpdateGame extends HttpServlet {
 					}
 
 					playerBuilder.add("nbDice", nbDice);
-					System.out.println(gameUcc.getCardsOf(player) + " - QSDFFFFFFFFFFFFFFFFFFFFFFF");
 					playerBuilder.add("nbCards", gameUcc.getCardsOf(player).size());
 					listBuilder.add(playerBuilder.build());
 				}
@@ -86,11 +84,7 @@ public class UpdateGame extends HttpServlet {
 
 			oBuilder.add("players", listBuilder.build());
 
-			if (currentPlayer.equals(myUsername)) {
-				mBuilder.add("myTurn", true);
-			} else {
-				mBuilder.add("myTurn", false);
-			}
+			oBuilder.add("myTurn", currentPlayer.equals(myUsername));
 
 			for (Card card : myCards) {
 				cBuilder.add(card.toJson());
