@@ -4,8 +4,7 @@
 	<div id="wrap">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
-				<p class="navbar-text" id="turn-info">Test turn</p>
-				<a href="disconnect.html"><button type="button"
+				<a href="forfeit.html"><button type="button"
 						class="btn btn-default navbar-btn navbar-right">
 						<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Abandonner
 					</button></a>
@@ -21,7 +20,7 @@
 	</div>
 	<div class="row" id="my-board">
 		<div id="my-cards" class="col-md-9">
-		
+
 		</div>
 		<div id="my-dice" class="col-md-3"></div>
 	</div>
