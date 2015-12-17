@@ -66,8 +66,8 @@ public class CardsUccImpl implements CardsUcc {
 
 	@Override
 	public Card stealCardFrom(PlayerGame thief, PlayerGame victim) {
-		thief=playerGameDao.reload(new PlayerGamePK(thief.getUserId(),thief.getGameId()));
-		victim=playerGameDao.reload(new PlayerGamePK(victim.getUserId(),victim.getGameId()));
+		thief=playerGameDao.reload(thief.getPk());
+		victim=playerGameDao.reload(victim.getPk());
 
 		playerGameDao.loadCards(victim);
 		playerGameDao.loadCards(thief);

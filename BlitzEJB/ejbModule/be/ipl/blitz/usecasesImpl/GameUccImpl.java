@@ -49,9 +49,9 @@ public class GameUccImpl implements GameUcc {
 	static int dicePerPlayer;
 	static int nbCardsByPlayer;
 	static List<Face> faces;
-	
-	private List<String> tmpFaces=Arrays.asList("c","c","d","w","w","w");
- 
+
+	private List<String> tmpFaces = Arrays.asList("c", "c", "d", "w", "w", "w");
+
 	public GameUccImpl() {
 	}
 
@@ -174,12 +174,13 @@ public class GameUccImpl implements GameUcc {
 	public boolean giveDice(String username, int num) {
 		Util.checkPositiveOrZero(num);
 		Util.checkString(username);
-		if(username.equals(getCurrentPlayer())){
+		if (username.equals(getCurrentPlayer())) {
 			return false;
 		}
-		PlayerGame curr=getPlayerGame(getCurrentPlayer());
-		//TODO: Que faire si nombre de dé donné>nombre de dé dispo? retourner faux?
-		if(curr.getNbDice()<num){
+		PlayerGame curr = getPlayerGame(getCurrentPlayer());
+		// TODO: Que faire si nombre de dé donné>nombre de dé dispo? retourner
+		// faux?
+		if (curr.getNbDice() < num) {
 			return false;
 		}
 		getPlayerGame(username).addDie(num);
@@ -317,13 +318,13 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public List<Card> getCardsOf(String username) {
 		PlayerGame p = getPlayerGame(username);
-		p = playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
+		p = playerGameDao.reload(p.getPk());
 		return p.getCards();
 	}
 
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
 		PlayerGame p = getPlayerGame(username);
-		p = playerGameDao.reload(new PlayerGamePK(p.getUserId(), p.getGameId()));
+		p = playerGameDao.reload(p.getPk());
 		for (Card c : cards) {
 			p.addCard(c);
 		}
@@ -338,17 +339,17 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public boolean giveMeCards(String src) {
 		Util.checkString(src);
-		if(src.equals(getCurrentPlayer())){
+		if (src.equals(getCurrentPlayer())) {
 			return false;
 		}
-		cardsUcc.stealCardFrom(getPlayerGame(getCurrentPlayer()), getPlayerGame(src));		
-			return true;
+		cardsUcc.stealCardFrom(getPlayerGame(getCurrentPlayer()), getPlayerGame(src));
+		return true;
 	}
 
 	@Override
 	public void changeDirection() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

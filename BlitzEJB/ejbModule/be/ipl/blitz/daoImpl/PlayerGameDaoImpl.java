@@ -21,8 +21,9 @@ public class PlayerGameDaoImpl extends DaoImpl<PlayerGamePK, PlayerGame> {
 		Util.checkObject(id);
 		return find(id);
 	}
+
 	public PlayerGame loadCards(PlayerGame pg) {
-		pg = findById(new PlayerGamePK(pg.getUserId(), pg.getGameId()));
+		pg = findById(pg.getPk());
 		pg.getCards().size();
 		return pg;
 	}
