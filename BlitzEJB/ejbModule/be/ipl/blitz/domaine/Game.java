@@ -84,6 +84,20 @@ public class Game implements Serializable {
 					p.removeCard(i);
 				}
 			}
+			@Override
+			void endGame(Game g){
+				g.setState(OVER);
+				if(g.users.size()<2){
+					g.setWinner(g.users.get(0).getUser().getName());
+				}else{
+					for(PlayerGame p: g.getUsers()){
+						if(p.getNbDice()==0){
+							g.setWinner(p.getUser().getName());
+							return;
+						}
+					}
+				}
+			}
 
 		},
 		OVER {
@@ -130,6 +144,11 @@ public class Game implements Serializable {
 
 		void keepRandomCard(PlayerGame playerGame, int num) {
 
+
+		}
+
+		void endGame(Game game) {
+
 		}
 	}
 
@@ -146,7 +165,7 @@ public class Game implements Serializable {
 	private Date startDate;
 
 	@Column
-	private User winner;
+	private String winner;
 
 	@Transient
 	private int currentUser;
@@ -203,12 +222,12 @@ public class Game implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public User getWinner() {
+	public String getWinner() {
 		return winner;
 	}
 
-	public void setWinner(User winner) {
-		Util.checkObject(winner);
+	public void setWinner(String winner) {
+		Util.checkString(winner);
 		this.winner = winner;
 	}
 
@@ -288,5 +307,9 @@ public class Game implements Serializable {
 		Util.checkObject(playerGame);
 		Util.checkPositiveOrZero(num);
 		state.keepRandomCard(playerGame, num);
+	}
+
+	public void endGame() {
+		state.endGame(this);
 	}
 }

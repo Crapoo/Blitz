@@ -210,10 +210,7 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return null;
 		}
-		User u = game.getWinner();
-		if (u == null)
-			return null;
-		return u.getName();
+		return game.getWinner();
 	}
 
 	@Override
@@ -375,7 +372,7 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public String endGame() {
-		return null;
+	public void endGame() {
+		game.endGame();
 	}
 }

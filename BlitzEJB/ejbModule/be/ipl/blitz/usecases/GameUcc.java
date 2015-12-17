@@ -177,5 +177,5 @@ public interface GameUcc {
 	 * Ends the game
 	 * @return le pseudo du vainqueur
 	 */
-	String endGame();	
+	void endGame();	
 }
