@@ -129,6 +129,8 @@
     \end{table}
 
     \section{Tests Fonctionnels}
+
+
     \section{Connexion}
     \begin{table}[H]
         \begin{tabularx}{\textwidth}{X|X}
@@ -143,6 +145,7 @@
             & 9. Le système vérifie que l'utilisateur existe et que le mot de passe est correct et affiche l'erreur \og Nom d'utilisateur ou mot de passe incorrect\fg{} et reste sur le popup.\\
         \end{tabularx}
     \end{table}
+
     \section{Création de partie}
     \begin{table}[H]
         \begin{tabularx}{\textwidth}{X|X}
@@ -164,6 +167,23 @@
 
     \chapter{Manuels}
     \section{Manuel d'installation}
+    Les constantes sont dans un fichier xml, situé a Blitz/BlitzEJB/ejbModule/blitz.xml.
+
+    \subsection{Instalation avec Eclipse}
+    \begin{enumerate}
+        \item Créer un schéma nommé \og blitz\fg{} dans la base de données.
+        \item Importer le projet dans éclipse.\footnote{Il est supposé que Wildfly est déjà configuré, ainsi que la JDK.}
+        \item Click droit sur le serveur
+        \item Cliquer sur \og Add and Remove\fg{}
+        \item Ajouter \og BlitzEAR\fg{}
+        \item Cliquer sur \og Full Publish\fg{}
+        \item Lancer le serveur
+    \end{enumerate}
+    \subsection{Installation sans Eclipse}
+    \begin{enumerate}
+        \item Créer un schéma nommé \og blitz\fg{} dans la base de données.
+        \item Mettre Blitz.EAR dans le dossier suivant JBOSS\_HOME/server/your config>/deploy folder.
+    \end{enumerate}
 
     \section{Manuel d'utilisation}
     \subsection{Comment accéder au jeu?}
