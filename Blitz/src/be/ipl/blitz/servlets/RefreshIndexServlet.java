@@ -37,11 +37,10 @@ public class RefreshIndexServlet extends HttpServlet {
 		JsonObjectBuilder oBuilder = Json.createObjectBuilder();
 
 		List<String> playersList = gameUcc.listPlayers();
-
 		if (playersList == null) {
 			oBuilder.add("playersCount", 0);
 		} else {
-			oBuilder.add("playersCount", gameUcc.listPlayers().size());
+			oBuilder.add("playersCount", playersList.size());
 		}
 		State state = gameUcc.getState();
 		if (state != null) {
@@ -50,7 +49,7 @@ public class RefreshIndexServlet extends HttpServlet {
 			oBuilder.add("gameState", "OVER");
 		}
 		JsonObject json = oBuilder.build();
-		
+
 		response.getWriter().print(json.toString());
 	}
 
