@@ -348,8 +348,7 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public void changeDirection() {
-		// TODO Auto-generated method stub
-
+		game.changeDirection();
 	}
 
 	@Override
@@ -359,7 +358,6 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public String endGame() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

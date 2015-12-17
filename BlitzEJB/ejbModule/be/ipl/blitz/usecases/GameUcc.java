@@ -137,6 +137,9 @@ public interface GameUcc {
 	 */
 	boolean giveMeCards(String src);
 	
+	/**
+	 * change la direction du jeu
+	 */
 	void changeDirection();
 	
 	

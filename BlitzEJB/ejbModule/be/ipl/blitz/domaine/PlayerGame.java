@@ -33,9 +33,6 @@ public class PlayerGame implements Serializable {
 	private int gameId;
 
 	@Transient
-	private PlayerGamePK pk;
-
-	@Transient
 	@EJB
 	private CardsUccImpl cardUcc;
 
@@ -59,7 +56,6 @@ public class PlayerGame implements Serializable {
 	public PlayerGame(User u, Game g) {
 		userId = u.getId();
 		gameId = g.getId();
-		pk = new PlayerGamePK(u.getId(), g.getId());
 		this.user = u;
 		this.game = g;
 	}
@@ -69,7 +65,7 @@ public class PlayerGame implements Serializable {
 	}
 
 	public PlayerGamePK getPk() {
-		return pk;
+		return new PlayerGamePK(userId, gameId);
 	}
 
 	public int getNbDice() {

@@ -27,7 +27,6 @@ public class tests {
 			userUcc = (UserUcc) jdni.lookup("ejb:BlitzEAR/BlitzEJB/UserUccImpl!be.ipl.blitz.usecases.UserUcc");
 			gameUcc = (GameUcc) jdni.lookup("ejb:BlitzEAR/BlitzEJB/GameUccImpl!be.ipl.blitz.usecases.GameUcc");
 			cardUcc = (CardsUcc) jdni.lookup("ejb:BlitzEAR/BlitzEJB/CardsUccImpl!be.ipl.blitz.usecases.CardsUcc");
-		
 
 			/**************************************************************************
 			 * GAMEUCC TESTS
@@ -55,37 +54,30 @@ public class tests {
 			printGameState();
 
 			gameUcc.removePlayer("em");
-			
-			printGameState();
-			
-		/*	List<String> f = gameUcc.throwDice();
 
-			System.out.println("dices thrown: " + f.size());
-			for (String fa : f) {
-				System.out.print(fa + " - ");
-			}
-			System.out.println();
-
-			System.out.println("Current player removes 1 die:");
-			gameUcc.deleteDice(1, gameUcc.getCurrentPlayer());
-			printGameState();
-			System.out.println("Current player gives 1 die to mi");
-			if (!gameUcc.giveDice("mi", 1)) {
-				gameUcc.giveDice("em", 1);
-			}
 			printGameState();
 
-			System.out.println("Current player draws a card:");
-			gameUcc.drawCard(gameUcc.getCurrentPlayer(), 1);
-			printGameState();
-
-			// NOT IMPLEMENTED YET
-			 System.out.println("Current player steals card from");
-			 if(!gameUcc.giveMeCards("mi")){
-				 gameUcc.giveMeCards("ol");
-			 }
-			 printGameState();
-*/
+			/*
+			 * List<String> f = gameUcc.throwDice();
+			 * 
+			 * System.out.println("dices thrown: " + f.size()); for (String fa :
+			 * f) { System.out.print(fa + " - "); } System.out.println();
+			 * 
+			 * System.out.println("Current player removes 1 die:");
+			 * gameUcc.deleteDice(1, gameUcc.getCurrentPlayer());
+			 * printGameState(); System.out.println(
+			 * "Current player gives 1 die to mi"); if (!gameUcc.giveDice("mi",
+			 * 1)) { gameUcc.giveDice("em", 1); } printGameState();
+			 * 
+			 * System.out.println("Current player draws a card:");
+			 * gameUcc.drawCard(gameUcc.getCurrentPlayer(), 1);
+			 * printGameState();
+			 * 
+			 * // NOT IMPLEMENTED YET System.out.println(
+			 * "Current player steals card from");
+			 * if(!gameUcc.giveMeCards("mi")){ gameUcc.giveMeCards("ol"); }
+			 * printGameState();
+			 */
 			// int effectCode=;
 			// System.out.println("\n\ncards of currentPlayer:");
 			// for(Card s:gameUcc.getCardsOf(gameUcc.getCurrentPlayer())){
@@ -98,9 +90,10 @@ public class tests {
 			// for(Card s:gameUcc.getCardsOf(gameUcc.getCurrentPlayer())){
 			// System.out.println(s);
 			// }
-			//TODO: gerer si il y n y a plus de card dans le deck
-			//TODO: verifier dans toutes les methodes si l utilisateur a bien les cartes/de pour faire ce qu il veut
-			
+			// TODO: gerer si il y n y a plus de card dans le deck
+			// TODO: verifier dans toutes les methodes si l utilisateur a bien
+			// les cartes/de pour faire ce qu il veut
+
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
