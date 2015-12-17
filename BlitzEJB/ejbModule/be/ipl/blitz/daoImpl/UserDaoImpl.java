@@ -24,7 +24,7 @@ public class UserDaoImpl extends DaoImpl<Integer, User>{
 	
 	public User findByName(String s){
 		Util.checkString(s);
-		String queryString = "SELECT u FROM User u WHERE u.name = ?1";
+		String queryString = "SELECT u FROM User u WHERE LOWER(u.name) = LOWER(?1)";
 		return search(queryString, s);
 	}
 

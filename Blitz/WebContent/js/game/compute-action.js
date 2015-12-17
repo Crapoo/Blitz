@@ -7,6 +7,7 @@ var data = "target";
 var value = "";
 
 var isBusy = false;
+var diceRolled = false;
 
 // TODO Retrieve datas from html with
 // $(variable).data('dataname')
@@ -64,7 +65,14 @@ function dispatchAction(caller) {
 		changeDirection();
 		break;
 	case 20:
+		if (diceRolled) {
+			break;
+		}
+		diceRolled = true;
 		rollDice();
+		break;
+	case 21:
+		endTurn();
 		break;
 	}
 }
@@ -123,6 +131,11 @@ function limitToOneCard() {
 
 function skipTurn(target) {
 
+}
+
+function endTurn() {
+
+	diceRolled = false;
 }
 
 function endGame(hasWon) {

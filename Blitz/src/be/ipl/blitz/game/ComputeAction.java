@@ -25,9 +25,6 @@ public class ComputeAction extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		System.out.println(request.getParameterMap());
-
 		int actionCode = Integer.parseInt(request.getParameter("action-code"));
 		String username = (String) request.getSession().getAttribute("username");
 		String target;
