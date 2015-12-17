@@ -30,7 +30,6 @@ function refresh() {
 }
 
 function updateInfoOf(player) {
-	console.log('Dice : ' + player.nbDice);
 	$('#' + player.username).find(".nb-cards").text(player.nbCards);
 	$('#' + player.username).find('.nb-dice').text(player.nbDice);
 }
@@ -58,19 +57,25 @@ function updateMyCards(cards) {
 }
 
 function createDie(face) {
-	buttonAction = "";
+	var buttonAction = "";
 	switch (face) {
 		case 'b':
 		break;
 		case 'c':
 		//buttonAction = "drawCards(1)";
-		buttonAction = "prepareGiveDieModal()";
+		// TODO supprimer ça après
+		buttonAction = "prepareGiveDieModal";
 		break;
 		case 'd':
-		buttonAction = "prepareGiveDieModal()";
+		buttonAction = "prepareGiveDieModal";
 		break;
 	}
 	var dieSpan = $('<button class="die btn btn-default" data-toggle="modal" data-target="#target-enemy-modal" onclick="' + buttonAction + '">');
+
+	dieSpan.on('click', function() {
+		window[buttonAction]();
+		$(this).prop('disabled', true);
+	});
 	dieSpan.append('<strong>' + face + '</strong>');
 	/*<button type="button" class="btn btn-lg btn-primary col-md-6" data-toggle="modal" data-target="#create-game-modal" id="create-game-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Cr&eacute;er une partie</button>*/
 	return dieSpan;

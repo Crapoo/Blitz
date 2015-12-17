@@ -40,12 +40,10 @@ public class ComputeAction extends HttpServlet {
 			System.out.println("Give Die");
 			target = (String) request.getParameter("target");
 			System.out.println("Target : " + target);
-			if (gameUcc.giveDice(target, 1)) {
-				System.out.println("GAVE DIE");
-				System.out.println(gameUcc.getNbDice(target));
-			} else {
-				System.out.println("DIDN'T GIVE");
-			}
+			gameUcc.giveDice(target, 1);
+			break;
+		case "end-turn":
+			gameUcc.nextPlayer();
 			break;
 		default:
 			break;

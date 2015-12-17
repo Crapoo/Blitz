@@ -1,16 +1,8 @@
 // FIXME Don't know if we need it
 var currentPlayer;
 
-// TODO Implement this shit - Alfred
-/*var action = "";
-var data = "target";
-var value = "";*/
-
 var isBusy = false;
 var diceRolled = false;
-
-// TODO Retrieve datas from html with
-// $(variable).data('dataname')
 
 // TODO For example, a boolean variable that indicates if a card if currently
 // being played. If so, ignore every other request
@@ -28,13 +20,11 @@ function dispatchAction(caller) {
 	}
 
 	isBusy = true;
-
-	action = $(caller).data('action-code');
-	value = "";
-
 }
 
 function rollDice() {
+	isBusy = true;
+
 	var $request = sendAction("roll-dice", "");
 
 	$request.done(function(response, textStatus, xhr) {
@@ -46,6 +36,7 @@ function rollDice() {
 		});
 	});
 
+	diceRolled = true;
 	isBusy = false;
 }
 
@@ -61,6 +52,9 @@ function discardCard(target) {
 }
 
 function giveDie(target) {
+	if (isBusy) {
+		return;
+	}
 	sendAction("give-die", target);
 	$('#target-enemy-modal').modal('hide');
 }
@@ -90,6 +84,11 @@ function skipTurn(target) {
 }
 
 function endTurn() {
+	if (!diceRolled) {
+		return;
+	}
+
+	sendAction("end-turn", "");
 
 	diceRolled = false;
 }
@@ -105,6 +104,8 @@ function prepareGiveDieModal() {
 	$.each(playerList, function(i, player) {
 		list.append('<button type="button" class="list-group-item" onclick="giveDie(\'' + player + '\')">' + player + '</button>');
 	});
+
+	$('#target-enemy-modal').modal('show');
 }
 
 function prepareTargetModal(title, message) {
@@ -122,14 +123,4 @@ function sendAction(action, target) {
 		type : "get",
 		dataType : "json",
 	});
-
-	/*
-	* var $request = $.ajax({ url: "compute-action.html" + action, type: "get",
-	* dataType: "json", });
-	*
-	* $request.done(function (response, textStatus, xhr) { });
-	*
-	* $request.fail(function (xhr, textStatus, errorThrown) {
-	* alert(errorThrown); });
-	*/
 }

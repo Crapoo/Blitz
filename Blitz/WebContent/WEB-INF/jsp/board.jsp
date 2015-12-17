@@ -5,8 +5,9 @@
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<p class="navbar-text">Tour de : <span id="current-player"></span></p>
+				<button type="button" class="btn btn-default" onclick="endTurn()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Passer le tour</button>
 				<a href="forfeit.html"><button type="button"
-					class="btn btn-default navbar-btn navbar-right">
+					class="btn btn-danger navbar-btn navbar-right">
 					<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Abandonner
 				</button></a>
 			</div>

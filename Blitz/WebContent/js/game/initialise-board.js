@@ -72,6 +72,7 @@ function createCard(card) {
 	// TODO : Matt - rendre cliquable uniquement si tour du joueur ET peut payer
 	// le prix
 	cardElt.append($('<button class="btn btn-default"  data-id="' + card.id + '" data-action-code="' + card.effectCode + '" onclick="dispatchAction(this)">Utiliser</button>'));
+	// TODO Replace action code by onclick
 	return cardElt;
 }
 
