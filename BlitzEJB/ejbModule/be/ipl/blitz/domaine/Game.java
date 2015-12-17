@@ -84,14 +84,15 @@ public class Game implements Serializable {
 					p.removeCard(i);
 				}
 			}
+
 			@Override
-			void endGame(Game g){
+			void endGame(Game g) {
 				g.setState(OVER);
-				if(g.users.size()<2){
+				if (g.users.size() < 2) {
 					g.setWinner(g.users.get(0).getUser().getName());
-				}else{
-					for(PlayerGame p: g.getUsers()){
-						if(p.getNbDice()==0){
+				} else {
+					for (PlayerGame p : g.getUsers()) {
+						if (p.getNbDice() == 0) {
 							g.setWinner(p.getUser().getName());
 							return;
 						}
@@ -103,16 +104,34 @@ public class Game implements Serializable {
 		OVER {
 			@Override
 			void removePlayer(PlayerGame pg, Game g) {
-
+				System.err.println("ici");
 			}
 
 			@Override
-			User getWinner(Game game) {
-				return null;
+			String getWinner(Game game) {
+				return game.winner;
+			}
+
+			@Override
+			boolean startGame(Game game) {
+				Random r = new Random();
+				int playerCount = game.users.size();
+				if (playerCount == 0) {
+					return false;
+				}
+				game.currentUser = r.nextInt(playerCount);
+				game.state = State.IN_PROGRESS;
+				return true;
 			}
 		};
+
 		void removePlayer(PlayerGame player, Game g) {
-			g.users.remove(player);
+			if (g.users.contains(player)) {
+				System.err.println("joueur retiré");
+				g.users.remove(player);
+			} else {
+				System.err.println("Le joueur n'est pas dans le jeu");
+			}
 		}
 
 		PlayerGame addPlayer(User u, Game g) {
@@ -130,7 +149,7 @@ public class Game implements Serializable {
 		void removeDie(int num, PlayerGame pg, Game game) {
 		}
 
-		User getWinner(Game game) {
+		String getWinner(Game game) {
 			return null;
 		}
 
@@ -143,7 +162,6 @@ public class Game implements Serializable {
 		}
 
 		void keepRandomCard(PlayerGame playerGame, int num) {
-
 
 		}
 
@@ -172,9 +190,6 @@ public class Game implements Serializable {
 
 	@Transient
 	private int direction = 1;
-
-	// @Transient
-	// private UserDaoImpl userDao;
 
 	public List<PlayerGame> getUsers() {
 		return users;
@@ -223,7 +238,7 @@ public class Game implements Serializable {
 	}
 
 	public String getWinner() {
-		return winner;
+		return state.getWinner(this);
 	}
 
 	public void setWinner(String winner) {

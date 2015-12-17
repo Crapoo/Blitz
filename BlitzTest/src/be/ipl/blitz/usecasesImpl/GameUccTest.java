@@ -1,9 +1,9 @@
 package be.ipl.blitz.usecasesImpl;
 
-import static org.junit.Assert.*;
-
-import java.util.HashSet;
-import java.util.Set;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -64,7 +64,9 @@ public class GameUccTest {
 	@Test
 	public void testStartGame() {
 		gameUcc.createGame(gameName);
+		assertEquals("joueurs?", 0, gameUcc.listPlayers().size());
 		assertFalse("Démarrage de partie sans joueur", gameUcc.startGame());
+		assertEquals("Etat de la partie inexacte", State.INITIAL, gameUcc.getState());
 		gameUcc.joinGame(gameName, "em");
 		assertTrue("Démarrage de partie échoue", gameUcc.startGame());
 		gameUcc.endGame();
@@ -101,12 +103,24 @@ public class GameUccTest {
 
 	@Test
 	public void testNextPlayer() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.startGame();
+		String firstPlayer = gameUcc.getCurrentPlayer();
+		String nextPlayer = gameUcc.nextPlayer().getName();
+		assertFalse("Next player garde le meme joueur", firstPlayer.equals(nextPlayer));
 	}
 
 	@Test
 	public void testGetWinner() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.startGame();
+		assertEquals("Etat incorrect", State.IN_PROGRESS, gameUcc.getState());
+		gameUcc.removePlayer("ol");
+		assertEquals("Mauvais gagnant", "em", gameUcc.endGame());
 	}
 
 	@Test
@@ -121,7 +135,7 @@ public class GameUccTest {
 
 	@Test
 	public void testGetState() {
-		fail("Not yet implemented");
+		gameUcc.startGame();
 	}
 
 	@Test
@@ -222,7 +236,12 @@ public class GameUccTest {
 	@Test
 	public void testEndGame() {
 		gameUcc.createGame(gameName);
-		assertEquals("Impossible de finir une partie", State.OVER.toString(), gameUcc.endGame());
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+		gameUcc.endGame();
+		assertEquals("Impossible de finir une partie", State.OVER, gameUcc.getState());
 	}
 
 }

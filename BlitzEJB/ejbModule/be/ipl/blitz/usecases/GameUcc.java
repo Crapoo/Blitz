@@ -46,7 +46,7 @@ public interface GameUcc {
 	 * @return True si la partie a pu être lancée.
 	 */
 	boolean startGame();
-	
+
 	/**
 	 * Annule la partie précédemment lancée.
 	 */
@@ -86,13 +86,6 @@ public interface GameUcc {
 	User nextPlayer();
 
 	/**
-	 * Récupère le nom du gagnant de la dernière partie.
-	 * 
-	 * @return Le nom du gagnant.
-	 */
-	String getWinner();
-
-	/**
 	 * Récupère les noms de tous les joueurs participant à la partie courante.
 	 * 
 	 * @return Liste des noms de tous les joueurs.
@@ -112,7 +105,7 @@ public interface GameUcc {
 	 * @return une liste des cartes a tirer, null si il n'y a pas de cartes dans
 	 *         la pioche
 	 */
-	List<Card> drawCard(String username,int num);
+	List<Card> drawCard(String username, int num);
 
 	int getMaxPlayers();
 
@@ -123,7 +116,7 @@ public interface GameUcc {
 	int getNbCardsByPlayer();
 
 	int getDicePerPlayer();
-	
+
 	/**
 	 * Récupère les cartes pour le joueur passé en paramètre
 	 * 
@@ -132,55 +125,62 @@ public interface GameUcc {
 	 * @return La liste des cartes de ce joueur
 	 */
 	List<Card> getCardsOf(String pseudo);
+
 	/**
 	 * Le joueur src donne num cartes au hasard au joueur courrant
 	 */
 	boolean giveMeCards(String src);
-	
+
 	/**
 	 * change la direction du jeu
 	 */
 	void changeDirection();
-	
-	
+
 	/**
 	 * Retire un joueur de la partie
+	 * 
 	 * @param pseudo
 	 */
 	void removePlayer(String pseudo);
-	
+
 	/**
 	 * Supprime une carte du deck du joueur
 	 * 
 	 * @param username
-	 * @param effectCode code effect de la carte
+	 * @param effectCode
+	 *            code effect de la carte
 	 * @return true si ca a reussit, faux si le joueur ne possede pas la carte.
 	 */
 	boolean discard(String username, int effectCode);
-	
+
 	/**
 	 * Donne un dé du joueur courant au joueur passé em parametre.
+	 * 
 	 * @param username
-	 * @param num nombre de dé a donner
+	 * @param num
+	 *            nombre de dé a donner
 	 * @return true si reussi, false sinon
 	 */
 	boolean giveDice(String username, int num);
 
 	/**
 	 * Récupere le nombre dés d'un utilisateur
+	 * 
 	 * @param username
 	 * @return le nombre de dé
 	 */
 	int getNbDice(String username);
-	
+
 	/**
 	 * Ends the game
+	 * 
 	 * @return le pseudo du vainqueur
 	 */
-	void endGame();	
-	
+	String endGame();
+
 	/**
 	 * the username only keeps num cards
+	 * 
 	 * @param username
 	 * @param num
 	 */

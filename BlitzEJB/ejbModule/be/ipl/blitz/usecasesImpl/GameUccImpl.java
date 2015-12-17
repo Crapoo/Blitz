@@ -96,7 +96,7 @@ public class GameUccImpl implements GameUcc {
 
 	@Override
 	public boolean startGame() {
-		if (game == null || game.getState() != State.INITIAL) {
+		if (game == null || game.getUsers().isEmpty()) {
 			return false;
 		}
 		if (game.startGame()) {
@@ -202,15 +202,9 @@ public class GameUccImpl implements GameUcc {
 		if (game == null) {
 			return null;
 		}
-		return game.nextPlayer().getUser();
-	}
 
-	@Override
-	public String getWinner() {
-		if (game == null) {
-			return null;
-		}
-		return game.getWinner();
+		PlayerGame next = game.nextPlayer();
+		return next.getUser();
 	}
 
 	@Override
@@ -223,11 +217,7 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public boolean createGame(String gameName) {
 		Util.checkString(gameName);
-		if (game != null) {
-			return false;
-		}
-
-		this.game = new Game(gameName);
+		game = new Game(gameName);
 		game = gameDao.save(game);
 		cardsUcc.shuffleDeck();
 		return true;
@@ -254,12 +244,12 @@ public class GameUccImpl implements GameUcc {
 		return giveCardsTo(username, cardsUcc.drawCard(num));
 	}
 
-	public void keepRandomCards(String username, int num){
+	public void keepRandomCards(String username, int num) {
 		Util.checkString(username);
 		Util.checkPositiveOrZero(num);
 		game.keepRandomCard(getPlayerGame(username), num);
 	}
-	
+
 	@Override
 	public boolean discard(String username, int effectCode) {
 		Util.checkString(username);
@@ -372,7 +362,14 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public void endGame() {
+	public String endGame() {
+		if (game == null) {
+			return null;
+		}
 		game.endGame();
+		gameDao.update(game);
+		String winner = game.getWinner();
+		game = null;
+		return winner;
 	}
 }
