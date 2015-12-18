@@ -65,7 +65,6 @@ public class GameUccTest {
 		assertEquals(diceEm, gameUcc.getNbDice("em"));
 		assertEquals(diceMi, gameUcc.getNbDice("mi"));
 		assertEquals(diceOl, gameUcc.getNbDice("ol"));
-
 	}
 	
 	@Test
@@ -315,6 +314,8 @@ public class GameUccTest {
 		assertEquals("Nombre de carte gardée incorrect", 1, gameUcc.getCardsOf("em").size());
 		gameUcc.keepRandomCards("ol", 2);
 		assertEquals("Nombre de carte gardée incorrect", 2, gameUcc.getCardsOf("ol").size());
+		gameUcc.keepRandomCards("mi", 4);
+		assertEquals("Nombre de carte changé alors qu'il faudrait pas", 3, gameUcc.getCardsOf("mi").size());
 	}
 
 }
