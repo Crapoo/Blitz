@@ -244,7 +244,7 @@ public class GameUccTest {
 		gameUcc.nextPlayer();
 		gameUcc.changeDirection();
 		gameUcc.nextPlayer();
-
+//changement
 		assertEquals("Changement de sens echoue", firstPlayer, gameUcc.getCurrentPlayer());
 	}
 
