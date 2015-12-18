@@ -51,9 +51,6 @@
     \renewcommand{\labelitemi}{$\bullet$}
     \renewcommand{\labelitemii}{$\circ$}
     %%%%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%
-
-
-    %%%%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%
     \begin{titlepage}
         \begin{center}
             ~\\[1.5cm]
@@ -66,7 +63,7 @@
 
             % Title
             \rule{\textwidth}{1pt} \\[0.4cm]
-            { \bfseries \Huge{Blitz}\\ \Large{Clone du jeu Wazabi}\\[0.4cm]}
+            \Huge{\textsc{Blitz}}\\ \large{Clone du jeu Wazabi}\\[0.4cm]
 
             \rule{\textwidth}{1pt} \\[1.5cm]
 
@@ -88,7 +85,7 @@
     %	#	#	#	#	#	#	#	#	#	#	#	#	#	#	#	#	# Document
 
     \chapter{Introduction}
-    Wasabi est un jeu de dés et de cartes dont le but est de se débarrasser de tous ses dés. Nous avons dû, dans le cadre du cours de mise en situation professionnelle, implémenter ce jeu durant la semaine 13.
+    Wazabi est un jeu de dés et de cartes dont le but est de se débarrasser de tous ses dés. Nous avons dû, dans le cadre du cours de mise en situation professionnelle, implémenter un clone de ce jeu sur une période d'une semaine. Le thème de notre clone est la 2\ieme Guerre Mondiale et s'appelle \textsc{Blitz}, diminutif de \og Blitzkrieg\fg{}.
 
     Un des buts de ce projet étant de se rapprocher le plus possible de l'expérience professionnelle, certaines contraintes nous ont été imposées. Entre autres, le projet devait être développé en utilisant les technologies EJB et JSP, avec la possibilité d'utiliser d'autres technologies telles que Bootstrap, JavaScript et Ajax. Il nous a aussi été demandé de procéder de manière itérative, ce que nous avons fait en procédant par Usecase. Enfin, nous étions divisés en groupes de 4, qui ont été formés par les chefs d'équipe sur base de CV anonymes.
 
@@ -115,23 +112,18 @@
         \begin{tabularx}{\textwidth}{X|X}
             1. Le joueur clique sur le bouton \og Rejoindre une partie \fg{} & \\
             & 2. Le système vérifie si une partie est déjà lancée \\
-            3.a [Une partie est en cours de lancement] & \\
             & a.1 Le système envoie le joueur vers le lobby.\\
-            & a.2 Une fois que le nombre minimal de joueur est atteint, le jeu est lancé\\
-            3.b [Aucune partie n'est en cours] & \\
-            & b.1 Le système informe le joueur et le renvoie vers la page de création de jeu. \\
-            b.2 Le joueur crée une partie & \\
-            & b.3 Le système envoie le joueur vers le lobby. \\
-            & b.4 Une fois que le nombre minimal de joueur est atteint, le jeu est lancé\\
-            3.c [Une partie est déjà en cours de jeu] & \\
-            & c.1 Le système ne permettant de lancer qu'une partie à la fois, il informe le joueur et le renvoie vers la page d'accueil.\\
+            & a.2 Le nombre de joueurs minimal étant atteint, le jeu est lancé\\
         \end{tabularx}
     \end{table}
 
-    \section{Tests Fonctionnels}
+    \chapter{Tests}
 
+    \section{Tests unitaires}
+    Les tests unitaires de Blitz se trouvent dans le projet \og BlitzTests\fg{} et testent la classe GameUcc. Celà nous a permis de régler un nombre conséquent de bugs dans la partie EJB, ce qui n'empêche malheureusement pas certaines actions de mal fonctionner une fois appelées par l'utilisateur.
 
-    \section{Connexion}
+    \section{Test fonctionnels}
+    \subsection{Connexion}
     \begin{table}[H]
         \begin{tabularx}{\textwidth}{X|X}
             1. Cliquer sur le bouton \og Connexion / Inscription\fg{} situé en haut à droite. & \\
@@ -146,24 +138,56 @@
         \end{tabularx}
     \end{table}
 
-    \section{Création de partie}
+    \subsection{Création de partie}
     \begin{table}[H]
         \begin{tabularx}{\textwidth}{X|X}
             1. En partant de la page d'accueil, cliquer sur le bouton \og Créer une partie\fg{}. & \\
             & 2. Un popup apparait permettant d'entrer le nom de la partie.\\
             3. Entrer \og test\fg{} en tant que nom de partie. & \\
             4. Cliquer sur le bouton \og OK\fg{}. & \\
-            & 5.Le système renvoie vers le lobby de la partie. \\
-            6.Attendre d'autres joueurs et joueur. & \\
+            & 5. Le système renvoie vers le lobby de la partie. \\
+            6. Attendre d'autres joueurs et joueur. & \\
         \end{tabularx}
     \end{table}
 
-    \section{Jeu}
+    \subsection{Jeu}
     \begin{table}[H]
         \begin{tabularx}{\textwidth}{X|X}
             1. Attendre que ce soit
         \end{tabularx}
     \end{table}
+
+    \chapter{Architecture}
+    La partie EJB est découpé en différentes parties comme suit :
+    \begin{description}
+        \item[dao]\hfill \\ Contient le DAO permettant l'accès aux tables de la base de données.
+        \item[daoImpl]\hfill \\ Contient les DAO implémentés permettant l'accès à une table précise selon l'entité.
+        \item[domaine]\hfill \\ Contient les différents objets formant l'application.
+        \item[usecases]\hfill \\ Contient les interfaces correspondantes aux usecases. Ces interfaces sont le seul lien entre la partie EJB et la partie JSP.
+        \item[usecasesImpl]\hfill \\ Contient les implémentations des interfaces Usecases.
+        \item[utils]\hfill \\ Contient les classes offrant des méthodes de vérification, appelées par les autres classes.
+    \end{description}
+
+    La partie JSP est quant à elle découpée de cette façon :
+
+    \begin{itemize}
+        \item Partie Java
+        \begin{description}
+            \item[filters]\hfill \\ Contient les filtres gérant les requêtes utilisateurs. Permet de rediriger l'utilisateur en cas d'erreur et de vérifier l'utilisation des cookies.
+            \item[game]\hfill \\ Contient les servlets Java gérant une partie.
+            \item[servlets]\hfill \\ Contient les servlets gérant le reste de l'application.
+        \end{description}
+        \item Partie Web
+        \begin{description}
+            \item[css]\hfill \\ Contient le css régissant le style de l'interface du programme.
+            \item[images]\hfill \\ Contient les images utilisées dans l'interface.
+            \item[js]\hfill \\
+        \end{description}
+    \end{itemize}
+    \chapter{Notes}
+    Parler du pattern
+    de la table dés
+    des inchoerences du xml,
 
     \chapter{Manuels}
     \section{Manuel d'installation}
@@ -185,6 +209,15 @@
         \item Mettre Blitz.EAR dans le dossier suivant JBOSS\_HOME/server/your config>/deploy folder.
     \end{enumerate}
 
+    \section{Manuel d'utilisation de Toastr}
+    Pour afficher les notifications aux joueurs, nous utilisons Toastr.js (\url{https://codeseven.github.io/toastr}), qui est un plugin de jQuery. L'utilisation que nous en faisons est assez basique, la seule méthode à connaitre est la suivante : toastr.into();
+
+    Cette méthode fonctionne de la façon suivante :
+
+    \begin{itemize}
+        \item toastr.info(\og Message\fg)\\ Affiche un Toast contenant un message à l'utilisateur.
+        \item toastr.info(\og Titre\fg, \og Message\fg)\\ Affiche un Toast contenant un message et un titre à l'utilisateur
+    \end{itemize}
     \section{Manuel d'utilisation}
     \subsection{Comment accéder au jeu?}
     Pour jouer sur une machine locale, tapez dans le browser \og \url{localhost:8080/Blitz}\fg{} (sans les guillemets).
@@ -212,5 +245,8 @@
     \subsection{Comment se déroule le tour de jeu?}
 
     \chapter{Conclusion}
+    Durant ce projet, nous avons beaucoup appris. Nous avons en effet approfondis notre connaissance des technologies utilisées et amélioré notre façon de travailler ensemble grâce, entre-autre, à l'utilisation de Github. Cet outil nous a permis de travailler en parallèle tout en restant tous sur la même version de notre code. Nous avons cependant préféré l'utilisation de la ligne de commande pour accéder aux commandes Git, l'utilisation du plugin d'Eclipse ne permettant pas un contrôle total de l'outil. Nous avons aussi pu nous rendre compte de l'importance des \og outils développeur\fg{} permettant un débug plus aisé de la partie web et principalement la partie JavaScript.
+
+    Ce projet nous aura aussi montré certaines facettes moins sympathiques du déroulement d'un projet. La durée du projet étant très courte, et nous retrouvant à 3 après le départ d'un membre, nous avons dû travailler chaque jour plus d'une dizaine d'heures et n'avons tout de même pas pu terminer dans les temps. Ce travail intensif nous a tous fait ressentir une grande pression et une importante fatigue.
 
 \end{document}
