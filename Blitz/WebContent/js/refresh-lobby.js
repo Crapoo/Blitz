@@ -6,7 +6,7 @@ function refresh() {
   });
   $request.done(function (response, textStatus, xhr) {
     // Min players -> launch game
-    if (response.playersCount == 2) {
+    if (response.playersCount == response.minPlayers) {
       window.location.href = "board.html";
     }
     var playersList = "";

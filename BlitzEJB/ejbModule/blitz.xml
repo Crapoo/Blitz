@@ -2,7 +2,7 @@
 <blitz xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="blitz.xsd"
 	goal="être le premier joueur à ne plus avoir de dé. " nbCardsByPlayer="3"
-	nbTotalCards="36" minPlayers="2" maxPlayers="6">
+	nbTotalCards="36" minPlayers="3" maxPlayers="6">
 	<die nbByPlayer="4" nbTotalDice="24">
 		<face figure="blitz" identif="b" src="images/" nbFaces="3"></face>
 		<face figure="die" identif="d" nbFaces="1"></face>
