@@ -30,7 +30,7 @@ function rollDice() {
 
 	$('#my-dice').show(500);
 
-	$('#my-shekels').text(shekels);
+	//$('#my-shekels').text(shekels);
 
 	console.log("Shekels rolled : " + shekels);
 
@@ -112,7 +112,7 @@ function endTurn() {
 
 	$('#my-dice').hide(500);
 
-	$('#my-shekels').text('0');
+	//$('#my-shekels').text('0');
 
 	shekels = 0;
 	diceRolled = false;
@@ -173,6 +173,7 @@ function canPlay() {
 	}
 
 	if (currentCost > shekels) {
+		toastr.warning("Vous n'avez pas assez de shekels pour jouer cette carte.");
 		return false;
 	}
 

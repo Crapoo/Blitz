@@ -79,7 +79,7 @@ nav .glyphicon {
 }
 
 .highlighted {
-	box-shadow: 0px 0px 5px lightgreen;
+	box-shadow: 0px 0px 30px #2ecc71;
 }
 
 #overlay {
