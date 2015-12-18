@@ -1,6 +1,3 @@
-// FIXME Don't know if we need it
-var currentPlayer;
-
 var isMyTurn = false;
 var isBusy = false;
 var diceRolled = false;
@@ -27,6 +24,8 @@ function rollDice() {
 		});
 	});
 
+	$('#my-dice').show(500);
+
 	diceRolled = true;
 	isBusy = false;
 }
@@ -37,6 +36,8 @@ function drawCards(number) {
 	isBusy = true;
 
 	sendAction("draw-cards", number);
+
+	toastr.info("Vous avez pioché une carte ! Bravo.");
 
 	isBusy = false;
 }
@@ -55,6 +56,8 @@ function giveDie(target) {
 
 	sendAction("give-die", target);
 	$('#target-enemy-modal').modal('hide');
+
+	toastr.success("Vous avez donné un dé à " + target);
 
 	isBusy = false;
 }
@@ -84,12 +87,13 @@ function skipTurn(target) {
 }
 
 function endTurn() {
-
 	if (!canPlay() || !diceRolled) {
 		return;
 	}
 
 	sendAction("end-turn", "");
+
+	$('#my-dice').hide(500);
 
 	diceRolled = false;
 }
@@ -114,8 +118,10 @@ function prepareTargetModal(title, message) {
 }
 
 function canPlay() {
-	if (!isMyTurn) return false;
-	if (isBusy) return false;
+	if (!isMyTurn || isBusy) {
+		toastr.warning("Vous ne pouvez pas faire cette action pour le moment.");
+		return false;
+	}
 	return true;
 }
 

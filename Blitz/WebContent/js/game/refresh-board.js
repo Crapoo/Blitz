@@ -1,3 +1,5 @@
+var currentPlayer = "";
+
 function refresh() {
 	var $request = $.ajax({
 		url : "update-game.html",
@@ -16,7 +18,12 @@ function refresh() {
 
 			updateMyInfo(response.nbDice, response.myCards, response.myTurn);
 
-			$('#current-player').text(response.currentPlayer);
+			if (currentPlayer !== response.currentPlayer) {
+				currentPlayer = response.currentPlayer;
+				toastr.success("Tour de " + currentPlayer);
+			}
+
+			$('#current-player').text(currentPlayer);
 		}
 	});
 
@@ -43,6 +50,9 @@ function updateMyInfo(nbDice, cards, myTurn) {
 function updateMyButton(myTurn) {
 	var myButton = $('#my-button');
 	myButton.prop('disabled', !myTurn);
+
+	var endTurnButton = $('#end-turn');
+	endTurnButton.prop('disabled', !myTurn);
 }
 
 function updateMyCards(cards) {

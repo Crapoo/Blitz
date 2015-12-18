@@ -4,9 +4,9 @@
 	<div id="wrap">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
-				<p class="navbar-text">Tour de : <span id="current-player"></span></p>
+				<p class="navbar-text">Tour de : <mark><span id="current-player"></span></mark></p>
 				<div class="navbar-nav navbar-right">
-				<button type="button" class="btn btn-default" onclick="endTurn()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Passer le tour</button>
+				<button type="button" class="btn btn-default" id="#end-turn" onclick="endTurn()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Passer le tour</button>
 				<a href="forfeit.html"><button type="button"
 					class="btn btn-danger navbar-btn">
 					<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Abandonner
@@ -51,4 +51,9 @@
 	<script src="js/game/initialise-board.js"></script>
 	<script src="js/game/compute-action.js"></script>
 	<script src="js/game/refresh-board.js"></script>
+
+	<!-- Toastr https://github.com/CodeSeven/toastr -->
+	<script src="libs/toastr/toastr.min.js"></script>
+	<link href="libs/toastr/toastr.min.css" rel="stylesheet" type="text/css">
+
 	<link href="css/board.css" rel="stylesheet" type="text/css">
