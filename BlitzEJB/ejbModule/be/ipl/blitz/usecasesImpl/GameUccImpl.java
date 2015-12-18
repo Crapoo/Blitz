@@ -288,6 +288,7 @@ public class GameUccImpl implements GameUcc {
 	public List<Card> getCardsOf(String username) {
 		Util.checkString(username);
 		PlayerGame p = getPlayerGame(username);
+		System.out.println("p : " + p);
 		p = playerGameDao.reload(p.getPk());
 		return (p.getCards() == null) ? new ArrayList<Card>() : p.getCards();
 	}
@@ -296,7 +297,10 @@ public class GameUccImpl implements GameUcc {
 	public int getNbDice(String username) {
 		Util.checkString(username);
 		// FIXME Przemek : getPlayerGame est null
-		return getPlayerGame(username).getNbDice();
+		PlayerGame pg = getPlayerGame(username);
+		pg = playerGameDao.reload(pg.getPk());
+		return pg.getNbDice();
+		//return getPlayerGame(username).getNbDice();
 	}
 
 	public String getWinner() {
