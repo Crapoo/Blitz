@@ -86,12 +86,44 @@ function createDie(face) {
 	var dieSpan = $('<button class="die btn btn-default" data-toggle="modal" data-target="#target-enemy-modal" onclick="' + buttonAction + '">');
 
 	dieSpan.on('click', function() {
+		currentCode = -1;
 		window[buttonAction](actionData);
 		$(this).prop('disabled', true);
 	});
 	dieSpan.append('<strong>' + face + '</strong>');
 
 	return dieSpan;
+}
+
+function createCard(card) {
+	var cardElt = $('<div class="card col-xs-4 col-md-2"></div>');
+	var cost = $('<ul class="cost"></ul>');
+
+	if (card.cost == "0") {
+		cost.append($('<li>Gratuit</li>'));
+	} else {
+		for (var i = 0; i < card.cost; i++) {
+			var costLi = $('<li><img src="images/shekel.png"/></li>');
+			cost.append(costLi);
+		}
+	}
+
+	cardElt.append(cost);
+	// TODO : Matt - Ajouter des images?
+	// cardElt.append($('<img src="' + card.src + '" />'));
+	cardElt.append($('<p>' + card.effect + '</p>'));
+
+	// TODO : Matt - rendre cliquable uniquement si tour du joueur ET peut payer
+	// le prix
+	cardElt.append($('<button class="btn btn-default"  data-id="' + card.id + '" data-effect-code="' + card.effectCode + '">Utiliser</button>'));
+
+	cardElt.on('click', function() {
+		currentCode = card.effectCode;
+		executeFunctionFromCode(card.effectCode);
+		//window[getFuctionFromCode(card.effectCode)]();
+	});
+	// TODO Replace action code by onclick
+	return cardElt;
 }
 
 $(function() {

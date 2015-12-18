@@ -4,6 +4,8 @@ var diceRolled = false;
 
 var shekels = -1;
 
+var currentCode = -1;
+
 // TODO For example, a boolean variable that indicates if a card if currently
 // being played. If so, ignore every other request
 
@@ -30,6 +32,14 @@ function rollDice() {
 	isBusy = false;
 }
 
+function playCard(caller) {
+	var effectCode = $(called).data('effect-code');
+	currentCode = effectCode;
+	window[getFuctionFromCode(effectCode)]();
+
+	currentCode = -1;
+}
+
 function drawCards(number) {
 	if (!canPlay()) return;
 
@@ -37,13 +47,21 @@ function drawCards(number) {
 
 	sendAction("draw-cards", number);
 
-	toastr.info("Vous avez pioché une carte ! Bravo.");
+	toastr.success("Vous avez pioché une carte ! Bravo.");
 
 	isBusy = false;
 }
 
 function discardDice(number) {
+	if (!canPlay()) return;
 
+	isBusy = true;
+
+	sendAction("discard-dice", number);
+
+	toastr.success("Vous avez supprimeé un dé! La victoire approche!");
+
+	isBusy = false;
 }
 
 function discardCard(target) {
@@ -113,8 +131,28 @@ function prepareGiveDieModal() {
 	$('#target-enemy-modal').modal('show');
 }
 
-function prepareTargetModal(title, message) {
+function prepareTargetModal(title, message, fn) {
+	var list = $('#target-list');
+	list.empty();
 
+	$.each(playerList, function(i, player) {
+		//list.append('<button type="button" class="list-group-item" onclick="giveDie(\'' + player + '\')">' + player + '</button>');
+		fctn = getFuctionFromCode + '(' + player + ')';
+		list.append('<button type="button" class="list-group-item" onclick="' + fctn + '">' + player + '</button>');
+	});
+
+	$('#target-enemy-modal').modal('show');
+}
+
+function executeFunctionFromCode(effectCode) {
+	switch (effectCode) {
+		case 1: // Discard one die
+		discardDice(1);
+		break;
+		default:
+		toastr.warning("Pas encore implémenté");
+		break;
+	}
 }
 
 function canPlay() {
@@ -131,7 +169,8 @@ function sendAction(action, data) {
 		url : "compute-action.html",
 		data : {
 			"action" : action,
-			"data" : data
+			"data" : data,
+			"effect-code" : currentCode
 		},
 		type : "get",
 		dataType : "json",

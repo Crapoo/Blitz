@@ -53,31 +53,6 @@ function createMyCards(cards) {
 	});
 }
 
-function createCard(card) {
-	var cardElt = $('<div class="card col-xs-4 col-md-2"></div>');
-	var cost = $('<ul class="cost"></ul>');
-
-	if (card.cost == "0") {
-		cost.append($('<li>Gratuit</li>'));
-	} else {
-		for (var i = 0; i < card.cost; i++) {
-			var costLi = $('<li><img src="images/shekel.png"/></li>');
-			cost.append(costLi);
-		}
-	}
-	
-	cardElt.append(cost);
-	// TODO : Matt - Ajouter des images?
-	// cardElt.append($('<img src="' + card.src + '" />'));
-	cardElt.append($('<p>' + card.effect + '</p>'));
-
-	// TODO : Matt - rendre cliquable uniquement si tour du joueur ET peut payer
-	// le prix
-	cardElt.append($('<button class="btn btn-default"  data-id="' + card.id + '" data-effect-code="' + card.effectCode + '" onclick="">Utiliser</button>'));
-	// TODO Replace action code by onclick
-	return cardElt;
-}
-
 $(function() {
 	initialise();
 });
