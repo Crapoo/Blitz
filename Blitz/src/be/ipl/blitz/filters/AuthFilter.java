@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet Filter implementation class AuthFilter
  */
-//@WebFilter("/index.html", "/create-game.html", "/compute-action.html", "/lobby.html", "/board.html")
 @WebFilter(urlPatterns = {"/index.html", "/create-game.html", "/compute-action.html", "/lobby.html", "/board.html", 
 		"/disconnect.html","/join-lobby.html","/refresh-index.html", "/refresh-lobby.html","/index.html/*", "/create-game.html/*", "/compute-action.html/*", "/lobby.html/*", "/board.html/*", 
 		"/disconnect.html/*","/join-lobby.html/*","/refresh-index.html/*", "/refresh-lobby.html/*","/login.html/*"})

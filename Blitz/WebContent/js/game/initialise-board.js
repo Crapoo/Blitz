@@ -25,7 +25,7 @@ function initialise() {
 
 		myUsername = response.myUsername;
 		$('#my-username').text(myUsername);
-		highlist(response.currentPlayer);
+		highlight(response.currentPlayer);
 		currentPlayer = response.currentPlayer;
 	});
 
