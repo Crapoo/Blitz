@@ -150,7 +150,7 @@ function endTurn() {
 	hasPlayedCard = false;
 }
 
-function endGame(hasWon) {
+function endGame(hasWon, winner) {
 	$("#overlay").show();
 }
 

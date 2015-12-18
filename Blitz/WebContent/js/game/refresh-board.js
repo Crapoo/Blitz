@@ -11,7 +11,7 @@ function refresh() {
 	$request.done(function(response, textStatus, xhr) {
 		if (typeof response.hasWon !== 'undefined') {
 			clearInterval(refreshBoardInterval);
-			endGame(response.hasWon);
+			endGame(response.hasWon, response.winner);
 		} else {
 			$.each(response.players, function(i, player) {
 				updateInfoOf(player);
@@ -42,7 +42,6 @@ function refresh() {
 	});
 
 	$request.fail(function(xhr, textStatus, errorThrown) {
-		//alert(errorThrown);
 		console.log(errorThrown);
 		clearInterval(refreshBoardInterval);
 	});
@@ -153,7 +152,7 @@ function createCard(card) {
 		}
 		currentCode = card.effectCode;
 		currentCost = card.cost;
-		
+
 		executeFunctionFromCode(card.effectCode);
 		hasPlayedCard = true;
 		currentCost = -1;

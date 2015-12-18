@@ -39,6 +39,7 @@ public class UpdateGame extends HttpServlet {
 
 		if (winner != null) {
 			oBuilder.add("hasWon", gameUcc.getWinner().equals(myUsername) ? true : false);
+			oBuilder.add("winner", winner);
 			String json = oBuilder.build().toString();
 			response.getWriter().println(json);
 			return;
