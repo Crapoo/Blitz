@@ -1,5 +1,3 @@
-var isMyTurn = false;
-
 function refresh() {
 	var $request = $.ajax({
 		url : "update-game.html",
@@ -60,9 +58,11 @@ function createDie(face) {
 	var buttonAction = "";
 	var actionData = "";
 
+	shekels = 0;
+
 	switch (face) {
 		case 'b':
-		// Increment mana
+		shekels++;
 		break;
 		case 'c':
 		buttonAction = "drawCards";
@@ -80,7 +80,7 @@ function createDie(face) {
 		$(this).prop('disabled', true);
 	});
 	dieSpan.append('<strong>' + face + '</strong>');
-	/*<button type="button" class="btn btn-lg btn-primary col-md-6" data-toggle="modal" data-target="#create-game-modal" id="create-game-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Cr&eacute;er une partie</button>*/
+
 	return dieSpan;
 }
 

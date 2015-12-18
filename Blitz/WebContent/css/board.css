@@ -10,6 +10,10 @@ html, body {
 	height: 60%;
 }
 
+nav .glyphicon {
+	margin-right: 1.5em;
+}
+
 #my-board {
 	overflow-x: scroll;
 	height: 40%;

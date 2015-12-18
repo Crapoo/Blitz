@@ -1,28 +1,19 @@
 // FIXME Don't know if we need it
 var currentPlayer;
 
+var isMyTurn = false;
 var isBusy = false;
 var diceRolled = false;
+
+var shekels = -1;
 
 // TODO For example, a boolean variable that indicates if a card if currently
 // being played. If so, ignore every other request
 
-function dispatchAction(caller) {
-	// TODO After dispatching, block every other action until it completes,
-	// callback ?
-
-	if (!isMyTurn) {
-		return;
-	}
-
-	if (isBusy) {
-		return;
-	}
-
-	isBusy = true;
-}
-
 function rollDice() {
+	if (!canPlay()) return;
+	if (diceRolled) return;
+
 	isBusy = true;
 
 	var $request = sendAction("roll-dice", "");
@@ -41,9 +32,7 @@ function rollDice() {
 }
 
 function drawCards(number) {
-	if (isBusy) {
-		return;
-	}
+	if (!canPlay()) return;
 
 	isBusy = true;
 
@@ -60,9 +49,8 @@ function discardCard(target) {
 }
 
 function giveDie(target) {
-	if (isBusy) {
-		return;
-	}
+	if (!canPlay()) return;
+
 	isBusy = true;
 
 	sendAction("give-die", target);
@@ -96,7 +84,8 @@ function skipTurn(target) {
 }
 
 function endTurn() {
-	if (!diceRolled) {
+
+	if (!canPlay() || !diceRolled) {
 		return;
 	}
 
@@ -122,6 +111,12 @@ function prepareGiveDieModal() {
 
 function prepareTargetModal(title, message) {
 
+}
+
+function canPlay() {
+	if (!isMyTurn) return false;
+	if (isBusy) return false;
+	return true;
 }
 
 // Data is a map of attribute names and their values

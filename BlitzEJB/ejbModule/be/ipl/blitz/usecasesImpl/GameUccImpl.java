@@ -227,6 +227,7 @@ public class GameUccImpl implements GameUcc {
 			return getCurrentPlayer();
 		} else {
 			PlayerGame next = game.nextPlayer();
+			next = playerGameDao.reload(next.getPk());
 			return next.getUser().getName();
 		}
 	}

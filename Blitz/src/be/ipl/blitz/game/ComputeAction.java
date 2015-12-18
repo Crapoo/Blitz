@@ -36,7 +36,7 @@ public class ComputeAction extends HttpServlet {
 			response.getWriter().print(rollDiceToJson());
 			break;
 		case "give-die":
-			target = (String) request.getParameter("target");
+			target = (String) request.getParameter("data");
 			gameUcc.giveDice(target, 1);
 			break;
 		case "draw-cards":
@@ -44,7 +44,8 @@ public class ComputeAction extends HttpServlet {
 			gameUcc.drawCard(username, number);
 			break;
 		case "end-turn":
-			gameUcc.nextPlayer();
+			String next = gameUcc.nextPlayer();
+			System.out.println("Next Player : " + next);
 			break;
 		default:
 			break;
