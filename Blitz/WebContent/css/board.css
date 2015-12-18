@@ -62,6 +62,7 @@ html, body {
 
 .cost li {
 	display: inline;
+	height: 100 px;
 	background-color: #bdc3c7;
 }
 
@@ -113,16 +114,8 @@ html, body {
 
 #img-btn{
 	position: absolute;
-<<<<<<< HEAD
 	top: 50%;
 	left: 50%;
 	margin-right: -50%;
 	transform: translate(-50%, -50%)
 }
-=======
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
-}
->>>>>>> 91b173dc72cb0e5e668dfb1a56e4dbee71ac72bf

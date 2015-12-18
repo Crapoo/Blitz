@@ -18,7 +18,6 @@ import be.ipl.blitz.domaine.Face;
 import be.ipl.blitz.domaine.Game;
 import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.domaine.PlayerGame;
-import be.ipl.blitz.domaine.PlayerGamePK;
 import be.ipl.blitz.domaine.User;
 import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
@@ -355,11 +354,12 @@ public class GameUccImpl implements GameUcc {
 		PlayerGame victim = getPlayerGame(player);
 
 		List<Card> victimCards = victim.getCards();
-		Random r = new Random();
-		int toSteal = r.nextInt(victimCards.size());
-
-		Card card = victim.removeCard(toSteal);
-		thief.addCard(card);
+		if (victimCards.size()!=0) {
+			Random r = new Random();
+			int toSteal = r.nextInt(victimCards.size());
+			Card card = victim.removeCard(toSteal);
+			thief.addCard(card);
+		}		
 		return true;
 	}
 
