@@ -85,7 +85,8 @@ public class Game implements Serializable {
 
 			@Override
 			void keepRandomCard(PlayerGame p, int num) {
-				for (int i = 0; i <= p.getCards().size() - num; i++) {
+				int nbCards = p.getCards().size();
+				for (int i = 0; i < nbCards - num; i++) {
 					p.removeCard(i);
 				}
 			}

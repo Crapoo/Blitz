@@ -355,12 +355,12 @@ public class GameUccImpl implements GameUcc {
 		PlayerGame victim = getPlayerGame(player);
 
 		List<Card> victimCards = victim.getCards();
-		if (victimCards.size()!=0) {
+		if (victimCards.size() != 0) {
 			Random r = new Random();
 			int toSteal = r.nextInt(victimCards.size());
 			Card card = victim.removeCard(toSteal);
 			thief.addCard(card);
-		}		
+		}
 		return true;
 	}
 
@@ -395,7 +395,9 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public void limitAllToNumCards(int num) {
 		for (PlayerGame pg : game.getUsers()) {
-			game.keepRandomCard(pg, num);
+			if (!pg.getUser().getName().equals(getCurrentPlayer())) {
+				game.keepRandomCard(pg, num);
+			}
 		}
 	}
 
