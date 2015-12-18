@@ -25,6 +25,7 @@ function initialise() {
 
 		myUsername = response.myUsername;
 		$('#my-username').text(myUsername);
+		highlist(response.currentPlayer);
 		currentPlayer = response.currentPlayer;
 	});
 
@@ -47,7 +48,7 @@ function createEnemy(username, nbCards, nbDice, avatarPath) {
 	'</span></p>');
 
 	var buttons = $('<div class="row buttons">');
-	
+
 	infoPanel.append(infoRow);
 	infoPanel.append(buttons);
 
