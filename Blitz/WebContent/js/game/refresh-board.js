@@ -11,7 +11,7 @@ function refresh() {
 	$request.done(function(response, textStatus, xhr) {
 		if (typeof response.hasWon !== 'undefined') {
 			clearInterval(refreshBoardInterval);
-			endGame(response.hasWon);
+			endGame(response.hasWon, response.winner);
 		} else {
 			$.each(response.players, function(i, player) {
 				updateInfoOf(player);
@@ -19,33 +19,36 @@ function refresh() {
 
 			updateMyInfo(response.nbDice, response.myCards, response.myTurn);
 
-			if (currentPlayer !== response.currentPlayer) {
-				if (currentPlayer == myUsername) {
-					$('#my-board').removeClass('highlighted');
-				} else {
-					$('#' + currentPlayer).removeClass('highlighted');
-				}
-
-				currentPlayer = response.currentPlayer;
-
-				if (response.currentPlayer == myUsername) {
-					toastr.info("Votre tour");
-					$('#my-board').addClass('highlighted');
-				} else {
-					toastr.info("Tour de " + currentPlayer);
-					$('#' + currentPlayer).addClass('highlighted');
-				}
-			}
+			highlight(response.currentPlayer);
 
 			$('#current-player').text(currentPlayer);
 		}
 	});
 
 	$request.fail(function(xhr, textStatus, errorThrown) {
-		//alert(errorThrown);
 		console.log(errorThrown);
 		clearInterval(refreshBoardInterval);
 	});
+}
+
+function highlight(newPlayer) {
+	if (currentPlayer !== newPlayer) {
+		if (currentPlayer == myUsername) {
+			$('#my-board').removeClass('highlighted');
+		} else {
+			$('#' + currentPlayer).removeClass('highlighted');
+		}
+
+		currentPlayer = newPlayer;
+
+		if (newPlayer == myUsername) {
+			toastr.info("Votre tour");
+			$('#my-board').addClass('highlighted');
+		} else {
+			toastr.info("Tour de " + currentPlayer);
+			$('#' + currentPlayer).addClass('highlighted');
+		}
+	}
 }
 
 function updateInfoOf(player) {
@@ -83,29 +86,37 @@ function createDie(face) {
 	var buttonAction = "";
 	var actionData = "";
 	var hasAction = false;
+	var title = "";
+	var message = "";
 
 	switch (face) {
 		case 'b':
 		shekels++;
 		break;
 		case 'c':
-		buttonAction = "drawCards";
-		actionData = 1; // Number of cards to draw - parameter
 		hasAction = true;
 		break;
 		case 'd':
-		buttonAction = "prepareGiveDieModal";
 		hasAction = true;
 		break;
 	}
 
 	if (hasAction) {
-		dieSpan = $('<button class="die btn btn-default" data-toggle="modal" data-target="#target-enemy-modal" onclick="' + buttonAction + '">');
-		dieSpan.on('click', function() {
-			currentCode = -1;
-			window[buttonAction](actionData);
-			$(this).prop('disabled', true);
-		});
+		dieSpan = $('<button class="die btn btn-default" data-toggle="modal">');
+
+		if (face == 'c') {
+			dieSpan.on('click', function() {
+				currentCode = -1;
+				drawCards(1);
+				$(this).prop('disabled', true);
+			});
+		} else if (face == 'd') {
+			dieSpan.on('click', function() {
+				currentCode = -1;
+				prepareTargetModal("Donnez un dé à", "Choisissez votre cible", giveDie);
+				$(this).prop('disabled', true);
+			});
+		}
 	} else {
 		dieSpan = $('<button class="die btn btn-default">');
 	}
@@ -116,7 +127,7 @@ function createDie(face) {
 }
 
 function createCard(card) {
-	var cardElt = $('<div class="card col-xs-4 col-md-2"></div>');
+	var cardElt = $('<div class="card col-xs-4 col-md-1"></div>');
 	var cost = $('<ul class="cost"></ul>');
 
 	if (card.cost == "0") {
@@ -138,11 +149,17 @@ function createCard(card) {
 			toastr.warning("Vous avez d&eacute;j&agrave; jou&eacute; une carte!");
 			return;
 		}
+
+		if (!diceRolled) {
+			toastr.warning("Vous n'avez pas lanc&eacute;s vos d&eacute;s.");
+			return;
+		}
 		currentCode = card.effectCode;
 		currentCost = card.cost;
-		console.log('Click Code : ' + card.effectCode);
+
 		executeFunctionFromCode(card.effectCode);
 		hasPlayedCard = true;
+		currentCost = -1;
 	});
 
 	return cardElt;

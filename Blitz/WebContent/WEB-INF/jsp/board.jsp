@@ -22,7 +22,7 @@
 	</div>
 	<div id="my-board">
 		<div id="my-info" class="col-sm-12">
-			<div id="my-dice"></div><span class="lead" id="my-shekels"></span>
+			<div id="my-dice"></div><!--<span class="lead" id="my-shekels"></span>-->
 			<button type="button" class="btn btn-default pull-right" id="my-button" disabled="true" onclick="rollDice()">Lancer d&eacute;s</button>
 		</div>
 
