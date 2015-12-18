@@ -6,6 +6,7 @@ import javax.ejb.Remote;
 
 import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.domaine.Game;
+import be.ipl.blitz.domaine.PlayerGame;
 import be.ipl.blitz.domaine.Game.State;
 
 @Remote
@@ -205,9 +206,10 @@ public interface GameUcc {
 	 * Permet au joueur courant de rejouer à la fin de son tour.
 	 */
 	void replay();
-	
+
 	/**
-	 * prmet de limiter le nombre de cartes de tous les joueurs sauf le joueur courant
+	 * prmet de limiter le nombre de cartes de tous les joueurs sauf le joueur
+	 * courant
 	 */
 	void limitAllToNumCards(int num);
 }

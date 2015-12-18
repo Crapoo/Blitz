@@ -88,7 +88,17 @@ public class GameUccTest {
 
 	@Test
 	public void testThrowDice() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+
+		List<String> faces = gameUcc.throwDice();
+		assertEquals("Nombre de dé incorrect", 4, faces.size());
+		gameUcc.deleteDice(1, gameUcc.getCurrentPlayer());
+		faces = gameUcc.throwDice();
+		assertEquals("Nombre de dé incorrect", 3, faces.size());
 	}
 
 	@Test
@@ -114,17 +124,17 @@ public class GameUccTest {
 		gameUcc.joinGame(gameName, "ol");
 		gameUcc.joinGame(gameName, "mi");
 		gameUcc.startGame();
-		String cur= gameUcc.getCurrentPlayer();
-		if(cur.equals("em")){
+		String cur = gameUcc.getCurrentPlayer();
+		if (cur.equals("em")) {
 			gameUcc.giveDice("mi", 1);
 			assertEquals(3, gameUcc.getNbDice(cur));
-			assertEquals(5,gameUcc.getNbDice("mi"));
+			assertEquals(5, gameUcc.getNbDice("mi"));
 			gameUcc.giveDice(cur, 3);
-			
-		}else{
+
+		} else {
 			gameUcc.giveDice("em", 1);
 			assertEquals(3, gameUcc.getNbDice(cur));
-			assertEquals(5,gameUcc.getNbDice("em"));
+			assertEquals(5, gameUcc.getNbDice("em"));
 			gameUcc.giveDice(cur, 3);
 		}
 	}
@@ -190,7 +200,7 @@ public class GameUccTest {
 		gameUcc.joinGame(gameName, "ol");
 		gameUcc.joinGame(gameName, "mi");
 		gameUcc.startGame();
-		
+
 		gameUcc.drawCard("em", 1);
 		assertEquals(4, gameUcc.getCardsOf("em").size());
 		gameUcc.drawCard("ol", 3);
@@ -199,7 +209,15 @@ public class GameUccTest {
 
 	@Test
 	public void testDiscard() {
-		fail("Not yet implemented");
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+
+		List<Card> cards = gameUcc.getCardsOf("em");
+		gameUcc.discard("em", cards.get(0).getEffectCode());
+		assertEquals("Carte pas supprimée", 2, gameUcc.getCardsOf("em").size());
 	}
 
 	@Test
@@ -209,8 +227,7 @@ public class GameUccTest {
 		gameUcc.joinGame(gameName, "ol");
 		gameUcc.joinGame(gameName, "mi");
 		gameUcc.startGame();
-		List<Card> c=gameUcc.getCardsOf("em");
-		assertEquals(3,gameUcc.getCardsOf("em").size());
+		assertEquals(3, gameUcc.getCardsOf("em").size());
 	}
 
 	@Test
@@ -220,15 +237,15 @@ public class GameUccTest {
 		gameUcc.joinGame(gameName, "ol");
 		gameUcc.joinGame(gameName, "mi");
 		gameUcc.startGame();
-		String cur= gameUcc.getCurrentPlayer();
-		if(cur.equals("em")){
+		String cur = gameUcc.getCurrentPlayer();
+		if (cur.equals("em")) {
 			gameUcc.giveMeCards("mi");
 			assertEquals(4, gameUcc.getCardsOf(cur).size());
-			assertEquals(2,gameUcc.getCardsOf("mi").size());
-		}else{
+			assertEquals(2, gameUcc.getCardsOf("mi").size());
+		} else {
 			gameUcc.giveMeCards("em");
 			assertEquals(4, gameUcc.getCardsOf(cur).size());
-			assertEquals(2,gameUcc.getCardsOf("em").size());
+			assertEquals(2, gameUcc.getCardsOf("em").size());
 		}
 	}
 
@@ -244,7 +261,7 @@ public class GameUccTest {
 		gameUcc.nextPlayer();
 		gameUcc.changeDirection();
 		gameUcc.nextPlayer();
-//changement
+		// changement
 		assertEquals("Changement de sens echoue", firstPlayer, gameUcc.getCurrentPlayer());
 	}
 

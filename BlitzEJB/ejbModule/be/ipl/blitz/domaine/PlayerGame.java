@@ -1,6 +1,7 @@
 package be.ipl.blitz.domaine;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -57,6 +58,7 @@ public class PlayerGame implements Serializable {
 		gameId = g.getId();
 		this.user = u;
 		this.game = g;
+		cards = new ArrayList<>();
 	}
 
 	public PlayerGame() {

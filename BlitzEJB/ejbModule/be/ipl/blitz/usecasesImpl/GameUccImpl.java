@@ -264,10 +264,14 @@ public class GameUccImpl implements GameUcc {
 		Util.checkString(username);
 		Util.checkPositiveOrZero(effectCode);
 		PlayerGame pg = getPlayerGame(username);
-		for (Card c : pg.getCards()) {
-			if (c.getEffectCode() == effectCode) {
-				pg.removeCard(c.getId());
-				cardsUcc.discard(c);
+
+		List<Card> cards = pg.getCards();
+		for (int i = 0; i < cards.size(); i++) {
+			Card card;
+			if ((card = cards.get(i)).getEffectCode() == effectCode) {
+				System.out.println("Je supprime une carte, lol");
+				cardsUcc.discard(card);
+				pg.removeCard(i);
 				return true;
 			}
 		}
@@ -290,8 +294,6 @@ public class GameUccImpl implements GameUcc {
 	public List<Card> getCardsOf(String username) {
 		Util.checkString(username);
 		PlayerGame p = getPlayerGame(username);
-		System.out.println("p : " + p);
-		p = playerGameDao.reload(p.getPk());
 		return (p.getCards() == null) ? new ArrayList<Card>() : p.getCards();
 	}
 
@@ -316,12 +318,13 @@ public class GameUccImpl implements GameUcc {
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
 		Util.checkString(username);
 		Util.checkObject(cards);
+		
+		System.out.println("donne carte à " +username);
 		PlayerGame p = getPlayerGame(username);
-		p = playerGameDao.reload(p.getPk());
+		
 		for (Card c : cards) {
 			p.addCard(c);
 		}
-		p = playerGameDao.update(p);
 		return p.getCards();
 	}
 
@@ -344,12 +347,20 @@ public class GameUccImpl implements GameUcc {
 	}
 
 	@Override
-	public boolean giveMeCards(String src) {
-		Util.checkString(src);
-		if (src.equals(getCurrentPlayer())) {
+	public boolean giveMeCards(String player) {
+		Util.checkString(player);
+		if (player.equals(getCurrentPlayer())) {
 			return false;
 		}
-		cardsUcc.stealCardFrom(getPlayerGame(getCurrentPlayer()), getPlayerGame(src));
+		PlayerGame thief = getPlayerGame(getCurrentPlayer());
+		PlayerGame victim = getPlayerGame(player);
+		
+		List<Card> victimCards = victim.getCards();
+		Random r = new Random();
+		int toSteal = r.nextInt(victimCards.size());
+
+		Card card = victim.removeCard(toSteal);
+		thief.addCard(card);
 		return true;
 	}
 
@@ -379,6 +390,13 @@ public class GameUccImpl implements GameUcc {
 			nFaces.add(faces.get(r.nextInt(6)).getIdentif());
 		}
 		return nFaces;
+	}
+
+	@Override
+	public void limitAllToNumCards(int num) {
+		for (PlayerGame pg : game.getUsers()) {
+			game.keepRandomCard(pg, num);
+		}
 	}
 
 	/* Util */
@@ -413,10 +431,4 @@ public class GameUccImpl implements GameUcc {
 		}
 	}
 
-	@Override
-	public void limitAllToNumCards(int num) {
-		for (PlayerGame pg : game.getUsers()) {
-			game.keepRandomCard(pg, num);
-		}
-	}
 }

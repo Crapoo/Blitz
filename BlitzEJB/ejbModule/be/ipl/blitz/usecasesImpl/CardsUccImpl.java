@@ -30,7 +30,7 @@ public class CardsUccImpl implements CardsUcc {
 	UserDaoImpl userDao;
 	@EJB
 	GameDaoImpl gameDao;
-	
+
 	@EJB
 	PlayerGameDaoImpl playerGameDao;
 
@@ -62,22 +62,5 @@ public class CardsUccImpl implements CardsUcc {
 	@Override
 	public void discard(Card card) {
 		deck.add(card);
-	}
-
-	@Override
-	public Card stealCardFrom(PlayerGame thief, PlayerGame victim) {
-		thief=playerGameDao.reload(thief.getPk());
-		victim=playerGameDao.reload(victim.getPk());
-
-		playerGameDao.loadCards(victim);
-		playerGameDao.loadCards(thief);
-		List<Card> victimCards = victim.getCards();
-		Random r = new Random();
-		int toSteal = r.nextInt(victimCards.size());
-
-		Card card = victim.removeCard(toSteal);
-		thief.addCard(card);
-
-		return card;
 	}
 }

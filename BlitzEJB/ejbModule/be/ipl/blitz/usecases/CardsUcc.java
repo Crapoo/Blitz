@@ -32,15 +32,4 @@ public interface CardsUcc {
 	 */
 	public void discard(Card card);
 
-	/**
-	 * Vole une carte dans le jeu du volé et les rajoute dans le jeu du voleur.
-	 * 
-	 * @param thief
-	 *            Joueur qui vole la carte.
-	 * @param victim
-	 *            Joueur chez qui on vole la carte.
-	 * @return La carte rajoutée au jeu du voleur.
-	 */
-	public Card stealCardFrom(PlayerGame thief, PlayerGame victim);
-
 }
