@@ -1,18 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <body>
+	<nav class="navbar navbar-default">
+		<p class="navbar-text lead" id="my-username"></p>
+		<p class="navbar-text lead">Tour de : <strong><span id="current-player"></span></strong></p>
+		<div class="navbar-right">
+			<button type="button" class="btn btn-default" id="#end-turn" onclick="endTurn()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Passer le tour</button>
+			<a href="forfeit.html"><button type="button"
+				class="btn btn-danger navbar-btn">
+				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Abandonner
+			</button></a>
+		</div>
+	</nav>
+
 	<div class="container-fluid">
-		<nav class="navbar navbar-default">
-			<p class="navbar-text lead" id="my-username"></p>
-			<p class="navbar-text">Tour de : <mark><span id="current-player"></span></mark></p>
-			<div class="navbar-nav navbar-right">
-				<button type="button" class="btn btn-default" id="#end-turn" onclick="endTurn()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Passer le tour</button>
-				<a href="forfeit.html"><button type="button"
-					class="btn btn-danger navbar-btn">
-					<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Abandonner
-				</button></a>
-			</div>
-		</nav>
 
 		<div class="container-fluid">
 			<div class="row text-center" id="enemy-row"></div>
