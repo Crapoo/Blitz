@@ -58,7 +58,6 @@ public class RefreshLobbyServlet extends HttpServlet {
 							System.out.println("cancel");
 							gameUcc.cancelGame();
 							cancelGame = true;
-							timerRunning = false;
 						}
 					}
 				};

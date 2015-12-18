@@ -163,9 +163,6 @@ function createCard(card) {
 		currentCost = card.cost;
 
 		executeFunctionFromCode(card.effectCode);
-		//hasPlayedCard = true;
-		/*currentCost = -1;
-		currentCode = -1;*/
 	});
 
 	return cardElt;

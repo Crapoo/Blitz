@@ -58,8 +58,8 @@
 					<h4 class="modal-title">Choisissez La Direction</h4>
 				</div>
 				<div class="modal-body">
-					<button type="button" onclick="exchangeDice(\"l\")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span></button>
-					<button type="button" onclick="exchangeDice(\"r\")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-right"></span></button>
+					<button type="button" onclick="exchangeDice('l')" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span></button>
+					<button type="button" onclick="exchangeDice('r')" class="btn btn-default"><span class="glyphicon glyphicon-arrow-right"></span></button>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
