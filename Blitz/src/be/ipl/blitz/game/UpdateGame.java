@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import be.ipl.blitz.domaine.Card;
-import be.ipl.blitz.domaine.Game.State;
 import be.ipl.blitz.usecases.GameUcc;
 
 @WebServlet("/update-game.html")
@@ -41,8 +40,6 @@ public class UpdateGame extends HttpServlet {
 		if (winner != null) {
 			oBuilder.add("hasWon", gameUcc.getWinner().equals(myUsername) ? true : false);
 			String json = oBuilder.build().toString();
-			System.out.println(myUsername + "P&!W NULL");
-			System.out.println(json);
 			response.getWriter().println(json);
 			return;
 		}
@@ -51,16 +48,9 @@ public class UpdateGame extends HttpServlet {
 			gameUcc.endGame();
 			oBuilder.add("", "");
 			String json = oBuilder.build().toString();
-			System.out.println(myUsername + "END GAME NULL");
-			System.out.println(json);
 			response.getWriter().println(json);
 			return;
 		} else {
-			System.out.println(myUsername);
-			// TODO Store the current player in the context to minimise DB
-			// access
-			// and only update it on each end of turn - François
-
 			List<Card> myCards = gameUcc.getCardsOf(myUsername);
 
 			JsonArrayBuilder listBuilder = Json.createArrayBuilder();

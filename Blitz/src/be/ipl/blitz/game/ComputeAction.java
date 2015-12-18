@@ -21,8 +21,6 @@ public class ComputeAction extends HttpServlet {
 	@EJB
 	private GameUcc gameUcc;
 
-	// TODO Implement all the action in compute-action.js
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getParameter("action");
@@ -47,7 +45,6 @@ public class ComputeAction extends HttpServlet {
 			break;
 		case "end-turn":
 			String next = gameUcc.nextPlayer();
-			System.out.println("Next Player : " + next);
 			break;
 		case "skip-turn":
 			target = (String) request.getParameter("data");
@@ -55,9 +52,7 @@ public class ComputeAction extends HttpServlet {
 			break;
 		case "discard-dice":
 			number = Integer.parseInt(request.getParameter("data"));
-			if (gameUcc.deleteDice(number, username)) {
-				System.out.println("DISCARD POSITIF SA MèRE");
-			}
+			gameUcc.deleteDice(number, username);
 			break;
 		case "replay":
 			gameUcc.replay();
@@ -68,7 +63,7 @@ public class ComputeAction extends HttpServlet {
 			target = (String) request.getParameter("data");
 			gameUcc.giveMeCards(target);
 			break;
-		case "limit-target-to-one-cards":
+		case "limit-target-to-one-card":
 			target = (String) request.getParameter("data");
 			gameUcc.keepRandomCards(target, 1);
 			break;
@@ -78,6 +73,7 @@ public class ComputeAction extends HttpServlet {
 		default:
 			break;
 		}
+
 		if (effectCode != -1) {
 			gameUcc.discard(username, effectCode);
 		}
