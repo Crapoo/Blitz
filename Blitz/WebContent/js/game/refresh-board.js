@@ -166,6 +166,6 @@ function createCard(card) {
 }
 
 $(function() {
-	getList();
+	refresh();
 	refreshBoardInterval = setInterval(refresh, 1000);
 });
