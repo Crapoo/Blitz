@@ -86,8 +86,11 @@ public class Game implements Serializable {
 			@Override
 			void keepRandomCard(PlayerGame p, int num) {
 				int nbCards = p.getCards().size();
-				for (int i = 0; i < nbCards - num; i++) {
-					p.removeCard(i);
+				if (nbCards >= num) {
+					Random random = new Random();
+					for (int i = 0; i < nbCards - num; i++) {
+						p.removeCard(random.nextInt(p.getCards().size()));
+					}
 				}
 			}
 
@@ -122,14 +125,14 @@ public class Game implements Serializable {
 				int tmp;
 				int nbDicePreviousPlayer = players.get(0).getNbDice();
 				if (direction.equals("r")) {
-					for (int i=1; i < players.size(); i++) {
+					for (int i = 1; i < players.size(); i++) {
 						PlayerGame p = players.get(i);
 						tmp = p.getNbDice();
 						p.setNbDice(nbDicePreviousPlayer);
 						nbDicePreviousPlayer = tmp;
 					}
-				}else{
-					for (int i=players.size()-1; i >=0 ; i--) {
+				} else {
+					for (int i = players.size() - 1; i >= 0; i--) {
 						PlayerGame p = players.get(i);
 						tmp = p.getNbDice();
 						p.setNbDice(nbDicePreviousPlayer);
