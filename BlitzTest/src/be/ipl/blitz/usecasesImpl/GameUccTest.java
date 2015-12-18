@@ -3,7 +3,6 @@ package be.ipl.blitz.usecasesImpl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -48,6 +47,23 @@ public class GameUccTest {
 		gameUcc.cancelGame();
 	}
 
+	@Test
+	public void testExchangeDice(){
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+		int diceEm = gameUcc.getNbDice("em");
+		int diceMi = gameUcc.getNbDice("mi");
+		int diceOl = gameUcc.getNbDice("ol");
+		gameUcc.exchangeDice("g");
+		assertEquals(diceEm, gameUcc.getNbDice("mi"));
+		assertEquals(diceMi, gameUcc.getNbDice("ol"));
+		assertEquals(diceOl, gameUcc.getNbDice("em"));
+		
+	}
+	
 	@Test
 	public void testJoinGame() {
 		gameUcc.createGame(gameName);
