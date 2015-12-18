@@ -403,4 +403,11 @@ public class GameUccImpl implements GameUcc {
 			playerGameDao.update(player);
 		}
 	}
+
+	@Override
+	public void limitAllToNumCards(int num) {
+		for (PlayerGame pg : game.getUsers()) {
+			game.keepRandomCard(pg, num);
+		}
+	}
 }

@@ -27,7 +27,9 @@ public class ComputeAction extends HttpServlet {
 			throws ServletException, IOException {
 		String action = request.getParameter("action");
 		String username = (String) request.getSession().getAttribute("username");
+		int effectCode = Integer.parseInt(request.getParameter("effect-code"));
 		String target;
+		int number;
 
 		response.setContentType("application/json");
 
@@ -40,32 +42,42 @@ public class ComputeAction extends HttpServlet {
 			gameUcc.giveDice(target, 1);
 			break;
 		case "draw-cards":
-			int number = Integer.parseInt(request.getParameter("data"));
+			number = Integer.parseInt(request.getParameter("data"));
 			gameUcc.drawCard(username, number);
 			break;
 		case "end-turn":
 			String next = gameUcc.nextPlayer();
 			System.out.println("Next Player : " + next);
 			break;
-		case "replay":
-			
-			break;
 		case "skip-turn":
-			
+			target = (String) request.getParameter("data");
+			gameUcc.skipTurn(target);
 			break;
 		case "discard-dice":
-			
+			number = Integer.parseInt(request.getParameter("data"));
+			gameUcc.deleteDice(number, username);
 			break;
+		case "replay":
+			gameUcc.replay();
 		case "change-direction":
+			gameUcc.changeDirection();
 			break;
 		case "steal-card":
+			target = (String) request.getParameter("data");
+			gameUcc.giveMeCards(target);
 			break;
 		case "limit-target-to-one-cards":
+			target = (String) request.getParameter("data");
+			gameUcc.keepRandomCards(target, 1);
 			break;
 		case "limit-all-to-two-cards":
+			gameUcc.limitAllToNumCards(2);
 			break;
 		default:
 			break;
+		}
+		if(effectCode!= -1){
+			gameUcc.discard(username, effectCode);
 		}
 	}
 

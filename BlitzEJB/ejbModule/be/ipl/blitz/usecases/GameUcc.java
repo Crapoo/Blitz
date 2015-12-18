@@ -205,4 +205,9 @@ public interface GameUcc {
 	 * Permet au joueur courant de rejouer à la fin de son tour.
 	 */
 	void replay();
+	
+	/**
+	 * prmet de limiter le nombre de cartes de tous les joueurs sauf le joueur courant
+	 */
+	void limitAllToNumCards(int num);
 }
