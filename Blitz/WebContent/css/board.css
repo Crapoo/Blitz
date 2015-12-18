@@ -61,6 +61,7 @@ html, body {
 
 .cost li {
 	display: inline;
+	height: 100 px;
 	background-color: #bdc3c7;
 }
 
