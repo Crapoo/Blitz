@@ -20,7 +20,10 @@ function initialise() {
 
 				createMyCards(response.myCards);
 
-				var overlay = $('<div id="overlay"><h1><a href="forfeit.html"><button type="button" class="btn btn-default navbar-btn navbar-right"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Quitter</button></a></h1></div>');
+				var overlay = $('<div id="overlay"><div id="img-btn">'+
+						'<p><img id="resultImg" src="" alt="result" height="" width=""></p>'+
+						'<p><a href="forfeit.html"><button type="button" class="btn btn-default navbar-btn navbar-right">'+
+						'<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Quitter</button></a></p></div></div>');
 				
 				$('body').append(overlay);
 
