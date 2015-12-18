@@ -300,7 +300,9 @@ public class GameUccImpl implements GameUcc {
 		Util.checkString(username);
 		// FIXME Przemek : getPlayerGame est null
 		PlayerGame pg = getPlayerGame(username);
-		pg = playerGameDao.reload(pg.getPk());
+		if(pg==null){
+			return 0;
+		}
 		return pg.getNbDice();
 		// return getPlayerGame(username).getNbDice();
 	}
