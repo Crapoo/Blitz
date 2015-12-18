@@ -10,9 +10,11 @@ var currentCost = -1;
 
 function rollDice() {
 	if (!canPlay())
+	return;
+	if (diceRolled) {
+		toastr.warning("Vous avez d&eacute;j&agrave; lanc&eacute; vos d&eacute;s!");
 		return;
-	if (diceRolled)
-		return;
+	}
 
 	isBusy = true;
 
@@ -35,20 +37,20 @@ function rollDice() {
 
 var drawCards = function(number) {
 	if (!canPlay())
-		return;
+	return;
 
 	isBusy = true;
 
 	sendAction("draw-cards", number);
 
-	toastr.success("Vous avez pioch&eacute; " + number + " carte(s) ! Bravo.");
+	toastr.success("Vous avez pioch&eacute; " + number + " carte(s)! Bravo!");
 
 	isBusy = false;
 };
 
 function discardDice(number) {
 	if (!canPlay())
-		return;
+	return;
 
 	isBusy = true;
 
@@ -61,7 +63,7 @@ function discardDice(number) {
 
 var giveDie = function(target) {
 	if (!canPlay())
-		return;
+	return;
 
 	isBusy = true;
 
@@ -75,7 +77,7 @@ var giveDie = function(target) {
 
 var stealCard = function(target) {
 	if (!canPlay())
-		return;
+	return;
 
 	isBusy = true;
 
@@ -89,7 +91,7 @@ var stealCard = function(target) {
 
 function changeDirection() {
 	if (!canPlay())
-		return;
+	return;
 
 	isBusy = true;
 
@@ -101,12 +103,24 @@ function changeDirection() {
 }
 
 function replay() {
+	isBusy = true;
+	isMyTurn = false;
+	diceRolled = false;
+	hasPlayedCard = false;
 
+	shekels = 0;
+
+	currentCode = -1;
+	currentCost = -1;
+
+	toastr.success("Vous pouvez rejouer!");
+
+	isBusy = false;
 }
 
 var keepOneCard = function keepOneCard(target) {
 	if (!canPlay())
-		return;
+	return;
 
 	isBusy = true;
 
@@ -120,20 +134,20 @@ var keepOneCard = function keepOneCard(target) {
 
 function limitToTwOCards() {
 	if (!canPlay())
-		return;
+	return;
 
 	isBusy = true;
 
 	sendAction("limit-all-to-two-cards", "");
 
-	toastr.succes("Les enemis n'ont plus que deux cartes!");
+	toastr.success("Les enemis n'ont plus que deux cartes!");
 
 	isBusy = false;
 }
 
 var skipTurn = function(target) {
 	if (!canPlay())
-		return;
+	return;
 
 	isBusy = true;
 
@@ -142,7 +156,11 @@ var skipTurn = function(target) {
 
 	toastr.info(target + " va passer son tour!");
 
-	isBusy = false;
+	if (playerList.length == 1) {
+		replay();
+	} else {
+		isBusy = false;
+	}
 };
 
 function endTurn() {
@@ -175,13 +193,14 @@ function prepareTargetModal(title, message, fn) {
 
 	$.each(playerList, function(i, player) {
 		fctn = fn.name + '(' + player + ')';
-		// var btn = $('<button type="button" class="list-group-item" onclick="'
-		// + fctn + '">' + player + '</button>');
+
 		var btn = $('<button type="button" class="list-group-item">' + player	+ '</button>');
+
 		btn.on('click', function() {
 			fn(player);
 			$('#target-enemy-modal').modal('hide');
 		});
+
 		list.append(btn);
 	});
 
@@ -190,42 +209,40 @@ function prepareTargetModal(title, message, fn) {
 
 function executeFunctionFromCode(effectCode) {
 	switch (effectCode) {
-	case 1: // Discard 1 die
-		console.log('Code 1 : DiscardDice(1)');
+		case 1: // Discard 1 die
 		discardDice(1);
 		break;
-	case 2: // Change direction
-		changeDirection();
+		case 2: // Pass dice
+		//changeDirection();
+		toastr.warning("Pas encore impl&eacute;ment&eacute;");
 		break;
-	case 3: // Discard 2 dice
+		case 3: // Discard 2 dice
 		discardDice(2);
 		break;
-	case 4: // Give die to target
-		giveDie(1);
+		case 4: // Give die to target
+		prepareTargetModal("Volez une carte", "Choisissez votre cible",	giveDie);
 		break;
-	case 5: // Take card from target
-		prepareTargetModal("Volez une carte", "Choisissez votre cible",
-				stealCard);
+		case 5: // Take card from target
+		prepareTargetModal("Volez une carte", "Choisissez votre cible",	stealCard);
 		break;
-	case 6: // Limit target to 1 card
-		prepareTargetModal("Limitez à une carte", "Choisissez votre cible",
-				keepOneCard);
+		case 6: // Limit target to 1 card
+		prepareTargetModal("Limitez à une carte", "Choisissez votre cible",	keepOneCard);
 		break;
-	case 7: // Draw 3 cards
+		case 7: // Draw 3 cards
 		drawCards(3);
 		break;
-	case 8: // Limit everyone to 2 cards
+		case 8: // Limit everyone to 2 cards
 		limitToTwOCards();
 		break;
-	case 9: // Skip turn
+		case 9: // Skip turn
 		prepareTargetModal("Passer le tour", "Choisissez votre cible", skipTurn);
 		break;
-	case 10: // Replay and change direction
-		replay();
+		case 10: // Replay and change direction
 		changeDirection();
+		replay();
 		break;
-	default:
-		toastr.warning("Pas encore implémenté");
+		default:
+		toastr.warning("Pas encore impl&eacute;ment&eacute;");
 		break;
 	}
 }
@@ -242,21 +259,17 @@ function canPlay() {
 	}
 
 	if (currentCost > shekels) {
-		toastr
-				.warning("Vous n'avez pas assez de shekels pour jouer cette carte.");
+		toastr.warning("Vous n'avez pas assez de shekels pour jouer cette carte.");
+		hasPlayedCard = false;
 		return false;
 	}
 
-	console.log("Cost to play : " + currentCost);
-
 	shekels -= currentCost;
-
-	console.log("Shekels left : " + shekels);
+	hasPlayedCard = true;
 
 	return true;
 }
 
-// Data is a map of attribute names and their values
 function sendAction(action, data) {
 	return $.ajax({
 		url : "compute-action.html",
