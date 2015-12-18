@@ -49,6 +49,25 @@
 		</div>
 	</div>
 
+	<!-- EXCHANGE DICE MODAL -->
+	<div class="modal fade" id="exchange-dice-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Choisissez La Direction</h4>
+				</div>
+				<div class="modal-body">
+					<button type="button" onclick="exchangeDice(\"l\")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span></button>
+					<button type="button" onclick="exchangeDice(\"r\")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-right"></span></button>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="js/game/initialise-board.js"></script>
 	<script src="js/game/compute-action.js"></script>
 	<script src="js/game/refresh-board.js"></script>

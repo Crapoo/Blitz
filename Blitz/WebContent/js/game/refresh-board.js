@@ -111,12 +111,14 @@ function createDie(face) {
 		if (face == 'c') {
 			dieSpan.on('click', function() {
 				currentCode = -1;
+				currentCost = -1;
 				drawCards(1);
 				$(this).prop('disabled', true);
 			});
 		} else if (face == 'd') {
 			dieSpan.on('click', function() {
 				currentCode = -1;
+				currentCost = -1;
 				prepareTargetModal("Donnez un dé à", "Choisissez votre cible", giveDie);
 				$(this).prop('disabled', true);
 			});
@@ -162,7 +164,8 @@ function createCard(card) {
 
 		executeFunctionFromCode(card.effectCode);
 		//hasPlayedCard = true;
-		currentCost = -1;
+		/*currentCost = -1;
+		currentCode = -1;*/
 	});
 
 	return cardElt;

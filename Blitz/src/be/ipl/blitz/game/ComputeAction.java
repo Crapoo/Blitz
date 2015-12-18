@@ -56,8 +56,10 @@ public class ComputeAction extends HttpServlet {
 			break;
 		case "replay":
 			gameUcc.replay();
-		case "change-direction":
-			gameUcc.changeDirection();
+			break;
+		case "exchange-dice":
+			target = (String) request.getParameter("data");
+			gameUcc.exchangeDice(target);
 			break;
 		case "steal-card":
 			target = (String) request.getParameter("data");
@@ -69,6 +71,9 @@ public class ComputeAction extends HttpServlet {
 			break;
 		case "limit-all-to-two-cards":
 			gameUcc.limitAllToNumCards(2);
+			break;
+		case "change-direction":
+			gameUcc.changeDirection();
 			break;
 		default:
 			break;

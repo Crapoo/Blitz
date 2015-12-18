@@ -104,7 +104,7 @@ function changeDirection() {
 
 function replay() {
 	isBusy = true;
-	isMyTurn = false;
+	isMyTurn = true;
 	diceRolled = false;
 	hasPlayedCard = false;
 
@@ -163,6 +163,20 @@ var skipTurn = function(target) {
 	}
 };
 
+function exchangeDice(direction) {
+	if (!canPlay())
+	return;
+
+	isBusy = true;
+
+	sendAction("exchange-dice", direction);
+	$('#exchange-dice-modal').modal('hide');
+
+	toastr.info("Les d&eacute;s ont &eacute;t&eacute; &eacute;chang&eacute;s!");
+
+	isBusy = false;
+}
+
 function endTurn() {
 	if (!diceRolled) {
 		toastr.warning("Veuillez lancer vos d&eacute;s d'abord!");
@@ -176,6 +190,9 @@ function endTurn() {
 	shekels = 0;
 	diceRolled = false;
 	hasPlayedCard = false;
+
+	currentCode = -1;
+	currentCost = -1;
 }
 
 function endGame(hasWon, winner) {
@@ -213,8 +230,7 @@ function executeFunctionFromCode(effectCode) {
 		discardDice(1);
 		break;
 		case 2: // Pass dice
-		//changeDirection();
-		toastr.warning("Pas encore impl&eacute;ment&eacute;");
+		$('#exchange-dice-modal').modal('show');
 		break;
 		case 3: // Discard 2 dice
 		discardDice(2);
@@ -255,6 +271,7 @@ function canPlay() {
 
 	// A die has no cost
 	if (currentCode == -1) {
+		console.log("Die used");
 		return true;
 	}
 
@@ -264,8 +281,11 @@ function canPlay() {
 		return false;
 	}
 
+	console.log("Card played");
 	shekels -= currentCost;
 	hasPlayedCard = true;
+	currentCode = -1;
+	currentCost = -1;
 
 	return true;
 }
