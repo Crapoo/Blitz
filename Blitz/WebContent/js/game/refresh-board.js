@@ -19,23 +19,7 @@ function refresh() {
 
 			updateMyInfo(response.nbDice, response.myCards, response.myTurn);
 
-			if (currentPlayer !== response.currentPlayer) {
-				if (currentPlayer == myUsername) {
-					$('#my-board').removeClass('highlighted');
-				} else {
-					$('#' + currentPlayer).removeClass('highlighted');
-				}
-
-				currentPlayer = response.currentPlayer;
-
-				if (response.currentPlayer == myUsername) {
-					toastr.info("Votre tour");
-					$('#my-board').addClass('highlighted');
-				} else {
-					toastr.info("Tour de " + currentPlayer);
-					$('#' + currentPlayer).addClass('highlighted');
-				}
-			}
+			highlight(response.currentPlayer);
 
 			$('#current-player').text(currentPlayer);
 		}
@@ -45,6 +29,26 @@ function refresh() {
 		console.log(errorThrown);
 		clearInterval(refreshBoardInterval);
 	});
+}
+
+function highlight(newPlayer) {
+	if (currentPlayer !== newPlayer) {
+		if (currentPlayer == myUsername) {
+			$('#my-board').removeClass('highlighted');
+		} else {
+			$('#' + currentPlayer).removeClass('highlighted');
+		}
+
+		currentPlayer = newPlayer;
+
+		if (newPlayer == myUsername) {
+			toastr.info("Votre tour");
+			$('#my-board').addClass('highlighted');
+		} else {
+			toastr.info("Tour de " + currentPlayer);
+			$('#' + currentPlayer).addClass('highlighted');
+		}
+	}
 }
 
 function updateInfoOf(player) {
