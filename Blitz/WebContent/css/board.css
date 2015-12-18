@@ -4,6 +4,7 @@ html, body {
 	padding: 0;
 }
 
+
 #wrap {
 	min-height: 60%;
 	height: auto !important;
@@ -95,4 +96,12 @@ nav .glyphicon {
 	-khtml-opacity: 0.5;
 	opacity: 0.5;
 	z-index: 10000;
+}
+
+#img-btn{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
 }

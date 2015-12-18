@@ -151,7 +151,12 @@ function endTurn() {
 }
 
 function endGame(hasWon, winner) {
-	$("#overlay").show();
+		if(player == winner){
+			$("#resultImg")attr("src", "../../images/victory.jpeg");
+		}else{
+			$("#resultImg")attr("src", "../../images/loser.gif");
+		}
+		$("#overlay").show();
 }
 
 function prepareTargetModal(title, message, fn) {
