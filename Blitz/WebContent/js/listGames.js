@@ -7,14 +7,13 @@ function getList() {
 
 	$request.done(function(response, textStatus, xhr) {
 		var htmlResponse = "";
-		var list = $("#game-list");
-
-		if (list.css('display') == 'none') {
+		var listHolder = $("#game-list");
+		if (listHolder.css('display') == 'none') {
 			console.log('show');
-			showList(list, response);
+			showList(listHolder, response);
 		} else {
 			console.log('hide');
-			hideList(list);
+			hideList(listHolder);
 		}
 	});
 
@@ -22,27 +21,27 @@ function getList() {
 		console.log(errorThrown);
 	});
 
-	function showList(list, response) {
+	function showList(listHolder, response) {
+		var list = listHolder.children("ul");
 		list.empty();
 		if ($.isEmptyObject(response)) {
-			list.append($('<p>Aucune partie n\'a été jouée pour le moment ;(</p>'));
+			list.append($('<li class="list-group-item">Aucune partie n\'a été jouée pour le moment ;(</li>'));
 		} else {
 			$.each(response, function(i, val) {
 				console.log(val);
-				var row = $('<p></p>');
-				row.append($('<h2>' + val.name + '</h2>'));
-				row.append($('<p>' + val.startDate + '</p>'));
+				var row = $('<li class="list-group-item"><span class="badge">' + val.startDate + '</span><p>' + val.name +' - <span id="winner"></span></p></li>');
+				
 				if (val.winner === "annulée") {
-					row.append($("<p> Cette partie a été annulée :(</p>"));
+					row.find("#winner").text("annulée");
 				} else {
-					row.append($('<p> Winner : ' + val.winner + '</p>'));
+					row.find("#winner").text("Gagnée par " + val.winner);
 				}
 				list.append(row);
 			});
 		}
-		list.show();
+		listHolder.show();
 	}
-	
+
 	function hideList(list) {
 		list.hide();
 	}
