@@ -5,8 +5,9 @@ function refresh() {
     dataType: "json",
   });
   $request.done(function (response, textStatus, xhr) {
-    // Min players -> launch game
-    if (response.playersCount == response.minPlayers) {
+	  console.log("start game : " + response.startGame);
+	  if (response.startGame) {
+		  console.log("StartGame");
       window.location.href = "board.html";
     }
     var playersList = "";
