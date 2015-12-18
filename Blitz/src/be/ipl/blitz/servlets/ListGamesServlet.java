@@ -1,6 +1,8 @@
 package be.ipl.blitz.servlets;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.ejb.EJB;
 import javax.json.Json;
@@ -50,7 +52,7 @@ public class ListGamesServlet extends HttpServlet {
 		for (Game game : gameUcc.getAllGames()) {
 			JsonObjectBuilder oBuilderGame = Json.createObjectBuilder();
 			oBuilderGame.add("name", game.getName());
-			oBuilderGame.add("startDate", game.getStartDate().toString());
+			oBuilderGame.add("startDate", new SimpleDateFormat().format(game.getStartDate()));
 			oBuilderGame.add("winner", game.getWinner() == null ? "annulée" : game.getWinner());
 			oBuilder.add("" + i++, oBuilderGame.build());
 		}

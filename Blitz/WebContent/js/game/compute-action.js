@@ -152,9 +152,9 @@ function endTurn() {
 
 function endGame(hasWon, winner) {
 		if(player == winner){
-			$("#resultImg")attr("src", "../../images/victory.jpeg");
+			$("#resultImg").attr("src", "../../images/victory.jpeg");
 		}else{
-			$("#resultImg")attr("src", "../../images/loser.gif");
+			$("#resultImg").attr("src", "../../images/loser.gif");
 		}
 		$("#overlay").show();
 }
