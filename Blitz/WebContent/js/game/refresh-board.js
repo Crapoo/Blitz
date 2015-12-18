@@ -142,8 +142,6 @@ function createCard(card) {
 	cardElt.append(cost);
 	cardElt.append($('<p>' + card.effect + '</p>'));
 
-	//cardElt.append($('<button class="btn btn-default" data-id="' + card.id + '" data-effect-code="' + card.effectCode + '">Utiliser</button>'));
-
 	cardElt.on('click', function() {
 		if (hasPlayedCard) {
 			toastr.warning("Vous avez d&eacute;j&agrave; jou&eacute; une carte!");
@@ -151,14 +149,15 @@ function createCard(card) {
 		}
 
 		if (!diceRolled) {
-			toastr.warning("Vous n'avez pas lanc&eacute;s vos d&eacute;s.");
+			toastr.warning("Vous n'avez pas lanc&eacute; vos d&eacute;s.");
 			return;
 		}
+
 		currentCode = card.effectCode;
 		currentCost = card.cost;
 
 		executeFunctionFromCode(card.effectCode);
-		hasPlayedCard = true;
+		//hasPlayedCard = true;
 		currentCost = -1;
 	});
 
