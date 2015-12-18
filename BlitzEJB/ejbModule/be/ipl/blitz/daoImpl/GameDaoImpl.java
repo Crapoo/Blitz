@@ -25,7 +25,7 @@ public class GameDaoImpl extends DaoImpl<Integer, Game> {
 	}
 	
 	public List<Game> getAll(){
-		String queryString = "SELECT * FROM Game g";
+		String queryString = "SELECT g FROM Game g";
 		return list(queryString);
 	}
 	

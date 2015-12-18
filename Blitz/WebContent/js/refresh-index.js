@@ -12,7 +12,7 @@ function refresh() {
     var disableJoin = true;
     switch(response.gameState) {
       case "OVER":
-      htmlResponse = '<p class="bg-primary"><strong><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Aucune partie en cours</p></strong>';
+      htmlResponse = '<p class="bg-primary"><strong><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Aucune partie en cours</strong></p>';
       disableCreate = false;
       disableJoin = true;
       break;
@@ -22,7 +22,7 @@ function refresh() {
       disableJoin = false;
       break;
       case "IN_PROGERSS":
-      htmlResponse = '<p class="bg-danger"><strong><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>Partie en cours</p></strong>';
+      htmlResponse = '<p class="bg-danger"><strong><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>Partie en cours</strong></p>';
       disableCreate = true;
       disableJoin = true;
       break;

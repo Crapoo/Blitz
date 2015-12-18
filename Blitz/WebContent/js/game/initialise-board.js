@@ -7,6 +7,7 @@ function initialise() {
 		dataType : "json",
 	});
 
+
 	$request.done(function(response, textStatus, xhr) {
 		var nbCards = response.nbCards;
 		var nbDice = response.nbDice;
@@ -18,7 +19,10 @@ function initialise() {
 
 		createMyCards(response.myCards);
 
-		var overlay = $('<div id="overlay"><h1><a href="forfeit.html"><button type="button" class="btn btn-default navbar-btn navbar-right"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Quitter</button></a></h1></div>');
+		var overlay = $('<div id="overlay"><div id="img-btn">'+
+		'<p><img id="resultImg" src="" alt="result" height="" width=""></p>'+
+		'<p><a href="forfeit.html"><button type="button" class="btn btn-default navbar-btn navbar-right">'+
+		'<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Quitter</button></a></p></div></div>');
 		$('body').append(overlay);
 
 		overlay.hide();
@@ -28,6 +32,7 @@ function initialise() {
 		highlight(response.currentPlayer);
 		currentPlayer = response.currentPlayer;
 	});
+
 
 	$request.fail(function(xhr, textStatus, errorThrown) {
 		console.log(errorThrown);

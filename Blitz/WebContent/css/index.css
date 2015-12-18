@@ -1,32 +1,34 @@
 body {
-  background-image: url("../images/background.jpg");
-	background-size: cover;
+	background: url("../images/background.jpg") no-repeat center center fixed;
 }
 
 .navbar {
-  border-bottom: 3px solid grey;
-  border-radius: 0;
-  /*padding: 10px;*/
+	border-bottom: 3px solid grey;
+	border-radius: 0;
+	/*padding: 10px;*/
 }
 
 /*#create-join-buttons {
     margin-top: 200px;
 }*/
-
 #create-join-buttons button {
-  padding: 2em;
-  border-radius: 0;
+	padding: 2em;
+	border-radius: 0;
 }
 
 .glyphicon {
-  margin-right: 1.5em;
+	margin-right: 1.5em;
 }
 
 #is-game-in-progress {
-  padding: 1.8em;
-  margin-top: 2em;
+	padding: 1.8em;
+	margin-top: 2em;
 }
 
 #is-game-in-progress p {
-  padding: 2em;
+	padding: 2em;
+}
+
+#game-list {
+	
 }
