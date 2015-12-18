@@ -381,9 +381,6 @@ public class GameUccImpl implements GameUcc {
 
 	/* Util */
 	private PlayerGame getPlayerGame(String username) {
-		if (!listPlayers().contains(username)) {
-			return null;
-		}
 		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
 	}
 
