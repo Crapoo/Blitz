@@ -88,16 +88,20 @@ function createDie(face) {
 	var hasAction = false;
 	var title = "";
 	var message = "";
+	var icon = "";
 
 	switch (face) {
 		case 'b':
 		shekels++;
+		icon = "shekel.png";
 		break;
 		case 'c':
 		hasAction = true;
+		icon = "draw-card.png";
 		break;
 		case 'd':
 		hasAction = true;
+		icon = "give-die.png";
 		break;
 	}
 
@@ -121,7 +125,7 @@ function createDie(face) {
 		dieSpan = $('<button class="die btn">');
 	}
 
-	dieSpan.append('<strong>' + face + '</strong>');
+	dieSpan.append('<img src="images/' + icon + '" alt="' + face + '">');
 
 	return dieSpan;
 }

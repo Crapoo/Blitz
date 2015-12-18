@@ -107,7 +107,6 @@ public class Game implements Serializable {
 			}
 
 			@Override
-
 			void skipTurn(PlayerGame p, Game g) {
 				for (int i = 0; i < g.getUsers().size(); i++) {
 					if (p.equals(g.getUsers().get(i))) {
@@ -116,6 +115,28 @@ public class Game implements Serializable {
 				}
 			}
 
+			@Override
+			void exchangeDice(String direction, Game game) {
+				List<PlayerGame> players = game.getUsers();
+				int dir;
+				int tmp;
+				int nbDicePreviousPlayer = players.get(0).getNbDice();
+				int i;
+				
+				if (direction.equals("g")) {
+					dir = 1;
+					i=1;
+				} else {
+					dir = -1;
+					i=players.size()-1;
+				}
+				for (; i < players.size()-1; Util.modulo((i+dir), players.size())) {
+					PlayerGame p = players.get(i);
+					tmp = p.getNbDice();
+					p.setNbDice(nbDicePreviousPlayer);
+					nbDicePreviousPlayer = tmp;
+				}
+			}
 		},
 		OVER {
 			@Override
@@ -161,18 +182,18 @@ public class Game implements Serializable {
 		}
 
 		void changeDirection(Game game) {
-
 		}
 
 		void keepRandomCard(PlayerGame playerGame, int num) {
-
 		}
 
 		void endGame(Game game) {
-
 		}
 
 		void skipTurn(PlayerGame playerGame, Game game) {
+		}
+
+		void exchangeDice(String direction, Game game) {
 		}
 	}
 
@@ -346,5 +367,9 @@ public class Game implements Serializable {
 
 	public void skipTurn(PlayerGame playerGame) {
 		state.skipTurn(playerGame, this);
+	}
+
+	public void exchangeDice(String direction) {
+		state.exchangeDice(direction, this);
 	}
 }

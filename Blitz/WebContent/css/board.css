@@ -13,16 +13,21 @@ html, body {
 
 .navbar-default {
 	border-radius: 0;
+	box-shadow: 0px 0px 3px black;
 }
 
-/*.glyphicon {
+.glyphicon {
 	margin-right: 1.5em;
-}*/
+}
+
+#nav-buttons #end-turn, #nav-buttons a {
+	margin-right: 20px;
+}
 
 #my-info {
-	padding: 30px;
-	width: 100%;
 	background-color: #ecf0f1;
+	margin-bottom: 25px;
+	box-shadow: 0px 0px 5px black;
 }
 
 #my-cards {
@@ -34,10 +39,24 @@ html, body {
 	display: inline-block;
 }
 
+#my-dice img, #my-button img {
+	width: 24px;
+}
+
+#my-button {
+	padding: 15px;
+	box-shadow: 0px 0px 5px black;
+	margin: 30px;
+}
+
 .die {
 	padding: 15px;
-	margin: 0 10px 0 10px;
+	margin: 30px;
 	background-color: white;
+}
+
+.die:hover {
+	box-shadow: 0px 0px 5px black;
 }
 
 .card {
@@ -51,6 +70,11 @@ html, body {
 	margin: 10px;
 	padding: 10px;
 	background-color: white;
+	cursor: pointer;
+}
+
+.card:hover {
+	box-shadow: 0px 0px 5px black;
 }
 
 .cost {
@@ -78,6 +102,7 @@ html, body {
 }
 
 .enemy {
+	display: inline-block;
 	border: 2px solid grey;
 	background-color: white;
 	min-height: 150px;
