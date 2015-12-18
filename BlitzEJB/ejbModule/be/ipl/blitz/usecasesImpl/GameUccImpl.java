@@ -177,6 +177,7 @@ public class GameUccImpl implements GameUcc {
 			return;
 		}
 		game.endGame();
+		gameDao.update(game);
 	}
 
 	@Override
