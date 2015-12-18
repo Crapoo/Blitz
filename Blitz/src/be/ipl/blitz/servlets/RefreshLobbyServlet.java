@@ -62,7 +62,7 @@ public class RefreshLobbyServlet extends HttpServlet {
 						}
 					}
 				};
-				timer.schedule(task, 5000);
+				timer.schedule(task, 30000);
 			}
 			
 			for (String player : players) {

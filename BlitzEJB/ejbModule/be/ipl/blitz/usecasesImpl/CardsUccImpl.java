@@ -3,7 +3,6 @@ package be.ipl.blitz.usecasesImpl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -14,8 +13,6 @@ import be.ipl.blitz.daoImpl.GameDaoImpl;
 import be.ipl.blitz.daoImpl.PlayerGameDaoImpl;
 import be.ipl.blitz.daoImpl.UserDaoImpl;
 import be.ipl.blitz.domaine.Card;
-import be.ipl.blitz.domaine.PlayerGame;
-import be.ipl.blitz.domaine.PlayerGamePK;
 import be.ipl.blitz.usecases.CardsUcc;
 import be.ipl.blitz.usecases.GameUcc;
 import be.ipl.blitz.usecases.UserUcc;
