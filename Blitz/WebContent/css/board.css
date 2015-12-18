@@ -2,26 +2,28 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+	/* Pattern from : http://subtlepatterns.com/one-in-a-million-s/ */
+	background-image: url("../images/ignasi_pattern_s.png");
+	background-repeat: repeat;
 }
 
-
-#wrap {
-	min-height: 60%;
-	height: auto !important;
-	height: 60%;
+.nav {
+	margin-bottom: 10px;
+	width: 100%
 }
 
-nav .glyphicon {
+.navbar-nav {
+		border-radius: 0;
+}
+
+.nav .glyphicon {
 	margin-right: 1.5em;
 }
 
-#my-board {
-	overflow-x: scroll;
-	height: 40%;
-}
-
 #my-info {
-	border-top: 1px solid black;
+	padding: 30px;
+	width: 100%;
+	background-color: #ecf0f1;
 }
 
 #my-cards {
@@ -30,20 +32,27 @@ nav .glyphicon {
 }
 
 #my-dice {
-	padding: 10px;
 	display: inline-block;
-	min-width: 75%;
 }
 
-#my-button {
-	margin-right: 10px;
+.die {
+	padding: 10px;
+	margin: 0 10px 0 10px;
+	font-weight: bold;
 }
 
 .card {
-	border: 1px solid black;
-	min-height: 80%;
+	display: inline-block;
+	border: 2px solid grey;
+	min-height: 250px;
+	max-height: 250px;
+
+	min-width: 170px;
+	max-width: 170px;
+	overflow-x: scroll;
 	margin: 10px;
 	padding: 10px;
+	background-color: white;
 }
 
 .cost {
@@ -53,31 +62,35 @@ nav .glyphicon {
 
 .cost li {
 	display: inline;
+	background-color: #bdc3c7;
 }
 
 .cost li img {
-	max-height: 10%;
-	max-width: 20%;
+	max-height: 40px;
+	max-width: 40px;
+	padding: 5px;
+}
+
+#enemy-row {
+	margin-bottom: 20px;
+	padding: 10px;
+	width: 100%;
 }
 
 .enemy {
-	border: 1px solid black;
+	border: 2px solid grey;
+	background-color: white;
+
+	min-height: 150px;
+	max-height: 150px;
+
+	min-width: 250px;
+	max-width: 250px;
+	cursor: pointer;
 }
 
-.enemy.avatar {
-	border: 1px solid black;
-}
-
-.enemy.info-panel {
-	border: 1px solid black;
-}
-
-.enemy.info {
-	border: 1px solid black;
-}
-
-.enemy.buttons {
-	border: 1px solid black;
+.enemy:hover {
+	background-color: #bdc3c7;
 }
 
 .highlighted {
@@ -100,8 +113,8 @@ nav .glyphicon {
 
 #img-btn{
 	position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%)
 }

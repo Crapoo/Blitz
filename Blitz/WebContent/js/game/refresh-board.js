@@ -34,7 +34,7 @@ function refresh() {
 function highlight(newPlayer) {
 	if (currentPlayer !== newPlayer) {
 		if (currentPlayer == myUsername) {
-			$('#my-board').removeClass('highlighted');
+			$('.nav').removeClass('highlighted');
 		} else {
 			$('#' + currentPlayer).removeClass('highlighted');
 		}
@@ -43,7 +43,7 @@ function highlight(newPlayer) {
 
 		if (newPlayer == myUsername) {
 			toastr.info("Votre tour");
-			$('#my-board').addClass('highlighted');
+			$('.nav').addClass('highlighted');
 		} else {
 			toastr.info("Tour de " + currentPlayer);
 			$('#' + currentPlayer).addClass('highlighted');
@@ -102,7 +102,7 @@ function createDie(face) {
 	}
 
 	if (hasAction) {
-		dieSpan = $('<button class="die btn btn-default" data-toggle="modal">');
+		dieSpan = $('<button class="die btn" data-toggle="modal">');
 
 		if (face == 'c') {
 			dieSpan.on('click', function() {
@@ -118,7 +118,7 @@ function createDie(face) {
 			});
 		}
 	} else {
-		dieSpan = $('<button class="die btn btn-default">');
+		dieSpan = $('<button class="die btn">');
 	}
 
 	dieSpan.append('<strong>' + face + '</strong>');
@@ -127,14 +127,14 @@ function createDie(face) {
 }
 
 function createCard(card) {
-	var cardElt = $('<div class="card col-xs-4 col-md-1"></div>');
+	var cardElt = $('<div class="card"></div>');
 	var cost = $('<ul class="cost"></ul>');
 
 	if (card.cost == "0") {
 		cost.append($('<li>Gratuit</li>'));
 	} else {
 		for (var i = 0; i < card.cost; i++) {
-			var costLi = $('<li><img src="images/shekel.png"/></li>');
+			var costLi = $('<li><img src="images/shekel.png" alt="S"></li>');
 			cost.append(costLi);
 		}
 	}
@@ -142,7 +142,7 @@ function createCard(card) {
 	cardElt.append(cost);
 	cardElt.append($('<p>' + card.effect + '</p>'));
 
-	cardElt.append($('<button class="btn btn-default"  data-id="' + card.id + '" data-effect-code="' + card.effectCode + '">Utiliser</button>'));
+	//cardElt.append($('<button class="btn btn-default" data-id="' + card.id + '" data-effect-code="' + card.effectCode + '">Utiliser</button>'));
 
 	cardElt.on('click', function() {
 		if (hasPlayedCard) {
