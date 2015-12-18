@@ -4,6 +4,7 @@
 	<div id="wrap">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
+				<p class="navbar-text lead" id="my-username"></p>
 				<p class="navbar-text">Tour de : <mark><span id="current-player"></span></mark></p>
 				<div class="navbar-nav navbar-right">
 				<button type="button" class="btn btn-default" id="#end-turn" onclick="endTurn()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Passer le tour</button>
@@ -21,7 +22,7 @@
 	</div>
 	<div id="my-board">
 		<div id="my-info" class="col-sm-12">
-			<div id="my-dice"></div>
+			<div id="my-dice"></div><span class="lead" id="my-shekels"></span>
 			<button type="button" class="btn btn-default pull-right" id="my-button" disabled="true" onclick="rollDice()">Lancer d&eacute;s</button>
 		</div>
 

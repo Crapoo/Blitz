@@ -10,14 +10,22 @@ function initialise() {
 	$request.done(function(response, textStatus, xhr) {
 		var nbCards = response.nbCards;
 		var nbDice = response.nbDice;
+
 		$.each(response.players, function(i, player) {
 			playerList[i] = player;
 			$('#enemy-row').append(createEnemy(player, nbCards, nbDice, ""));
 		});
+
 		createMyCards(response.myCards);
+
 		var overlay = $('<div id="overlay"><h1><a href="forfeit.html"><button type="button" class="btn btn-default navbar-btn navbar-right"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Quitter</button></a></h1></div>');
 		$('body').append(overlay);
+
 		overlay.hide();
+
+		myUsername = response.myUsername;
+		$('#my-username').text(myUsername);
+		currentPlayer = response.currentPlayer;
 	});
 
 	$request.fail(function(xhr, textStatus, errorThrown) {

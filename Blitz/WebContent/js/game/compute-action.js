@@ -1,10 +1,12 @@
 var isMyTurn = false;
 var isBusy = false;
 var diceRolled = false;
+var hasPlayedCard = false;
 
-var shekels = -1;
+var shekels = 0;
 
 var currentCode = -1;
+var currentCost = -1;
 
 // TODO For example, a boolean variable that indicates if a card if currently
 // being played. If so, ignore every other request
@@ -28,16 +30,12 @@ function rollDice() {
 
 	$('#my-dice').show(500);
 
+	$('#my-shekels').text(shekels);
+
+	console.log("Shekels rolled : " + shekels);
+
 	diceRolled = true;
 	isBusy = false;
-}
-
-function playCard(caller) {
-	var effectCode = $(called).data('effect-code');
-	currentCode = effectCode;
-	window[getFuctionFromCode(effectCode)]();
-
-	currentCode = -1;
 }
 
 function drawCards(number) {
@@ -57,6 +55,7 @@ function discardDice(number) {
 
 	isBusy = true;
 
+	console.log('DicardDice');
 	sendAction("discard-dice", number);
 
 	toastr.success("Vous avez supprimeé un dé! La victoire approche!");
@@ -113,7 +112,11 @@ function endTurn() {
 
 	$('#my-dice').hide(500);
 
+	$('#my-shekels').text('0');
+
+	shekels = 0;
 	diceRolled = false;
+	hasPlayedCard = false;
 }
 
 function endGame(hasWon) {
@@ -136,7 +139,6 @@ function prepareTargetModal(title, message, fn) {
 	list.empty();
 
 	$.each(playerList, function(i, player) {
-		//list.append('<button type="button" class="list-group-item" onclick="giveDie(\'' + player + '\')">' + player + '</button>');
 		fctn = getFuctionFromCode + '(' + player + ')';
 		list.append('<button type="button" class="list-group-item" onclick="' + fctn + '">' + player + '</button>');
 	});
@@ -146,8 +148,12 @@ function prepareTargetModal(title, message, fn) {
 
 function executeFunctionFromCode(effectCode) {
 	switch (effectCode) {
-		case 1: // Discard one die
+		case 1: // Discard 1 die
+		console.log('Code 1 : DiscardDice(1)');
 		discardDice(1);
+		break;
+		case 3: // Discard 2 dice
+		discardDice(2);
 		break;
 		default:
 		toastr.warning("Pas encore implémenté");
@@ -160,6 +166,22 @@ function canPlay() {
 		toastr.warning("Vous ne pouvez pas faire cette action pour le moment.");
 		return false;
 	}
+
+	// A die has no cost
+	if (currentCode == -1) {
+			return true;
+	}
+
+	if (currentCost > shekels) {
+		return false;
+	}
+
+	console.log("Cost to play : " + currentCost);
+
+	shekels -= currentCost;
+
+	console.log("Shekels left : " + shekels);
+
 	return true;
 }
 

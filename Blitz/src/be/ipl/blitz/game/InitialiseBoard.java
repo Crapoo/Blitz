@@ -41,6 +41,7 @@ public class InitialiseBoard extends HttpServlet {
 		oBuilder.add("currentPlayer", gameUcc.getCurrentPlayer());
 		oBuilder.add("nbCards", gameUcc.getNbCardsByPlayer());
 		oBuilder.add("nbDice", gameUcc.getDicePerPlayer());
+		oBuilder.add("myUsername", username);
 
 		List<String> players = gameUcc.listPlayers();
 
