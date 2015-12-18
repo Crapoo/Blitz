@@ -47,6 +47,23 @@ public class ComputeAction extends HttpServlet {
 			String next = gameUcc.nextPlayer();
 			System.out.println("Next Player : " + next);
 			break;
+		case "replay":
+			
+			break;
+		case "skip-turn":
+			
+			break;
+		case "discard-dice":
+			
+			break;
+		case "change-direction":
+			break;
+		case "steal-card":
+			break;
+		case "limit-target-to-one-cards":
+			break;
+		case "limit-all-to-two-cards":
+			break;
 		default:
 			break;
 		}
