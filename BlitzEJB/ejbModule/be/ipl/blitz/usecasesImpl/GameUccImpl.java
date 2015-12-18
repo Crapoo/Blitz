@@ -235,7 +235,9 @@ public class GameUccImpl implements GameUcc {
 	@Override
 	public void removePlayer(String username) {
 		Util.checkString(username);
-		game.removePlayer(getPlayerGame(username));
+		if (listPlayers().contains(username)) {
+			game.removePlayer(getPlayerGame(username));
+		}
 	}
 
 	/* Actions du jeu */
@@ -300,7 +302,7 @@ public class GameUccImpl implements GameUcc {
 		PlayerGame pg = getPlayerGame(username);
 		pg = playerGameDao.reload(pg.getPk());
 		return pg.getNbDice();
-		//return getPlayerGame(username).getNbDice();
+		// return getPlayerGame(username).getNbDice();
 	}
 
 	public String getWinner() {
