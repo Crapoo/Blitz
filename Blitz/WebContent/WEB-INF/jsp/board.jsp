@@ -4,7 +4,7 @@
 	<nav class="navbar navbar-default">
 		<p class="navbar-text lead" id="my-username"></p>
 		<p class="navbar-text lead">Tour de : <strong><span id="current-player"></span></strong></p>
-		<div class="navbar-right">
+		<div class="pull-right" id="nav-buttons">
 			<button type="button" class="btn btn-default" id="#end-turn" onclick="endTurn()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Passer le tour</button>
 			<a href="forfeit.html"><button type="button"
 				class="btn btn-danger navbar-btn">
@@ -16,13 +16,13 @@
 	<div class="container-fluid">
 
 		<div class="container-fluid">
-			<div class="row text-center" id="enemy-row"></div>
+			<div class="text-center" id="enemy-row"></div>
 		</div>
 
 		<div id="my-board">
 			<div id="my-info" class="row text-center">
 				<div id="my-dice" class="text-center"></div>
-				<button type="button" class="btn btn-default pull-right" id="my-button" disabled="true" onclick="rollDice()">Lancer d&eacute;s</button>
+				<button type="button" class="btn btn-default pull-right" id="my-button" disabled="true" onclick="rollDice()"><img src="images/roll.png" alt="Lancer les d&eacute;s"></button>
 			</div>
 
 			<div id="my-cards" class="row text-center">
