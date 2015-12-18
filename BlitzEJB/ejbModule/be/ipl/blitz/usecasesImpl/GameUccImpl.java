@@ -383,7 +383,13 @@ public class GameUccImpl implements GameUcc {
 
 	/* Util */
 	private PlayerGame getPlayerGame(String username) {
-		return playerGameDao.findById(new PlayerGamePK(userDao.findByName(username).getId(), game.getId()));
+		List<PlayerGame> list = game.getUsers();
+		for (PlayerGame playerGame : list) {
+			if (playerGame.getUser().getName().equals(username)) {
+				return playerGame;
+			}
+		}
+		return null;
 	}
 
 	private boolean dealCards(List<PlayerGame> gp) {
