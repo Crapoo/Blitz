@@ -1,4 +1,5 @@
 var currentPlayer = "";
+var myUsername = "";
 
 function refresh() {
 	var $request = $.ajax({
@@ -19,8 +20,21 @@ function refresh() {
 			updateMyInfo(response.nbDice, response.myCards, response.myTurn);
 
 			if (currentPlayer !== response.currentPlayer) {
+				if (currentPlayer == myUsername) {
+					$('#my-board').removeClass('highlighted');
+				} else {
+					$('#' + currentPlayer).removeClass('highlighted');
+				}
+
 				currentPlayer = response.currentPlayer;
-				toastr.success("Tour de " + currentPlayer);
+
+				if (response.currentPlayer == myUsername) {
+					toastr.info("Votre tour");
+					$('#my-board').addClass('highlighted');
+				} else {
+					toastr.info("Tour de " + currentPlayer);
+					$('#' + currentPlayer).addClass('highlighted');
+				}
 			}
 
 			$('#current-player').text(currentPlayer);
@@ -65,10 +79,10 @@ function updateMyCards(cards) {
 }
 
 function createDie(face) {
+	var dieSpan = "";
 	var buttonAction = "";
 	var actionData = "";
-
-	shekels = 0;
+	var hasAction = false;
 
 	switch (face) {
 		case 'b':
@@ -77,19 +91,25 @@ function createDie(face) {
 		case 'c':
 		buttonAction = "drawCards";
 		actionData = 1; // Number of cards to draw - parameter
+		hasAction = true;
 		break;
 		case 'd':
 		buttonAction = "prepareGiveDieModal";
+		hasAction = true;
 		break;
 	}
 
-	var dieSpan = $('<button class="die btn btn-default" data-toggle="modal" data-target="#target-enemy-modal" onclick="' + buttonAction + '">');
+	if (hasAction) {
+		dieSpan = $('<button class="die btn btn-default" data-toggle="modal" data-target="#target-enemy-modal" onclick="' + buttonAction + '">');
+		dieSpan.on('click', function() {
+			currentCode = -1;
+			window[buttonAction](actionData);
+			$(this).prop('disabled', true);
+		});
+	} else {
+		dieSpan = $('<button class="die btn btn-default">');
+	}
 
-	dieSpan.on('click', function() {
-		currentCode = -1;
-		window[buttonAction](actionData);
-		$(this).prop('disabled', true);
-	});
 	dieSpan.append('<strong>' + face + '</strong>');
 
 	return dieSpan;
@@ -109,20 +129,22 @@ function createCard(card) {
 	}
 
 	cardElt.append(cost);
-	// TODO : Matt - Ajouter des images?
-	// cardElt.append($('<img src="' + card.src + '" />'));
 	cardElt.append($('<p>' + card.effect + '</p>'));
 
-	// TODO : Matt - rendre cliquable uniquement si tour du joueur ET peut payer
-	// le prix
 	cardElt.append($('<button class="btn btn-default"  data-id="' + card.id + '" data-effect-code="' + card.effectCode + '">Utiliser</button>'));
 
 	cardElt.on('click', function() {
+		if (hasPlayedCard) {
+			toastr.warning("Vous avez d&eacute;j&agrave; jou&eacute; une carte!");
+			return;
+		}
 		currentCode = card.effectCode;
+		currentCost = card.cost;
+		console.log('Click Code : ' + card.effectCode);
 		executeFunctionFromCode(card.effectCode);
-		//window[getFuctionFromCode(card.effectCode)]();
+		hasPlayedCard = true;
 	});
-	// TODO Replace action code by onclick
+
 	return cardElt;
 }
 

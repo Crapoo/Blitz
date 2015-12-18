@@ -78,6 +78,10 @@ nav .glyphicon {
 	border: 1px solid black;
 }
 
+.highlighted {
+	box-shadow: 0px 0px 5px lightgreen;
+}
+
 #overlay {
 	position: fixed;
 	top: 0;

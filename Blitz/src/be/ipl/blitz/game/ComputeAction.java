@@ -55,7 +55,9 @@ public class ComputeAction extends HttpServlet {
 			break;
 		case "discard-dice":
 			number = Integer.parseInt(request.getParameter("data"));
-			gameUcc.deleteDice(number, username);
+			if (gameUcc.deleteDice(number, username)) {
+				System.out.println("DISCARD POSITIF SA MèRE");
+			}
 			break;
 		case "replay":
 			gameUcc.replay();
