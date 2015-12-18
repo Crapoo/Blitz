@@ -76,7 +76,7 @@ public class ComputeAction extends HttpServlet {
 		default:
 			break;
 		}
-		if(effectCode!= -1){
+		if (effectCode != -1) {
 			gameUcc.discard(username, effectCode);
 		}
 	}
