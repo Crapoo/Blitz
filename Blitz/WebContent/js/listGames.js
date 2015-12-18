@@ -25,7 +25,7 @@ function getList() {
 	function showList(list, response) {
 		list.empty();
 		if ($.isEmptyObject(response)) {
-			list.append($('<p class="bg-initial">Aucune partie n\'a été jouée pour le moment ;(</p>'));
+			list.append($('<p>Aucune partie n\'a été jouée pour le moment ;(</p>'));
 		} else {
 			$.each(response, function(i, val) {
 				console.log(val);

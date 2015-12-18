@@ -17,7 +17,7 @@
       <button type="button" class="btn btn-lg btn-primary col-md-12" onclick="getList()"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>Historique</button>
     </div>
     <div id="is-game-in-progress"></div>
-    <div id="game-list" style="display:none;"></div>
+    <div id="game-list" class="bg-primary" style="display:none;"></div>
   </div>
 
   <!-- CREATE GAME FORM -->
