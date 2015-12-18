@@ -269,7 +269,6 @@ public class GameUccImpl implements GameUcc {
 		for (int i = 0; i < cards.size(); i++) {
 			Card card;
 			if ((card = cards.get(i)).getEffectCode() == effectCode) {
-				System.out.println("Je supprime une carte, lol");
 				cardsUcc.discard(card);
 				pg.removeCard(i);
 				return true;
@@ -302,7 +301,7 @@ public class GameUccImpl implements GameUcc {
 		Util.checkString(username);
 		// FIXME Przemek : getPlayerGame est null
 		PlayerGame pg = getPlayerGame(username);
-		if(pg==null){
+		if (pg == null) {
 			return 0;
 		}
 		return pg.getNbDice();
@@ -320,10 +319,8 @@ public class GameUccImpl implements GameUcc {
 	public List<Card> giveCardsTo(String username, List<Card> cards) {
 		Util.checkString(username);
 		Util.checkObject(cards);
-		
-		System.out.println("donne carte à " +username);
 		PlayerGame p = getPlayerGame(username);
-		
+
 		for (Card c : cards) {
 			p.addCard(c);
 		}
@@ -356,7 +353,7 @@ public class GameUccImpl implements GameUcc {
 		}
 		PlayerGame thief = getPlayerGame(getCurrentPlayer());
 		PlayerGame victim = getPlayerGame(player);
-		
+
 		List<Card> victimCards = victim.getCards();
 		Random r = new Random();
 		int toSteal = r.nextInt(victimCards.size());

@@ -2158,7 +2158,7 @@ if (typeof jQuery === 'undefined') {
     this.scrollHeight   = 0
 
     this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
-    this.refresh()
+    this.getList()
     this.process()
   }
 
@@ -2215,7 +2215,7 @@ if (typeof jQuery === 'undefined') {
     var i
 
     if (this.scrollHeight != scrollHeight) {
-      this.refresh()
+      this.getList()
     }
 
     if (scrollTop >= maxScroll) {

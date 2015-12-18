@@ -29,14 +29,6 @@ public class JoinLobbyServlet extends HttpServlet {
 		final ServletContext context = getServletContext();
 		synchronized (context) {
 			String gameName = (String) context.getAttribute("game-name");
-
-/* TODO : Matt - Peut être mieux de faire ainsi? Si pas d epartie ou impossible de la joindre, on renvoie vers l'index, avec une erreur ou quoi
-            if (gameName == null || !gameUcc.joinGame(gameName, (String) request.getSession().getAttribute("username"))) {
-                // Renvoyer vers l'index?
-            } else {
-                response.sendRedirect(request.getContextPath() + "/lobby.html");
-            }
-*/
 			if (gameName != null) {
 				if (gameUcc.joinGame(gameName, (String) request.getSession().getAttribute("username"))) {
 					response.sendRedirect(request.getContextPath() + "/lobby.html");

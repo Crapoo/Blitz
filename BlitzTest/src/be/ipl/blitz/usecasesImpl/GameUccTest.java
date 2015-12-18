@@ -283,5 +283,18 @@ public class GameUccTest {
 		gameUcc.endGame();
 		assertEquals("Impossible de finir une partie", State.OVER, gameUcc.getState());
 	}
+	
+	@Test
+	public void testKeepRandomCard() {
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+		gameUcc.keepRandomCards("em", 1);
+		assertEquals("Nombre de carte gardée incorrect", 1, gameUcc.getCardsOf("em").size());
+		gameUcc.keepRandomCards("ol", 2);
+		assertEquals("Nombre de carte gardée incorrect", 2, gameUcc.getCardsOf("ol").size());
+	}
 
 }

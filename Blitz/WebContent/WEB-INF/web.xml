@@ -71,6 +71,16 @@
     <servlet-name>board.html</servlet-name>
     <url-pattern>/board.html</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>games.html</servlet-name>
+    <jsp-file>/WEB-INF/jsp/games.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>games.html</servlet-name>
+    <url-pattern>/games.html</url-pattern>
+  </servlet-mapping>
+  
+  
   <session-config>
     <cookie-config>
       <http-only>true</http-only>

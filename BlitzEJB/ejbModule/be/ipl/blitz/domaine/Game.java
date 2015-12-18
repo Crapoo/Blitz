@@ -245,6 +245,14 @@ public class Game implements Serializable {
 		this.startDate = startDate;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getWinner() {
 		return state.getWinner(this);
 	}
@@ -312,7 +320,7 @@ public class Game implements Serializable {
 	}
 
 	public void deleteDice(int num, PlayerGame pg) {
-		Util.checkObject(pg);	
+		Util.checkObject(pg);
 		Util.checkPositiveOrZero(num);
 		state.removeDie(num, pg, this);
 	}

@@ -26,6 +26,6 @@ function refresh() {
 }
 
 $(function () {
-  refresh();
+  getList();
   t = setInterval(refresh, 1500);
 });
