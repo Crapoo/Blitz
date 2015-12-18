@@ -57,11 +57,15 @@ public class GameUccTest {
 		int diceEm = gameUcc.getNbDice("em");
 		int diceMi = gameUcc.getNbDice("mi");
 		int diceOl = gameUcc.getNbDice("ol");
-		gameUcc.exchangeDice("g");
+		gameUcc.exchangeDice("d");
 		assertEquals(diceEm, gameUcc.getNbDice("mi"));
 		assertEquals(diceMi, gameUcc.getNbDice("ol"));
 		assertEquals(diceOl, gameUcc.getNbDice("em"));
-		
+		gameUcc.exchangeDice("l");
+		assertEquals(diceEm, gameUcc.getNbDice("em"));
+		assertEquals(diceMi, gameUcc.getNbDice("mi"));
+		assertEquals(diceOl, gameUcc.getNbDice("ol"));
+
 	}
 	
 	@Test

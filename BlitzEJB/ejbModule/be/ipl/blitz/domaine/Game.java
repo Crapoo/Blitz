@@ -117,23 +117,22 @@ public class Game implements Serializable {
 			@Override
 			void exchangeDice(String direction, Game game) {
 				List<PlayerGame> players = game.getUsers();
-				int dir;
 				int tmp;
 				int nbDicePreviousPlayer = players.get(0).getNbDice();
-				int i;
-				
-				if (direction.equals("g")) {
-					dir = 1;
-					i=1;
-				} else {
-					dir = -1;
-					i=players.size()-1;
-				}
-				for (; i < players.size()-1; Util.modulo((i+dir), players.size())) {
-					PlayerGame p = players.get(i);
-					tmp = p.getNbDice();
-					p.setNbDice(nbDicePreviousPlayer);
-					nbDicePreviousPlayer = tmp;
+				if (direction.equals("r")) {
+					for (int i=1; i < players.size(); i++) {
+						PlayerGame p = players.get(i);
+						tmp = p.getNbDice();
+						p.setNbDice(nbDicePreviousPlayer);
+						nbDicePreviousPlayer = tmp;
+					}
+				}else{
+					for (int i=players.size()-1; i >=0 ; i--) {
+						PlayerGame p = players.get(i);
+						tmp = p.getNbDice();
+						p.setNbDice(nbDicePreviousPlayer);
+						nbDicePreviousPlayer = tmp;
+					}
 				}
 			}
 		},
