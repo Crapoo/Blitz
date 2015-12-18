@@ -58,22 +58,25 @@ function updateMyCards(cards) {
 
 function createDie(face) {
 	var buttonAction = "";
+	var actionData = "";
+
 	switch (face) {
 		case 'b':
+		// Increment mana
 		break;
 		case 'c':
-		//buttonAction = "drawCards(1)";
-		// TODO supprimer ça après
-		buttonAction = "prepareGiveDieModal";
+		buttonAction = "drawCards";
+		actionData = 1; // Number of cards to draw - parameter
 		break;
 		case 'd':
 		buttonAction = "prepareGiveDieModal";
 		break;
 	}
+
 	var dieSpan = $('<button class="die btn btn-default" data-toggle="modal" data-target="#target-enemy-modal" onclick="' + buttonAction + '">');
 
 	dieSpan.on('click', function() {
-		window[buttonAction]();
+		window[buttonAction](actionData);
 		$(this).prop('disabled', true);
 	});
 	dieSpan.append('<strong>' + face + '</strong>');

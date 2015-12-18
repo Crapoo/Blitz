@@ -41,7 +41,15 @@ function rollDice() {
 }
 
 function drawCards(number) {
+	if (isBusy) {
+		return;
+	}
 
+	isBusy = true;
+
+	sendAction("draw-cards", number);
+
+	isBusy = false;
 }
 
 function discardDice(number) {
@@ -55,8 +63,12 @@ function giveDie(target) {
 	if (isBusy) {
 		return;
 	}
+	isBusy = true;
+
 	sendAction("give-die", target);
 	$('#target-enemy-modal').modal('hide');
+
+	isBusy = false;
 }
 
 function stealCard(target) {
@@ -75,7 +87,7 @@ function keepOneCard(target) {
 
 }
 
-function limitToOneCard() {
+function limitToTwOCard() {
 
 }
 
@@ -113,12 +125,12 @@ function prepareTargetModal(title, message) {
 }
 
 // Data is a map of attribute names and their values
-function sendAction(action, target) {
+function sendAction(action, data) {
 	return $.ajax({
 		url : "compute-action.html",
 		data : {
 			"action" : action,
-			"target" : target
+			"data" : data
 		},
 		type : "get",
 		dataType : "json",
