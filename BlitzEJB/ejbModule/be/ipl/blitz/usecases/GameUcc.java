@@ -6,7 +6,6 @@ import javax.ejb.Remote;
 
 import be.ipl.blitz.domaine.Card;
 import be.ipl.blitz.domaine.Game;
-import be.ipl.blitz.domaine.PlayerGame;
 import be.ipl.blitz.domaine.Game.State;
 
 @Remote
@@ -212,4 +211,10 @@ public interface GameUcc {
 	 * courant
 	 */
 	void limitAllToNumCards(int num);
+	
+	/**
+	 * Permet a tous les joueurs de donner leurs dés a leur voisin
+	 * @param direction dans laquelle il faut echanger les dés
+	 */
+	void exchangeDice(String direction);
 }

@@ -399,6 +399,13 @@ public class GameUccImpl implements GameUcc {
 		}
 	}
 
+
+	@Override
+	public void exchangeDice(String direction) {
+		game.exchangeDice(direction);
+	}
+	
+	
 	/* Util */
 	private PlayerGame getPlayerGame(String username) {
 		List<PlayerGame> list = game.getUsers();
@@ -430,5 +437,6 @@ public class GameUccImpl implements GameUcc {
 			playerGameDao.update(player);
 		}
 	}
+
 
 }
