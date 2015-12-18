@@ -16,8 +16,8 @@ public class tests {
 
 	public static void main(String[] args) {
 		try {
-			
-System.out.println("" + null);	
+
+			System.out.println("" + null);
 
 			String gameName = "New Game";
 			Set<String> playsersUsername = new HashSet<String>();
@@ -56,8 +56,22 @@ System.out.println("" + null);
 
 			printGameState();
 
-			gameUcc.removePlayer("em");
-
+			for (int i = 0; i < 7; i++) {
+				System.out.println(gameUcc.getCurrentPlayer());
+				gameUcc.nextPlayer();
+			}
+			
+			if (gameUcc.getCurrentPlayer().equals("em")) {
+				System.out.println("skipping turn of mi");
+				gameUcc.skipTurn("mi");
+			} else {
+				System.out.println("skipping turn of em");
+				gameUcc.skipTurn("em");
+			}
+			for (int i = 0; i < 7; i++) {
+				System.out.println(gameUcc.getCurrentPlayer());
+				gameUcc.nextPlayer();
+			}
 			printGameState();
 
 			/*

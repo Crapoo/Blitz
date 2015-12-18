@@ -71,7 +71,7 @@ public class Game implements Serializable {
 			PlayerGame nextPlayer(Game game) {
 				int nextPlayer = Util.modulo(game.currentUser + game.direction, game.users.size());
 				if (game.skippedPlayers.contains(nextPlayer)) {
-					game.skippedPlayers.remove(nextPlayer);
+					game.skippedPlayers.remove(game.skippedPlayers.indexOf(nextPlayer));
 					nextPlayer = Util.modulo(nextPlayer + game.direction, game.users.size());
 				}
 				game.setCurrentUser(nextPlayer);
@@ -111,6 +111,7 @@ public class Game implements Serializable {
 				for (int i = 0; i < g.getUsers().size(); i++) {
 					if (p.equals(g.getUsers().get(i))) {
 						g.skippedPlayers.add(i);
+						return;
 					}
 				}
 			}
