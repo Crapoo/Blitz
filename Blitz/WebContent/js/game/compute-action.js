@@ -198,13 +198,13 @@ function endTurn() {
 
 function endGame(hasWon, winner) {
 	if (myUsername == winner) {
-		$('#resultImg').attr("src", "images/victory.jpeg");
+		$('#result-img').attr("src", "images/victory.jpeg");
 		$('#victory').text("Victoire !");
-		$('#victory-message').text("Vous avez effectivement remporter la victoire et lib&eacute;rer l'Europe.");
+		$('#victory-message').text("Vous avez effectivement remporter la victoire et libérée l'Europe.");
 	} else {
-		$('#resultImg').attr("src", "images/loser.gif");
-		$('#victory').text("D&eacute;faite !");
-		$('#victory-message').text("Ce jeu n'est peut-&egrave;tre pas fait pour vous...");
+		$('#result-img').attr("src", "images/loser.gif");
+		$('#victory').text("Défaite !");
+		$('#victory-message').text("Ce jeu n'est peut-être pas fait pour vous...");
 	}
 	$('#overlay').show();
 }

@@ -18,15 +18,13 @@ function initialise() {
 		});
 
 		createMyCards(response.myCards);
-
-		$('body').append(overlay);
-		var overlay = $('<div class="containter">' +
+		var overlay = $('<div class="container" id="overlay">' +
 			'<h1 id="victory"></h1>' +
 			'<h2 id="victory-message"></h2>' +
 			'<h4>Appuyez sur l\'image pour revenir &agrave l\'&eacute;cran d\'accueil</h4>' +
 			'<div><a href="forfeit.html"><img id="result-img"></a></div>' +
 			'</div>');
-
+		$('body').append(overlay);
 		overlay.hide();
 
 		myUsername = response.myUsername;
