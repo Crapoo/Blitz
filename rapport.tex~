@@ -224,11 +224,7 @@
 
     Une fois connecté, vous arrivez sur l'écran suivant:
 
-    \begin{table}[H]
-        \centering
-        \includegraphics[width=\textwidth]{images/accueil.png}
-        \caption{Diagramme de navigation}
-    \end{table}
+    [ECRAN D ACCEUIL] (screenshot)
 
     \subsection{Comment créer une partie?}
     Pour lancer une partie, il vous suffit de cliquer sur créer une partie.
