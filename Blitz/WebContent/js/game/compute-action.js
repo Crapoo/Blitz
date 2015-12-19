@@ -198,11 +198,15 @@ function endTurn() {
 
 function endGame(hasWon, winner) {
 	if (myUsername == winner) {
-		$("#resultImg").attr("src", "images/victory.jpeg");
+		$('#resultImg').attr("src", "images/victory.jpeg");
+		$('#victory').text("Victoire !");
+		$('#victory-message').text("Vous avez effectivement remporter la victoire et lib&eacute;rer l'Europe.");
 	} else {
-		$("#resultImg").attr("src", "images/loser.gif");
+		$('#resultImg').attr("src", "images/loser.gif");
+		$('#victory').text("D&eacute;faite !");
+		$('#victory-message').text("Ce jeu n'est peut-&egrave;tre pas fait pour vous...");
 	}
-	$("#overlay").show();
+	$('#overlay').show();
 }
 
 function prepareTargetModal(title, message, fn) {
@@ -212,8 +216,7 @@ function prepareTargetModal(title, message, fn) {
 	$.each(playerList, function(i, player) {
 		fctn = fn.name + '(' + player + ')';
 
-		var btn = $('<button type="button" class="list-group-item">' + player
-				+ '</button>');
+		var btn = $('<button type="button" class="list-group-item">' + player	+ '</button>');
 
 		btn.on('click', function() {
 			fn(player);

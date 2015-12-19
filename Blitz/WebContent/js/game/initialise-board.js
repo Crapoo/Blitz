@@ -19,11 +19,13 @@ function initialise() {
 
 		createMyCards(response.myCards);
 
-		var overlay = $('<div id="overlay"><div id="img-btn">'+
-		'<p><img id="resultImg" src="" alt="result" height="" width=""></p>'+
-		'<p><a href="forfeit.html"><button type="button" class="btn btn-default navbar-btn navbar-right">'+
-		'<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Quitter</button></a></p></div></div>');
 		$('body').append(overlay);
+		var overlay = $('<div class="containter">' +
+			'<h1 id="victory"></h1>' +
+			'<h2 id="victory-message"></h2>' +
+			'<h4>Appuyez sur l\'image pour revenir &agrave l\'&eacute;cran d\'accueil</h4>' +
+			'<div><a href="forfeit.html"><img id="result-img"></a></div>' +
+			'</div>');
 
 		overlay.hide();
 
