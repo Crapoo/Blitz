@@ -31,6 +31,14 @@ public class ComputeAction extends HttpServlet {
 
 		response.setContentType("application/json");
 
+		if (effectCode != -1) {
+			if (!gameUcc.discard(username, effectCode)) {
+				/* TODO : Matt - Peut être afficher une erreur au joueur? */
+				System.out.println("pas possible d'utiliser cette carte - inexistante");
+				return;
+			}
+		}
+
 		switch (action) {
 		case "roll-dice":
 			response.getWriter().print(rollDiceToJson());
@@ -77,10 +85,6 @@ public class ComputeAction extends HttpServlet {
 			break;
 		default:
 			break;
-		}
-
-		if (effectCode != -1) {
-			gameUcc.discard(username, effectCode);
 		}
 	}
 

@@ -46,8 +46,6 @@ public class ListGamesServlet extends HttpServlet {
 
 		JsonObjectBuilder oBuilder = Json.createObjectBuilder();
 
-		System.out.println("Games : " + gameUcc.getAllGames().size());
-
 		int i = 0;
 		for (Game game : gameUcc.getAllGames()) {
 			JsonObjectBuilder oBuilderGame = Json.createObjectBuilder();

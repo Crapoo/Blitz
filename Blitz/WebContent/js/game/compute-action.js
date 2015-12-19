@@ -10,9 +10,10 @@ var currentCost = -1;
 
 function rollDice() {
 	if (!canPlay())
-	return;
+		return;
 	if (diceRolled) {
-		toastr.warning("Vous avez d&eacute;j&agrave; lanc&eacute; vos d&eacute;s!");
+		toastr
+				.warning("Vous avez d&eacute;j&agrave; lanc&eacute; vos d&eacute;s!");
 		return;
 	}
 
@@ -37,7 +38,7 @@ function rollDice() {
 
 var drawCards = function(number) {
 	if (!canPlay())
-	return;
+		return;
 
 	isBusy = true;
 
@@ -50,7 +51,7 @@ var drawCards = function(number) {
 
 function discardDice(number) {
 	if (!canPlay())
-	return;
+		return;
 
 	isBusy = true;
 
@@ -63,7 +64,7 @@ function discardDice(number) {
 
 var giveDie = function(target) {
 	if (!canPlay())
-	return;
+		return;
 
 	isBusy = true;
 
@@ -77,7 +78,7 @@ var giveDie = function(target) {
 
 var stealCard = function(target) {
 	if (!canPlay())
-	return;
+		return;
 
 	isBusy = true;
 
@@ -91,7 +92,7 @@ var stealCard = function(target) {
 
 function changeDirection() {
 	if (!canPlay())
-	return;
+		return;
 
 	isBusy = true;
 
@@ -120,7 +121,7 @@ function replay() {
 
 var keepOneCard = function keepOneCard(target) {
 	if (!canPlay())
-	return;
+		return;
 
 	isBusy = true;
 
@@ -134,7 +135,7 @@ var keepOneCard = function keepOneCard(target) {
 
 function limitToTwOCards() {
 	if (!canPlay())
-	return;
+		return;
 
 	isBusy = true;
 
@@ -147,7 +148,7 @@ function limitToTwOCards() {
 
 var skipTurn = function(target) {
 	if (!canPlay())
-	return;
+		return;
 
 	isBusy = true;
 
@@ -165,7 +166,7 @@ var skipTurn = function(target) {
 
 function exchangeDice(direction) {
 	if (!canPlay())
-	return;
+		return;
 
 	isBusy = true;
 
@@ -211,7 +212,8 @@ function prepareTargetModal(title, message, fn) {
 	$.each(playerList, function(i, player) {
 		fctn = fn.name + '(' + player + ')';
 
-		var btn = $('<button type="button" class="list-group-item">' + player	+ '</button>');
+		var btn = $('<button type="button" class="list-group-item">' + player
+				+ '</button>');
 
 		btn.on('click', function() {
 			fn(player);
@@ -226,38 +228,40 @@ function prepareTargetModal(title, message, fn) {
 
 function executeFunctionFromCode(effectCode) {
 	switch (effectCode) {
-		case 1: // Discard 1 die
+	case 1: // Discard 1 die
 		discardDice(1);
 		break;
-		case 2: // Pass dice
+	case 2: // Pass dice
 		$('#exchange-dice-modal').modal('show');
 		break;
-		case 3: // Discard 2 dice
+	case 3: // Discard 2 dice
 		discardDice(2);
 		break;
-		case 4: // Give die to target
-		prepareTargetModal("Volez une carte", "Choisissez votre cible",	giveDie);
+	case 4: // Give die to target
+		prepareTargetModal("Volez une carte", "Choisissez votre cible", giveDie);
 		break;
-		case 5: // Take card from target
-		prepareTargetModal("Volez une carte", "Choisissez votre cible",	stealCard);
+	case 5: // Take card from target
+		prepareTargetModal("Volez une carte", "Choisissez votre cible",
+				stealCard);
 		break;
-		case 6: // Limit target to 1 card
-		prepareTargetModal("Limitez à une carte", "Choisissez votre cible",	keepOneCard);
+	case 6: // Limit target to 1 card
+		prepareTargetModal("Limitez à une carte", "Choisissez votre cible",
+				keepOneCard);
 		break;
-		case 7: // Draw 3 cards
+	case 7: // Draw 3 cards
 		drawCards(3);
 		break;
-		case 8: // Limit everyone to 2 cards
+	case 8: // Limit everyone to 2 cards
 		limitToTwOCards();
 		break;
-		case 9: // Skip turn
+	case 9: // Skip turn
 		prepareTargetModal("Passer le tour", "Choisissez votre cible", skipTurn);
 		break;
-		case 10: // Replay and change direction
+	case 10: // Replay and change direction
 		changeDirection();
 		replay();
 		break;
-		default:
+	default:
 		toastr.warning("Pas encore impl&eacute;ment&eacute;");
 		break;
 	}
@@ -276,7 +280,8 @@ function canPlay() {
 	}
 
 	if (currentCost > shekels) {
-		toastr.warning("Vous n'avez pas assez de shekels pour jouer cette carte.");
+		toastr
+				.warning("Vous n'avez pas assez de shekels pour jouer cette carte.");
 		hasPlayedCard = false;
 		return false;
 	}
@@ -284,14 +289,12 @@ function canPlay() {
 	console.log("Card played");
 	shekels -= currentCost;
 	hasPlayedCard = true;
-	currentCode = -1;
-	currentCost = -1;
 
 	return true;
 }
 
 function sendAction(action, data) {
-	return $.ajax({
+	var ajax = $.ajax({
 		url : "compute-action.html",
 		data : {
 			"action" : action,
@@ -301,4 +304,7 @@ function sendAction(action, data) {
 		type : "get",
 		dataType : "json",
 	});
+	currentCode = -1;
+	currentCost = -1;
+	return ajax;
 }
