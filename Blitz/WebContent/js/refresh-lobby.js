@@ -20,7 +20,7 @@ function refresh() {
 
    $('#lobby-players-list').html(playersList);
    $('#players-count').text(response.playersCount);
-   // console.log(response);
+   console.log(response);
  });
  $request.fail(function (xhr, textStatus, errorThrown) {
    //alert(errorThrown);

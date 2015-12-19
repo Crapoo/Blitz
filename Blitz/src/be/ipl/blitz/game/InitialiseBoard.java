@@ -30,8 +30,6 @@ public class InitialiseBoard extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		gameUcc.startGame();
-
 		String username = (String) request.getSession().getAttribute("username");
 
 		JsonObjectBuilder oBuilder = Json.createObjectBuilder();

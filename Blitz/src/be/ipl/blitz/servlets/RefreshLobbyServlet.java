@@ -53,12 +53,15 @@ public class RefreshLobbyServlet extends HttpServlet {
 					@Override
 					public void run() {
 						if (gameUcc.listPlayers().size() >= gameUcc.getMinPlayers()) {
+							System.out.println("start game");
+							gameUcc.startGame();
 							startGame = true;
 						} else {
 							System.out.println("cancel");
 							gameUcc.cancelGame();
 							cancelGame = true;
 						}
+						timerRunning = false;
 					}
 				};
 				timer.schedule(task, 10000);
