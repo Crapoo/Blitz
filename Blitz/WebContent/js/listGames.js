@@ -9,10 +9,8 @@ function getList() {
 		var htmlResponse = "";
 		var listHolder = $("#game-list");
 		if (listHolder.css('display') == 'none') {
-			console.log('show');
 			showList(listHolder, response);
 		} else {
-			console.log('hide');
 			hideList(listHolder);
 		}
 	});
@@ -28,7 +26,6 @@ function getList() {
 			list.append($('<li class="list-group-item">Aucune partie n\'a été jouée pour le moment ;(</li>'));
 		} else {
 			$.each(response, function(i, val) {
-				console.log(val);
 				var row = $('<li class="list-group-item"><span class="badge">' + val.startDate + '</span><p>' + val.name +' - <span id="winner"></span></p></li>');
 				
 				if (val.winner === "annulée") {
