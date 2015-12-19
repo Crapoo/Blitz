@@ -157,11 +157,7 @@ var skipTurn = function(target) {
 
 	toastr.info(target + " va passer son tour!");
 
-	if (playerList.length == 1) {
-		replay();
-	} else {
-		isBusy = false;
-	}
+	isBusy = false;
 };
 
 function exchangeDice(direction) {
@@ -200,11 +196,14 @@ function endGame(hasWon, winner) {
 	if (myUsername == winner) {
 		$('#result-img').attr("src", "images/victory.jpeg");
 		$('#victory').text("Victoire !");
-		$('#victory-message').text("Vous avez effectivement remporter la victoire et libérée l'Europe.");
+		$('#victory-message')
+				.text(
+						"Vous avez effectivement remporter la victoire et libérée l'Europe.");
 	} else {
 		$('#result-img').attr("src", "images/loser.gif");
 		$('#victory').text("Défaite !");
-		$('#victory-message').text("Ce jeu n'est peut-être pas fait pour vous...");
+		$('#victory-message').text(
+				"Ce jeu n'est peut-être pas fait pour vous...");
 	}
 	$('#overlay').show();
 }
@@ -216,7 +215,8 @@ function prepareTargetModal(title, message, fn) {
 	$.each(playerList, function(i, player) {
 		fctn = fn.name + '(' + player + ')';
 
-		var btn = $('<button type="button" class="list-group-item">' + player	+ '</button>');
+		var btn = $('<button type="button" class="list-group-item">' + player
+				+ '</button>');
 
 		btn.on('click', function() {
 			fn(player);
