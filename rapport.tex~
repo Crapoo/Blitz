@@ -188,6 +188,7 @@
     \chapter{Notes}
     Il est demandé dans l'énoncé de charger les données du jeu à partir du fichier XML. Après l'avoir fait, nous n'avons pas compris pourquoi nous devions faire persister les dés dans la base de donnée. C'est pourquoi vous ne trouverez que 5 tables dans la DB et pas 7. 
     Nous avons aussi implémenté un patron de conception de type \og State\fg{} dans la classe domain.Game.java de la partie EJB, ainsi qu'un timer de 30 secondes est lancé dès que le premier joueur rejoint la partie.
+    Enfin, une amélioration possible serait de gerer le cas ou la pioche est vide. Il faudrait alors proposer au joueur de voler une carte à un de ses adversaires.
     \chapter{Manuels}
     \section{Manuel d'installation}
     Les constantes sont dans un fichier xml, situé a Blitz/BlitzEJB/ejbModule/blitz.xml.
