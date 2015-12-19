@@ -150,14 +150,59 @@
     \end{table}
 
     \subsection{Jeu}
+    N'importe quand dans le jeu :
     \begin{table}[H]
         \begin{tabularx}{\textwidth}{X|X}
-            1. Attendre que ce soit
+            1. Un joueur clique sur le bouton \og Abandonner\fg{} & \\
+            & 2. Le serveur le redirige vers la page d'accueuil.\\
+            & 3. Si il ne reste qu'un seul joueur dans la partie, le serveur affiche un message de victoire au dernier joueur. \\
+        \end{tabularx}
+    \end{table}
+
+    Quand c'est votre tour :
+
+    \begin{table}[H]
+        \begin{tabularx}{\textwidth}{X|X}
+            1. Le joueur clique sur le bouton de lancer les dés. & \\
+            & 2. Le serveur affiche les faces des dés lancés. \\
+            3. Le joueur clique sur un dé & \\
+            $[$Dé à donner$]$ & \\
+            & 3.a.1 Le serveur affiche un pop-up pour demander à qui le donner.\\
+            3.a.2 Le joueur clique sur l'adversaire choisit. & \\
+            & 3.a.3 Le serveur met a jour la case de l'adversaire choisit en incrémentant ses dés, affiche un message indiquant que l'opération s'est bien déroulée et grise le dé joué. \\
+            $[$Dé de pioche$]$ & \\
+            & 3.b.1 Le serveur rafraichit la liste des cartes du joueur qui en aura alors une de plus, affiche un message indiquant que l'opération s'est bien déroulée et grise le dé joué.\\
+        \end{tabularx}
+    \end{table}
+    \begin{table}[H]
+        \begin{tabularx}{\textwidth}{X|X}
+            4. Le joueur clique sur une carte & \\
+            $[$La carte ne peut pas être jouée$]$ & \\
+            & Le serveur affiche un mesage d'échec\\
+
+            $[$Si la carte nécéssite une cible$]$ & \\
+            & 4.a.1 Le serveur affiche un pop-up pour demander à qui sera la cible.\\
+            4.a.2 Le joueur clique sur l'adversaire choisit. & \\
+            & 4.a.3 Le serveur met a jour la case de l'adversaire choisit et affiche un message indiquant que l'opération s'est bien déroulée.\\
+
+            $[$Si la carte nécéssite un sens$]$ & \\
+            & 4.b.1 Le serveur affiche un pop-up pour demander quel sera le sens. \\
+            4.b.2 Le joueur clique sur le sens choisit. & \\
+            & 4.b.3 Le serveur met a jour la case de l'adversaire choisit et affiche un message indiquant que l'opération s'est bien déroulée. \\
+
+            $[$La carte ne nécessite aucune autre information$]$ & \\
+            & 4.c.1 Le serveur effectue l'action indiquée sur la carte et rafraichit le plateau de jeu. Il affiche un message indiquant que l'opération s'est bien déroulée. \\
+
+            5. Le joueur clique sur une deuxième carte. & \\
+            & 6. Le serveur affiche une message indiquant à l'utilisateur qu'il ne peut pas jouer une deuxième fois. \\
+
+            7. Le joueur clique sur le bouton \og finir le tour\fg{} & \\
+            & 8. Le serveur rend inopérant boutons de l'interface et passe au joueur suivant.\\
         \end{tabularx}
     \end{table}
 
     \chapter{Architecture}
-    La partie EJB est découpé en différentes parties comme suit :
+    \section{Partie EJB}
     \begin{description}
         \item[dao]\hfill \\ Contient le DAO permettant l'accès aux tables de la base de données.
         \item[daoImpl]\hfill \\ Contient les DAO implémentés permettant l'accès à une table précise selon l'entité.
@@ -167,7 +212,7 @@
         \item[utils]\hfill \\ Contient les classes offrant des méthodes de vérification, appelées par les autres classes.
     \end{description}
 
-    La partie JSP est quant à elle découpée de cette façon :
+    \section{Partie JSP}
 
     \begin{itemize}
         \item Partie Java
@@ -186,9 +231,11 @@
         \end{description}
     \end{itemize}
     \chapter{Notes}
-    Il est demandé dans l'énoncé de charger les données du jeu à partir du fichier XML. Après l'avoir fait, nous n'avons pas compris pourquoi nous devions faire persister les dés dans la base de donnée. C'est pourquoi vous ne trouverez que 5 tables dans la DB et pas 7. 
-    Nous avons aussi implémenté un patron de conception de type \og State\fg{} dans la classe domain.Game.java de la partie EJB, ainsi qu'un timer de 30 secondes est lancé dès que le premier joueur rejoint la partie.
-    Enfin, une amélioration possible serait de gerer le cas ou la pioche est vide. Il faudrait alors proposer au joueur de voler une carte à un de ses adversaires. 
+    Il est demandé dans l'énoncé de charger les données du jeu à partir du fichier XML. Après l'avoir fait, nous n'avons pas compris pourquoi nous devions faire persister les dés dans la base de donnée. C'est pourquoi vous ne trouverez que 5 tables dans la DB et pas 7.
+
+    Nous avons aussi implémenté un patron de conception de type \og State\fg{} dans la classe domain.Game.java de la partie EJB, ainsi qu'un timer de 30 secondes qui est lancé dès que le premier joueur rejoint la partie.
+
+    Enfin, une amélioration possible serait de gerer le cas ou la pioche est vide. Il faudrait alors proposer au joueur de voler une carte à un de ses adversaires.
     \chapter{Manuels}
     \section{Manuel d'installation}
     Les constantes sont dans un fichier xml, situé a Blitz/BlitzEJB/ejbModule/blitz.xml.
@@ -210,14 +257,25 @@
     \end{enumerate}
 
     \section{Manuel d'utilisation de Toastr}
-    Pour afficher les notifications aux joueurs, nous utilisons Toastr.js (\url{https://codeseven.github.io/toastr}), qui est un plugin de jQuery. L'utilisation que nous en faisons est assez basique, la seule méthode à connaitre est la suivante : toastr.into();
+    Pour afficher les notifications aux joueurs, nous utilisons Toastr.js (\url{https://codeseven.github.io/toastr}), qui est un plugin de jQuery. L'utilisation que nous en faisons est assez basique, les seule méthode à connaitre sont les suivantes : toastr.info(), toastr.warning() et toaster.success().
 
-    Cette méthode fonctionne de la façon suivante :
+    Ces méthodes fonctionnent de la façon suivante :
 
     \begin{itemize}
         \item toastr.info(\og Message\fg)\\ Affiche un Toast contenant un message à l'utilisateur.
         \item toastr.info(\og Titre\fg, \og Message\fg)\\ Affiche un Toast contenant un message et un titre à l'utilisateur
     \end{itemize}
+
+    Toastr peut aussi prendre certaines options à son instanciation. Les plus importantes pour notre projet ont été les suivantes :
+
+    \begin{description}
+        \item[positionClass : toast-top-center]\hfill \\ Permet de placer le toast au centre de l'écran
+        \item[onClick : null]\hfill \\ Empêche de cliquer sur le toast (car nous n'avosn aucune action liée à un clic)
+        \item[preventDuplicate : false]\hfill \\ Permet les messages dupliqués (car un joueur pourrait faire plusieurs fois une action identique)
+    \end{description}
+
+    D'autres options existent pour personaliser les animations et durées d'affichage.
+
     \section{Manuel d'utilisation}
     \subsection{Comment accéder au jeu?}
     Pour jouer sur une machine locale, tapez dans le browser \og \url{localhost:8080/Blitz}\fg{} (sans les guillemets).
