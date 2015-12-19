@@ -91,7 +91,6 @@
 
     Nous avons divisé le travail de la manière suivante: deux personnes se sont concentrées sur le back-end (la partie EJB) et deux sur le front-end (JSP). Malheureusement, un membre du groupe a décidé d'arrêter le projet en cours de route. De ce fait, nous avons dû re-distribuer afin de pouvoir continuer à avancer.
 
-    Le délai assez court pour réaliser ce projet à trois ne nous a malheureusement pas permis de rendre un travail aussi propre que nous l'aurions souhaité. Par exemple, nous avons pensé à implémenter des patrons de conception supplémentaires pour la gestion des effets de cartes, améliorer l'interface ou encore un timer permettant de lancer le jeu après 30 secondes.
     Dans la suite de ce rapport, nous allons présenter les détails du programme développé.
 
     \chapter{Analyse}
@@ -181,7 +180,9 @@
         \begin{description}
             \item[css]\hfill \\ Contient le css régissant le style de l'interface du programme.
             \item[images]\hfill \\ Contient les images utilisées dans l'interface.
-            \item[js]\hfill \\
+            \item[js]\hfill \\ Contient les fichiers gérant la partie JavaScript de l'interface.
+            \item[libs]\hfill \\ Contient les librairies Bootstrap, jQuery et Toastr
+            \item[WEB-INF]\hfill \\ Contient les fichiers décrivant le HTML utilisé par les pages web ainsi que la configuration du server permettant d'afficher la page correspondant à la requête.
         \end{description}
     \end{itemize}
     \chapter{Notes}
@@ -247,10 +248,32 @@
     Une fois dans la lobby, la partie se lance automatiquement une fois le nombre minimum de joueur atteint. Une fois ce nombre atteint, tous les joueurs sont redirigés vers la page de jeu.
 
     \subsection{Comment se déroule le tour de jeu?}
+    Dans la partie supérieure du plateau de jeu se trouvent vos adversaires. Dans la partie inférieure se trouve votre jeu.Vous pouvez y voir vos cartes ainsi que le nombre de dés que vous possédez. Sur la droite se trouve aussi un bouton vous permettant de lancer les dés.
+
+    Si un ennemie est en surbrillance, celà signifie que c'est à son tour de jouer. Vous pouvez aussi voir son nom en haut à gauche, après \og Tour de :\fg{}.
+
+    Quand vient votre tour de jouer, commencez par lancer vos dés. Ce lancé amène à 3 types de dé possible :
+
+    \begin{itemize}
+        \item Rond jaune : Pièce de monnaie, permet de payer une carte à jouer.
+        \item Carré avec un + : Pioche une carte.
+        \item Flèche vers le haut : Donne un dé à un ennemi.
+    \end{itemize}
+
+    Une fois les dés lancés, vous pouvez maintenant cliquer sur une carte pour la jouer ou encore cliquer sur un dé de pioche ou de don de dé pour l'utiliser.
+
+    Si une action demande de viser un joueur, une fenêtre modale apparait pour vous permettre de choisir un ennemie. Une fenêtre apparait aussi pour permettre de choisir le sens dans lequel passer les dés.
+
+    Une fois que vous avez fini votre tour, vous pouvez cliquer sur \og Passer le tour\fg{}, se trouvant en haut à droite.
+
+    Durant le jeu, des notifications de type Toast apparaissent selon vos actions.
 
     \chapter{Conclusion}
     Durant ce projet, nous avons beaucoup appris. Nous avons en effet approfondis notre connaissance des technologies utilisées et amélioré notre façon de travailler ensemble grâce, entre-autre, à l'utilisation de Github. Cet outil nous a permis de travailler en parallèle tout en restant tous sur la même version de notre code. Nous avons cependant préféré l'utilisation de la ligne de commande pour accéder aux commandes Git, l'utilisation du plugin d'Eclipse ne permettant pas un contrôle total de l'outil. Nous avons aussi pu nous rendre compte de l'importance des \og outils développeur\fg{} permettant un débug plus aisé de la partie web et principalement la partie JavaScript.
 
-    Ce projet nous aura aussi montré certaines facettes moins sympathiques du déroulement d'un projet. La durée du projet étant très courte, et nous retrouvant à 3 après le départ d'un membre, nous avons dû travailler chaque jour plus d'une dizaine d'heures et n'avons tout de même pas pu terminer dans les temps. Ce travail intensif nous a tous fait ressentir une grande pression et une importante fatigue.
+    Ce projet nous aura aussi montré certaines facettes moins sympathiques du déroulement d'un projet. La durée du projet étant très courte, et nous retrouvant à 3 après le départ d'un membre, nous avons dû travailler chaque jour plus d'une dizaine d'heures. Ce travail intensif nous a tous fait ressentir une grande pression et une importante fatigue.
 
+    Ce délai assez court pour réaliser le projet nous aura aussi empechés de rendre un travail aussi propre que nous aurions voulu. Nous nous sommes en effet rendu compte que certaines parties de notre code, telles que la gestion des effets des cartes, auraient pu être améliorées via l'utilisation de patterns que nous n'avons pas eu le temps d'implémenter.
+
+    Malgré celà, nous sommes fiers de ne pas avoir abandonné et d'avoir pu implémenter toutes les fonctions nécessaires à un programme fonctionnel.
 \end{document}
