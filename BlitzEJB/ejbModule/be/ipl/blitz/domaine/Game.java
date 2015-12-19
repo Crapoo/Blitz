@@ -123,15 +123,16 @@ public class Game implements Serializable {
 			void exchangeDice(String direction, Game game) {
 				List<PlayerGame> players = game.getUsers();
 				int tmp;
-				int nbDicePreviousPlayer = players.get(0).getNbDice();
 				if (direction.equals("r")) {
-					for (int i = 1; i < players.size(); i++) {
+					int nbDicePreviousPlayer = players.get(players.size() - 1).getNbDice();
+					for (int i = 0; i < players.size(); i++) {
 						PlayerGame p = players.get(i);
 						tmp = p.getNbDice();
 						p.setNbDice(nbDicePreviousPlayer);
 						nbDicePreviousPlayer = tmp;
 					}
 				} else {
+					int nbDicePreviousPlayer = players.get(0).getNbDice();
 					for (int i = players.size() - 1; i >= 0; i--) {
 						PlayerGame p = players.get(i);
 						tmp = p.getNbDice();

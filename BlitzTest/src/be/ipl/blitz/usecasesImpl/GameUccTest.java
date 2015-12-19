@@ -48,25 +48,38 @@ public class GameUccTest {
 	}
 
 	@Test
-	public void testExchangeDice(){
+	public void testExchangeDiceLeft() {
 		gameUcc.createGame(gameName);
 		gameUcc.joinGame(gameName, "em");
 		gameUcc.joinGame(gameName, "ol");
 		gameUcc.joinGame(gameName, "mi");
 		gameUcc.startGame();
-		int diceEm = gameUcc.getNbDice("em");
-		int diceMi = gameUcc.getNbDice("mi");
-		int diceOl = gameUcc.getNbDice("ol");
-		gameUcc.exchangeDice("d");
-		assertEquals(diceEm, gameUcc.getNbDice("mi"));
-		assertEquals(diceMi, gameUcc.getNbDice("ol"));
-		assertEquals(diceOl, gameUcc.getNbDice("em"));
+		gameUcc.deleteDice(1, "em");
+		gameUcc.deleteDice(2, "mi");
+
 		gameUcc.exchangeDice("l");
-		assertEquals(diceEm, gameUcc.getNbDice("em"));
-		assertEquals(diceMi, gameUcc.getNbDice("mi"));
-		assertEquals(diceOl, gameUcc.getNbDice("ol"));
+		assertEquals(4, gameUcc.getNbDice("em"));
+		assertEquals(2, gameUcc.getNbDice("ol"));
+		assertEquals(3, gameUcc.getNbDice("mi"));
 	}
-	
+
+	@Test
+	public void testExchangeDiceRight() {
+		gameUcc.createGame(gameName);
+		gameUcc.joinGame(gameName, "em");
+		gameUcc.joinGame(gameName, "ol");
+		gameUcc.joinGame(gameName, "mi");
+		gameUcc.startGame();
+		gameUcc.deleteDice(1, "em");
+		gameUcc.deleteDice(2, "mi");
+
+		assertTrue("Départ incorrect", gameUcc.getNbDice("em") == 3 && gameUcc.getNbDice("ol") == 4 && gameUcc.getNbDice("mi") == 2);
+		gameUcc.exchangeDice("r");
+		assertEquals(2, gameUcc.getNbDice("em"));
+		assertEquals(3, gameUcc.getNbDice("ol"));
+		assertEquals(4, gameUcc.getNbDice("mi"));
+	}
+
 	@Test
 	public void testJoinGame() {
 		gameUcc.createGame(gameName);
@@ -302,7 +315,7 @@ public class GameUccTest {
 		gameUcc.endGame();
 		assertEquals("Impossible de finir une partie", State.OVER, gameUcc.getState());
 	}
-	
+
 	@Test
 	public void testKeepRandomCard() {
 		gameUcc.createGame(gameName);
